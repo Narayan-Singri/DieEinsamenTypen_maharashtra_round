@@ -201,15 +201,15 @@ def seed():
                 print(f"  [+] Preset learner: {l_data['name']}")
 
         db.commit()
-        print("\n✅ Seed complete.")
+        print("\n[OK] Seed complete.")
     except Exception as e:
         db.rollback()
-        print(f"❌ Seed failed: {e}")
+        print(f"[ERR] Seed failed: {e}")
         raise
     finally:
         db.close()
 
 
 if __name__ == "__main__":
-    print("🌱 Seeding Re:Learn database...")
+    print("[SEED] Seeding Re:Learn database...")
     seed()
