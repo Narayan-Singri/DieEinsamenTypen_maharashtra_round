@@ -1,0 +1,933 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Re:Learn — Adaptive Misconception Diagnosis System</title>
+  <meta name="description" content="Re:Learn diagnoses, differentiates, and visually resolves deep-seated cognitive misconceptions in introductory Python programming using AI-driven micro-probes and memory-box trace visualization." />
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+
+  <!-- App Styles -->
+  <link rel="stylesheet" href="/static/styles.css" />
+
+  <!-- Monaco Editor via CDN -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.44.0/min/vs/loader.min.js"></script>
+
+  <!-- React 18 via CDN -->
+  <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+  <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+
+  <!-- Babel Standalone (for JSX transpiling in browser) -->
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+  <style>
+    /* Inline critical styles before CSS loads */
+    body { background: #0d0f17; color: #e8eaf6; }
+    #loading-screen {
+      position: fixed; inset: 0;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      background: #0d0f17; z-index: 9999;
+      gap: 16px;
+      transition: opacity 0.4s ease;
+    }
+    #loading-screen.hidden { opacity: 0; pointer-events: none; }
+    .loading-logo {
+      width: 60px; height: 60px;
+      background: linear-gradient(135deg, #4f7cff, #9f7aea);
+      border-radius: 16px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 28px;
+      box-shadow: 0 0 30px rgba(79,124,255,0.4);
+      animation: pulse 1.5s ease-in-out infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+    }
+    .loading-text {
+      font-family: Inter, sans-serif;
+      font-size: 20px; font-weight: 800;
+      background: linear-gradient(135deg, #fff 30%, #4f7cff);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .loading-sub {
+      font-family: Inter, sans-serif;
+      font-size: 12px; color: #5a6080;
+      letter-spacing: 0.5px;
+    }
+    .loading-bar {
+      width: 180px; height: 3px;
+      background: #1e2233;
+      border-radius: 2px;
+      overflow: hidden;
+    }
+    .loading-bar-fill {
+      height: 100%;
+      background: linear-gradient(90deg, #4f7cff, #9f7aea);
+      border-radius: 2px;
+      animation: progress 2s ease forwards;
+    }
+    @keyframes progress {
+      from { width: 0%; }
+      to { width: 100%; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- Loading Screen -->
+<div id="loading-screen">
+  <div class="loading-logo">🎓</div>
+  <div class="loading-text">Re:Learn</div>
+  <div class="loading-sub">Initialising Adaptive Diagnosis Engine…</div>
+  <div class="loading-bar"><div class="loading-bar-fill"></div></div>
+</div>
+
+<!-- React Root -->
+<div id="root"></div>
+
+<!-- Monaco Loader: define the custom dark theme before editor init -->
+<script>
+  require.config({ paths: { vs: 'https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.44.0/min/vs' } });
+  require(['vs/editor/editor.main'], function () {
+    // Register Re:Learn dark theme
+    monaco.editor.defineTheme('relearn-dark', {
+      base: 'vs-dark',
+      inherit: true,
+      rules: [
+        { token: 'keyword', foreground: '9f7aea', fontStyle: 'bold' },
+        { token: 'string', foreground: 'a8ff78' },
+        { token: 'number', foreground: 'f97316' },
+        { token: 'comment', foreground: '5a6080', fontStyle: 'italic' },
+        { token: 'function', foreground: '4f7cff' },
+        { token: 'type.identifier', foreground: '06b6d4' },
+        { token: 'identifier', foreground: 'e8eaf6' },
+      ],
+      colors: {
+        'editor.background': '#0d0f17',
+        'editor.foreground': '#e8eaf6',
+        'editorLineNumber.foreground': '#2e3452',
+        'editorLineNumber.activeForeground': '#5a6080',
+        'editor.lineHighlightBackground': '#131621',
+        'editorCursor.foreground': '#4f7cff',
+        'editor.selectionBackground': '#2a3050',
+        'editor.inactiveSelectionBackground': '#1e2233',
+        'editorIndentGuide.background': '#1e2233',
+        'editorIndentGuide.activeBackground': '#2e3452',
+        'scrollbarSlider.background': '#2e345288',
+        'scrollbarSlider.hoverBackground': '#3d447088',
+      }
+    });
+    window.__monacoReady = true;
+  });
+</script>
+
+<!-- JSX Components — loaded as text/babel for in-browser transpiling -->
+<script type="text/babel" data-type="module" data-presets="react">
+  // ──────────────────────────────────────────
+  // Load all component files inline
+  // (Zero-build-step: CDN Babel transpiles JSX)
+  // ──────────────────────────────────────────
+
+  const API_BASE = "http://127.0.0.1:8000";
+
+  // M Colors (shared)
+  const M_COLORS = {
+    M0: "#22c55e", M1: "#f97316", M2: "#9f7aea",
+    M3: "#eab308", M4: "#ef4444", M5: "#06b6d4",
+    M6: "#8b5cf6", M7: "#ec4899"
+  };
+
+  const M_LABELS = {
+    M0: "Correct", M1: "Accum. Reinit", M2: "Print vs Return",
+    M3: "Off-by-One Range", M4: "Wrong Comparator",
+    M5: "Assign in Cond.", M6: "Mutation vs New", M7: "Index Boundary",
+  };
+
+  const { useState, useEffect, useRef, useCallback } = React;
+
+  // ────────────────────────────────────────
+  // Monaco Editor
+  // ────────────────────────────────────────
+  function EditorPane({ code, onChange }) {
+    const containerRef = useRef(null);
+    const editorRef = useRef(null);
+
+    useEffect(() => {
+      if (!containerRef.current) return;
+      if (editorRef.current) return;
+
+      function initEditor() {
+        editorRef.current = monaco.editor.create(containerRef.current, {
+          value: code,
+          language: "python",
+          theme: "relearn-dark",
+          fontSize: 13,
+          fontFamily: "'JetBrains Mono', 'Fira Code', monospace",
+          fontLigatures: true,
+          lineHeight: 22,
+          minimap: { enabled: false },
+          scrollBeyondLastLine: false,
+          wordWrap: "on",
+          automaticLayout: true,
+          padding: { top: 12, bottom: 12 },
+          renderLineHighlight: "gutter",
+          cursorBlinking: "smooth",
+          cursorSmoothCaretAnimation: "on",
+          smoothScrolling: true,
+          bracketPairColorization: { enabled: true },
+          tabSize: 4,
+          insertSpaces: true,
+        });
+        editorRef.current.onDidChangeModelContent(() => {
+          onChange(editorRef.current.getValue());
+        });
+      }
+
+      if (window.__monacoReady) {
+        initEditor();
+      } else {
+        const iv = setInterval(() => {
+          if (window.__monacoReady) { clearInterval(iv); initEditor(); }
+        }, 100);
+        return () => clearInterval(iv);
+      }
+      return () => { if (editorRef.current) { editorRef.current.dispose(); editorRef.current = null; } };
+    }, []);
+
+    useEffect(() => {
+      if (editorRef.current) {
+        const cur = editorRef.current.getValue();
+        if (cur !== code) editorRef.current.setValue(code);
+      }
+    }, [code]);
+
+    return <div className="editor-container" ref={containerRef} id="monaco-editor" />;
+  }
+
+  // ────────────────────────────────────────
+  // Header
+  // ────────────────────────────────────────
+  function Header({ presetLearners, onPresetChange, onOpenInspector }) {
+    return (
+      <header className="header">
+        <div className="header-logo">
+          <div className="header-logo-icon">🎓</div>
+          <div>
+            <div className="header-logo-text">Re:Learn</div>
+            <div className="header-logo-subtitle">Adaptive Misconception Diagnosis</div>
+          </div>
+        </div>
+        <div className="header-controls">
+          <div className="judge-switcher" id="judge-quick-switcher">
+            <label>🎭 Judge:</label>
+            <select onChange={e => onPresetChange(e.target.value)} defaultValue="">
+              <option value="">— Live Session —</option>
+              {presetLearners.map(l => (
+                <option key={l.session_token} value={l.session_token}>{l.name}</option>
+              ))}
+            </select>
+          </div>
+          <div className="header-badge">v1.0 Demo</div>
+          <button id="inspector-modal-btn" className="inspector-btn" onClick={onOpenInspector}>
+            🔬 Inspector
+          </button>
+        </div>
+      </header>
+    );
+  }
+
+  // ────────────────────────────────────────
+  // Problem Bar
+  // ────────────────────────────────────────
+  function ProblemBar({ problems, selectedId, onSelect, problem }) {
+    return (
+      <>
+        <div className="problem-bar">
+          <span style={{fontSize:11,color:'var(--text-muted)',fontWeight:600,textTransform:'uppercase',letterSpacing:'0.5px'}}>
+            Problem
+          </span>
+          <select id="problem-select" className="problem-select" value={selectedId||""} onChange={e=>onSelect(Number(e.target.value))}>
+            {problems.map(p=>(
+              <option key={p.id} value={p.id}>#{p.id} — {p.title}</option>
+            ))}
+          </select>
+        </div>
+        {problem && (
+          <div className="problem-description">
+            <h3><span style={{color:'var(--accent-blue)'}}>📋</span> {problem.title}</h3>
+            <p style={{whiteSpace:'pre-wrap'}}>{problem.description}</p>
+          </div>
+        )}
+      </>
+    );
+  }
+
+  // ────────────────────────────────────────
+  // Editor Toolbar
+  // ────────────────────────────────────────
+  function EditorToolbar({ onSubmit, isSubmitting, diagnosisResult }) {
+    const passed = diagnosisResult?.passed ?? null;
+    const total  = diagnosisResult?.total  ?? null;
+    let badgeClass = "", badgeText = "";
+    if (passed !== null) {
+      if (passed === total)  { badgeClass="pass";    badgeText=`✅ ${passed}/${total}`; }
+      else if (passed === 0) { badgeClass="fail";    badgeText=`❌ ${passed}/${total}`; }
+      else                   { badgeClass="partial"; badgeText=`⚡ ${passed}/${total}`; }
+    }
+    return (
+      <div className="editor-toolbar">
+        <button id="submit-btn" className="btn btn-primary" onClick={onSubmit} disabled={isSubmitting}>
+          {isSubmitting ? <><span className="loading-spinner"/> Analysing…</> : <>▶ Run &amp; Diagnose</>}
+        </button>
+        <div className="test-status">
+          {badgeText && <span className={`test-badge ${badgeClass}`}>{badgeText}</span>}
+          <span>Tests</span>
+        </div>
+      </div>
+    );
+  }
+
+  // ────────────────────────────────────────
+  // Console
+  // ────────────────────────────────────────
+  function ConsolePanel({ lines }) {
+    const ref = useRef(null);
+    useEffect(() => { if (ref.current) ref.current.scrollTop = ref.current.scrollHeight; }, [lines]);
+    return (
+      <div className="console-panel">
+        <div className="console-header"><span className="console-dot"/>Console Output</div>
+        <div className="console-content" ref={ref}>
+          {lines.length===0
+            ? <span style={{color:'var(--text-muted)'}}>Submit code to see output…</span>
+            : lines.map(l=><div key={l.id} className={`console-line ${l.type}`}>{l.text}</div>)
+          }
+        </div>
+      </div>
+    );
+  }
+
+  // ────────────────────────────────────────
+  // Radar Feed
+  // ────────────────────────────────────────
+  function RadarFeed({ probabilities }) {
+    if (!probabilities) return (
+      <div className="radar-section">
+        <div className="section-title">🎯 Misconception Radar</div>
+        <div style={{color:'var(--text-muted)',fontSize:12,textAlign:'center',padding:'20px 0'}}>Submit code to see diagnosis…</div>
+      </div>
+    );
+    const sorted = Object.entries(probabilities).sort(([,a],[,b])=>b-a);
+    const topClass = sorted[0][0];
+    return (
+      <div className="radar-section">
+        <div className="section-title">🎯 Misconception Radar</div>
+        <div className="radar-bars">
+          {sorted.map(([m, prob]) => {
+            const color = M_COLORS[m]||"#888";
+            const pct   = Math.round(prob*100);
+            const isTop = m===topClass;
+            return (
+              <div key={m} className={`radar-bar-row ${isTop?"top-class":""}`}>
+                <div className="radar-bar-label" style={isTop?{color}:{}}>{m}</div>
+                <div className="radar-bar-track">
+                  <div className="radar-bar-fill" style={{
+                    width:`${pct}%`,
+                    background: isTop
+                      ? `linear-gradient(90deg,${color}cc,${color})`
+                      : `linear-gradient(90deg,${color}44,${color}66)`,
+                  }}/>
+                </div>
+                <div className="radar-bar-pct" style={isTop?{color}:{}}>{pct}%</div>
+              </div>
+            );
+          })}
+        </div>
+      </div>
+    );
+  }
+
+  // ────────────────────────────────────────
+  // Confidence Ring
+  // ────────────────────────────────────────
+  function ConfidenceRing({ value, color }) {
+    const r    = 14;
+    const circ = 2*Math.PI*r;
+    const dash = circ*value;
+    return (
+      <div className="confidence-ring">
+        <svg width="36" height="36" viewBox="0 0 36 36">
+          <circle cx="18" cy="18" r={r} fill="none" stroke="rgba(255,255,255,0.1)" strokeWidth="3"/>
+          <circle cx="18" cy="18" r={r} fill="none" stroke={color} strokeWidth="3"
+            strokeDasharray={`${dash} ${circ}`} strokeLinecap="round"
+            style={{transition:'stroke-dasharray 0.5s ease'}}/>
+          <text x="18" y="18" textAnchor="middle" dominantBaseline="central"
+            style={{fill:color,fontSize:9,fontWeight:700,fontFamily:'JetBrains Mono,monospace',
+              transform:'rotate(90deg)',transformOrigin:'18px 18px'}}>
+            {Math.round(value*100)}
+          </text>
+        </svg>
+      </div>
+    );
+  }
+
+  // ────────────────────────────────────────
+  // Micro Probe
+  // ────────────────────────────────────────
+  function MicroProbe({ result, onProbeAnswer }) {
+    const [answered, setAnswered]     = useState(null);
+    const [probeResult, setProbeResult] = useState(null);
+    const [loading, setLoading]       = useState(false);
+
+    useEffect(() => { setAnswered(null); setProbeResult(null); }, [result?.submission_id]);
+
+    if (!result || !result.probe_required || !result.probe) {
+      if (!result) return null;
+      return (
+        <div className="probe-card" style={{opacity:0.55}}>
+          <div className="probe-title">⚡ Micro-Probe</div>
+          <div style={{fontSize:12,color:'var(--text-muted)',textAlign:'center',padding:'10px 0'}}>
+            {result.confidence > 0.65
+              ? `High confidence (${Math.round(result.confidence*100)}%) — no probe needed`
+              : "No probe available for this pattern"}
+          </div>
+        </div>
+      );
+    }
+
+    const probe = result.probe;
+
+    const handleAnswer = async (optionKey) => {
+      if (answered) return;
+      setAnswered(optionKey);
+      setLoading(true);
+      try {
+        const res = await fetch(`${API_BASE}/api/probe/answer`, {
+          method:"POST", headers:{"Content-Type":"application/json"},
+          body: JSON.stringify({ diagnosis_id: result.submission_id, probe_id: probe.id, selected_option: optionKey }),
+        });
+        const data = await res.json();
+        setProbeResult(data);
+        if (onProbeAnswer) onProbeAnswer(data);
+      } catch(e) {
+        setProbeResult({feedback:"Could not reach backend."});
+      } finally { setLoading(false); }
+    };
+
+    const renderQ = (q) => {
+      const parts = q.split("```");
+      return parts.map((part, i) => {
+        if (i%2===1) {
+          const code = part.replace(/^python\n/,"");
+          return <pre key={i} style={{background:'var(--bg-secondary)',borderRadius:6,padding:'8px 10px',
+            fontFamily:"'JetBrains Mono',monospace",fontSize:11,color:'var(--text-code)',
+            margin:'6px 0',overflowX:'auto',lineHeight:1.6}}>{code}</pre>;
+        }
+        return <span key={i} style={{whiteSpace:'pre-wrap'}}>{part}</span>;
+      });
+    };
+
+    const isCorrect = probeResult?.is_correct;
+
+    return (
+      <div className="probe-card">
+        <div className="probe-title">⚡ 1-Click Micro-Probe</div>
+        <div className="probe-question">{renderQ(probe.question)}</div>
+        <div className="probe-options">
+          {Object.entries(probe.options).map(([key, text]) => {
+            let cls = "";
+            if (answered===key) cls = isCorrect ? "selected-correct" : "selected-wrong";
+            else if (answered && probeResult?.correct_option===key) cls = "selected-correct";
+            return (
+              <button key={key} id={`probe-option-${key}`} className={`probe-option ${cls}`}
+                onClick={()=>handleAnswer(key)} disabled={!!answered||loading}>
+                <span className="probe-option-key">{key}</span>{text}
+              </button>
+            );
+          })}
+        </div>
+        {loading && <div style={{marginTop:10,textAlign:'center'}}><span className="loading-spinner"/></div>}
+        {probeResult?.feedback && (
+          <div className={`probe-feedback ${probeResult.is_correct?"correct":"wrong"}`}>
+            {probeResult.feedback}
+            {probeResult.updated_probabilities && (
+              <div style={{marginTop:6,opacity:0.8}}>
+                Updated top: <strong>{probeResult.top_misconception}</strong>{" "}
+                ({Math.round(probeResult.confidence*100)}% confidence)
+              </div>
+            )}
+          </div>
+        )}
+      </div>
+    );
+  }
+
+  // ────────────────────────────────────────
+  // Visualizer
+  // ────────────────────────────────────────
+  function Visualizer({ memoryBoxes }) {
+    const [step, setStep]     = useState(0);
+    const [playing, setPlaying] = useState(false);
+    const ivRef               = useRef(null);
+    const frames              = memoryBoxes||[];
+    const total               = frames.length;
+
+    useEffect(() => { setStep(0); setPlaying(false); }, [memoryBoxes]);
+
+    useEffect(() => {
+      if (playing) {
+        ivRef.current = setInterval(() => {
+          setStep(s => {
+            if (s>=total-1) { setPlaying(false); clearInterval(ivRef.current); return s; }
+            return s+1;
+          });
+        }, 600);
+      }
+      return () => clearInterval(ivRef.current);
+    }, [playing, total]);
+
+    if (!frames.length) return (
+      <div className="visualizer-section">
+        <div className="section-title">🧠 Memory-Box Trace</div>
+        <div className="viz-empty">Submit code to see variable trace…</div>
+      </div>
+    );
+
+    const cur      = frames[step];
+    const curVars  = cur?.vars||{};
+    const prevVars = step>0 ? (frames[step-1]?.vars||{}) : {};
+
+    return (
+      <div className="visualizer-section">
+        <div className="section-title">🧠 Memory-Box Trace</div>
+        <div className="viz-playback">
+          <button className="viz-btn" onClick={()=>setStep(0)} disabled={step===0} title="First">⏮</button>
+          <button className="viz-btn" onClick={()=>setStep(s=>Math.max(0,s-1))} disabled={step===0} title="Prev">◀</button>
+          <button id="viz-play-btn" className={`viz-btn ${playing?"play-active":""}`}
+            onClick={()=>setPlaying(p=>!p)} title={playing?"Pause":"Play"}>
+            {playing?"⏸":"▶"}
+          </button>
+          <button className="viz-btn" onClick={()=>setStep(s=>Math.min(total-1,s+1))} disabled={step>=total-1} title="Next">▶</button>
+          <button className="viz-btn" onClick={()=>setStep(total-1)} disabled={step>=total-1} title="Last">⏭</button>
+          <input id="viz-scrub-slider" type="range" className="viz-slider" min={0} max={total-1} value={step}
+            onChange={e=>{setPlaying(false);setStep(Number(e.target.value));}}/>
+          <span className="viz-counter">{step+1}/{total}</span>
+        </div>
+
+        <div className="viz-source-line">
+          <span className="line-num">L{cur?.line}</span>
+          <span style={{color: cur?.event==='return'?'var(--accent-green)':'var(--text-code)'}}>
+            {cur?.event==='return'?'→ return ':''}{cur?.source_line||'…'}
+          </span>
+          <span style={{marginLeft:'auto',fontSize:10,color:'var(--text-muted)',textTransform:'uppercase'}}>
+            {cur?.event}
+          </span>
+        </div>
+
+        <div className="memory-boxes">
+          {Object.keys(curVars).length===0
+            ? <div style={{color:'var(--text-muted)',fontSize:12}}>No variables at this step</div>
+            : Object.entries(curVars).map(([name, value]) => {
+                const prev    = prevVars[name];
+                const changed = step>0 && JSON.stringify(prev)!==JSON.stringify(value);
+                const disp    = Array.isArray(value)?`[${value.join(", ")}]`:value===null?"None":String(value);
+                const prevDisp= Array.isArray(prev)?`[${prev.join(", ")}]`:prev===null?"None":prev!==undefined?String(prev):null;
+                return (
+                  <div key={name} className={`memory-box ${changed?"changed":""}`}>
+                    <div className="memory-box-name">{name}</div>
+                    {changed && prevDisp!==null && <div className="memory-box-arrow">{prevDisp} →</div>}
+                    <div className="memory-box-value">{disp}</div>
+                  </div>
+                );
+              })
+          }
+        </div>
+      </div>
+    );
+  }
+
+  // ────────────────────────────────────────
+  // Inspector Modal
+  // ────────────────────────────────────────
+  function InspectorModal({ onClose }) {
+    const [data, setData]     = useState(null);
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+      fetch(`${API_BASE}/api/inspector`)
+        .then(r=>r.json()).then(d=>{setData(d);setLoading(false);})
+        .catch(()=>setLoading(false));
+    }, []);
+
+    return (
+      <div className="modal-overlay" onClick={e=>e.target===e.currentTarget&&onClose()}>
+        <div className="modal-box">
+          <div className="modal-header">
+            <div className="modal-title">🔬 Model Inspector — Instructor View</div>
+            <button className="modal-close" onClick={onClose} id="inspector-close-btn">✕</button>
+          </div>
+          <div className="modal-body">
+            {loading ? (
+              <div style={{textAlign:'center',color:'var(--text-muted)',padding:40}}>
+                <span className="loading-spinner"/><div style={{marginTop:10}}>Loading…</div>
+              </div>
+            ) : data ? (
+              <>
+                <div style={{background:'var(--bg-card)',border:'1px solid var(--border-subtle)',
+                  borderRadius:'var(--radius-md)',padding:'10px 14px',fontSize:12,color:'var(--text-secondary)'}}>
+                  <strong style={{color:'var(--text-primary)'}}>Model:</strong> {data.model_info?.type}
+                </div>
+
+                <div>
+                  <div className="section-title">📊 Overall Metrics</div>
+                  <div className="metrics-grid">
+                    <div className="metric-card">
+                      <div className="metric-value">{(data.overall_accuracy*100).toFixed(1)}%</div>
+                      <div className="metric-label">Accuracy</div>
+                    </div>
+                    <div className="metric-card">
+                      <div className="metric-value">{(data.macro_f1*100).toFixed(1)}%</div>
+                      <div className="metric-label">Macro F1</div>
+                    </div>
+                    <div className="metric-card">
+                      <div className="metric-value" style={{color:'var(--accent-purple)'}}>8</div>
+                      <div className="metric-label">M Classes</div>
+                    </div>
+                    <div className="metric-card">
+                      <div className="metric-value" style={{color:'var(--accent-green)'}}>4</div>
+                      <div className="metric-label">Probes</div>
+                    </div>
+                  </div>
+                </div>
+
+                <div>
+                  <div className="section-title">🔢 Confusion Matrix</div>
+                  <div style={{overflowX:'auto'}}>
+                    <table className="confusion-matrix">
+                      <thead>
+                        <tr>
+                          <th>↓ Actual \ Pred →</th>
+                          {data.confusion_matrix.labels.map(l=><th key={l}>{l}</th>)}
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {data.confusion_matrix.matrix.map((row,i)=>(
+                          <tr key={i}>
+                            <th>{data.confusion_matrix.labels[i]}</th>
+                            {row.map((v,j)=><td key={j} className={i===j?"diag":""}>{v}</td>)}
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+
+                <div>
+                  <div className="section-title">📈 LOPO Metrics</div>
+                  <div className="metrics-grid">
+                    {Object.entries(data.lopo_metrics).map(([m, mt]) => (
+                      <div key={m} className="metric-card">
+                        <div className="metric-value" style={{fontSize:16,color:M_COLORS[m]||'var(--accent-blue)'}}>{m}</div>
+                        <div style={{marginTop:4,fontSize:11}}>
+                          <div>P: <strong>{(mt.precision*100).toFixed(0)}%</strong></div>
+                          <div>R: <strong>{(mt.recall*100).toFixed(0)}%</strong></div>
+                          <div>F1: <strong style={{color:'var(--accent-blue)'}}>{(mt.f1*100).toFixed(0)}%</strong></div>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                <div>
+                  <div className="section-title">⚡ Probe Differentiation Gain</div>
+                  {Object.entries(data.differentiation_gain).filter(([k])=>k.endsWith("_post_probe")).map(([k, after]) => {
+                    const pre  = data.differentiation_gain[k.replace("_post_probe","_pre_probe")]||0;
+                    const label= k.replace("_post_probe","").replace(/_/g," ").replace("vs","vs.");
+                    return (
+                      <div key={k} className="gain-row">
+                        <div className="gain-label">{label}</div>
+                        <div className="gain-before">{(pre*100).toFixed(0)}%</div>
+                        <div className="gain-arrow">→</div>
+                        <div className="gain-after">{(after*100).toFixed(0)}%</div>
+                        <div style={{fontSize:11,color:'var(--accent-green)',fontWeight:700}}>
+                          +{((after-pre)*100).toFixed(0)}pp
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+              </>
+            ) : (
+              <div style={{textAlign:'center',color:'var(--accent-red)',padding:40}}>
+                Could not load data. Is the backend running?
+              </div>
+            )}
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  // ────────────────────────────────────────
+  // Diagnosis Pane
+  // ────────────────────────────────────────
+  function DiagnosisPane({ result }) {
+    const [probeData, setProbeData] = useState(null);
+    useEffect(() => { setProbeData(null); }, [result?.submission_id]);
+
+    if (!result) return (
+      <div style={{color:'var(--text-muted)',textAlign:'center',paddingTop:40}}>
+        <div style={{fontSize:32,marginBottom:12}}>🎯</div>
+        <div style={{fontSize:13,fontWeight:600,marginBottom:6}}>Awaiting Submission</div>
+        <div style={{fontSize:12,lineHeight:1.6}}>Write code and click <strong>▶ Run &amp; Diagnose</strong></div>
+      </div>
+    );
+
+    const eff   = probeData ? probeData.intervention   : result.intervention;
+    const topM  = probeData ? probeData.top_misconception : result.top_misconception;
+    const conf  = probeData ? probeData.confidence        : result.confidence;
+    const probs = probeData ? probeData.updated_probabilities : result.probabilities;
+    const color = M_COLORS[topM]||"#888";
+
+    return (
+      <>
+        <div className="diagnosis-badge" style={{borderColor:`${color}44`,background:`${color}11`,color}}>
+          <div className="diagnosis-badge-icon">{eff?.badge?.split(" ")[0]}</div>
+          <div className="diagnosis-badge-label">{topM}: {M_LABELS[topM]}</div>
+          <div className="diagnosis-badge-sub">{eff?.badge?.replace(/^[^\s]+\s/,"")}</div>
+          <div className="diagnosis-badge-confidence">
+            <ConfidenceRing value={conf} color={color}/>
+            <div style={{fontSize:12}}>
+              <div style={{fontWeight:700}}>{Math.round(conf*100)}% confident</div>
+              <div style={{color:'var(--text-muted)',fontSize:11}}>
+                {conf<0.45?"Probe required":"High confidence"}
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <RadarFeed probabilities={probs}/>
+
+        <MicroProbe result={result} onProbeAnswer={setProbeData}/>
+
+        {eff && (
+          <div className="intervention-card" style={{borderColor:`${color}44`,background:`${color}08`,color}}>
+            <div style={{fontSize:11,fontWeight:700,textTransform:'uppercase',letterSpacing:'0.8px',marginBottom:8}}>
+              💡 Intervention
+            </div>
+            <div style={{fontSize:12,color:'var(--text-secondary)',lineHeight:1.6}}>{eff.message}</div>
+            {eff.hint && (
+              <div className="intervention-hint" style={{borderLeftColor:color}}>
+                <strong>Hint:</strong> {eff.hint}
+              </div>
+            )}
+          </div>
+        )}
+      </>
+    );
+  }
+
+  // ────────────────────────────────────────
+  // Reassess Pane
+  // ────────────────────────────────────────
+  function ReassessPane({ result, problems, sessionToken }) {
+    const [transferCode,  setTransferCode]  = useState("def solution(values):\n    # Transfer problem\n    pass\n");
+    const [counterCode,   setCounterCode]   = useState("def solution(nums):\n    # Counter-probe trap\n    pass\n");
+    const [transferProbId, setTransferProbId] = useState("");
+    const [counterProbId,  setCounterProbId]  = useState("");
+    const [verdict, setVerdict] = useState(null);
+    const [loading, setLoading] = useState(false);
+    const [error,   setError]   = useState(null);
+
+    useEffect(() => {
+      if (problems.length>=2) {
+        setTransferProbId(String(problems[problems.length-1]?.id||""));
+        setCounterProbId(String(problems[0]?.id||""));
+      }
+    }, [problems]);
+
+    const handleReassess = async () => {
+      if (!result) return;
+      setLoading(true); setVerdict(null); setError(null);
+      try {
+        const res = await fetch(`${API_BASE}/api/reassess`,{
+          method:"POST",headers:{"Content-Type":"application/json"},
+          body:JSON.stringify({
+            learner_id:result.submission_id, diagnosis_id:result.submission_id,
+            transfer_problem_id:Number(transferProbId), counter_probe_problem_id:Number(counterProbId),
+            transfer_code:transferCode, counter_probe_code:counterCode,
+          }),
+        });
+        const data = await res.json();
+        if (!res.ok) throw new Error(data.detail||"Reassess failed");
+        setVerdict(data);
+      } catch(e) { setError(e.message); } finally { setLoading(false); }
+    };
+
+    const textareaStyle = {
+      width:'100%',height:80,background:'var(--bg-secondary)',
+      border:'1px solid var(--border-normal)',borderRadius:'var(--radius-sm)',
+      color:'var(--text-primary)',fontFamily:'JetBrains Mono,monospace',
+      fontSize:11,padding:'8px',resize:'vertical',outline:'none',
+    };
+
+    return (
+      <div className="reassess-card">
+        <div className="section-title">🔁 Dual-Gate Reassessment</div>
+        {!result
+          ? <div style={{color:'var(--text-muted)',fontSize:12,textAlign:'center',padding:'20px 0'}}>Submit code first.</div>
+          : (
+            <>
+              <div style={{marginBottom:10}}>
+                <label style={{fontSize:11,color:'var(--text-muted)',display:'block',marginBottom:4}}>Gate 1 — Transfer Problem</label>
+                <select className="problem-select" style={{width:'100%',marginBottom:6}} value={transferProbId} onChange={e=>setTransferProbId(e.target.value)}>
+                  {problems.map(p=><option key={p.id} value={p.id}>#{p.id} {p.title}</option>)}
+                </select>
+                <textarea value={transferCode} onChange={e=>setTransferCode(e.target.value)} style={textareaStyle}/>
+              </div>
+              <div style={{marginBottom:12}}>
+                <label style={{fontSize:11,color:'var(--text-muted)',display:'block',marginBottom:4}}>Gate 2 — Counter-Probe Trap</label>
+                <select className="problem-select" style={{width:'100%',marginBottom:6}} value={counterProbId} onChange={e=>setCounterProbId(e.target.value)}>
+                  {problems.map(p=><option key={p.id} value={p.id}>#{p.id} {p.title}</option>)}
+                </select>
+                <textarea value={counterCode} onChange={e=>setCounterCode(e.target.value)} style={textareaStyle}/>
+              </div>
+              <button id="reassess-btn" className="btn btn-primary" onClick={handleReassess}
+                disabled={loading||!transferProbId||!counterProbId}
+                style={{width:'100%',justifyContent:'center'}}>
+                {loading?<><span className="loading-spinner"/> Evaluating…</>:"🔁 Run Dual-Gate Check"}
+              </button>
+              {error && <div style={{marginTop:10,color:'var(--accent-red)',fontSize:12}}>{error}</div>}
+              {verdict && (
+                <div style={{marginTop:12}}>
+                  <div className={`verdict-banner ${verdict.verdict.toLowerCase()}`}>{verdict.badge}</div>
+                  <div style={{fontSize:12,color:'var(--text-secondary)',lineHeight:1.6}}>{verdict.message}</div>
+                  <div style={{marginTop:8,display:'flex',gap:8}}>
+                    <span style={{fontSize:11,color:verdict.transfer_passed?'var(--accent-green)':'var(--accent-red)'}}>
+                      Gate 1 {verdict.transfer_passed?"✅":"❌"}
+                    </span>
+                    <span style={{fontSize:11,color:verdict.counter_probe_passed?'var(--accent-green)':'var(--accent-orange)'}}>
+                      Gate 2 {verdict.counter_probe_passed?"✅":"⚠️"}
+                    </span>
+                  </div>
+                </div>
+              )}
+            </>
+          )
+        }
+      </div>
+    );
+  }
+
+  // ────────────────────────────────────────
+  // Main App
+  // ────────────────────────────────────────
+  function App() {
+    const [problems,    setProblems]    = useState([]);
+    const [selectedId,  setSelectedId]  = useState(null);
+    const [problem,     setProblem]     = useState(null);
+    const [code,        setCode]        = useState("def solution(nums):\n    # your code here\n    pass\n");
+    const [result,      setResult]      = useState(null);
+    const [isLoading,   setIsLoading]   = useState(false);
+    const [activeTab,   setActiveTab]   = useState("diagnosis");
+    const [inspectorOpen, setInspectorOpen] = useState(false);
+    const [consoleLines, setConsoleLines]   = useState([]);
+    const [presets,     setPresets]     = useState([]);
+    const [sessionToken, setSessionToken] = useState(() => localStorage.getItem("rl_session")||null);
+
+    const addConsole = useCallback((type, text) => {
+      setConsoleLines(prev => [...prev.slice(-60), {type, text, id: Date.now()+Math.random()}]);
+    }, []);
+
+    useEffect(() => {
+      fetch(`${API_BASE}/api/inspector/problems`).then(r=>r.json()).then(data=>{
+        setProblems(data);
+        if (data.length>0) { setSelectedId(data[0].id); setProblem(data[0]); }
+      }).catch(()=>addConsole("error","⚠ Backend not reachable — start FastAPI first"));
+
+      fetch(`${API_BASE}/api/inspector/learners`).then(r=>r.json()).then(setPresets).catch(()=>{});
+
+      // Hide loading screen
+      setTimeout(()=>{
+        const s=document.getElementById("loading-screen");
+        if(s){s.classList.add("hidden");setTimeout(()=>s.remove(),400);}
+      }, 800);
+    }, []);
+
+    useEffect(()=>{
+      if (selectedId) {
+        const p = problems.find(x=>x.id===selectedId);
+        if(p){setProblem(p);setResult(null);}
+      }
+    },[selectedId,problems]);
+
+    const handleSubmit = async () => {
+      if (!selectedId) return;
+      setIsLoading(true); setConsoleLines([]);
+      addConsole("info",`Submitting to problem #${selectedId}…`);
+      try {
+        const res = await fetch(`${API_BASE}/api/submit`,{
+          method:"POST",headers:{"Content-Type":"application/json"},
+          body:JSON.stringify({code,problem_id:selectedId,session_token:sessionToken}),
+        });
+        const data = await res.json();
+        if (!res.ok) throw new Error(data.detail||"Submit failed");
+        setResult(data);
+        addConsole("info",`Tests: ${data.passed}/${data.total} passed`);
+        (data.test_results||[]).forEach((tr,i)=>{
+          addConsole(tr.ok?"pass":"fail",
+            `  [${i+1}] input=${JSON.stringify(tr.input)} → ${JSON.stringify(tr.actual)} (expected ${JSON.stringify(tr.expected)})`);
+        });
+        if(data.error) addConsole("error",`Error: ${data.error}`);
+        if(data.passed===data.total) addConsole("pass","✅ All tests passed!");
+        setActiveTab("diagnosis");
+      } catch(e) {
+        addConsole("error",`❌ ${e.message}`);
+      } finally { setIsLoading(false); }
+    };
+
+    return (
+      <div id="root">
+        <Header presetLearners={presets} onPresetChange={t=>{setSessionToken(t);localStorage.setItem("rl_session",t);}}
+          onOpenInspector={()=>setInspectorOpen(true)}/>
+        <div className="workspace">
+          {/* Left */}
+          <div className="pane-editor">
+            <ProblemBar problems={problems} selectedId={selectedId} onSelect={setSelectedId} problem={problem}/>
+            <EditorPane code={code} onChange={setCode}/>
+            <EditorToolbar onSubmit={handleSubmit} isSubmitting={isLoading} diagnosisResult={result}/>
+            <ConsolePanel lines={consoleLines}/>
+          </div>
+          {/* Right */}
+          <div className="pane-diagnosis">
+            <div className="pane-tabs">
+              {[["diagnosis","🎯 Diagnosis"],["visualizer","🧠 Trace"],["reassess","🔁 Reassess"]].map(([id,label])=>(
+                <div key={id} className={`pane-tab ${activeTab===id?"active":""}`} onClick={()=>setActiveTab(id)}>
+                  {label}
+                </div>
+              ))}
+            </div>
+            <div className="pane-content">
+              {activeTab==="diagnosis"  && <DiagnosisPane result={result}/>}
+              {activeTab==="visualizer" && <Visualizer memoryBoxes={result?.memory_boxes||[]}/>}
+              {activeTab==="reassess"   && <ReassessPane result={result} problems={problems} sessionToken={sessionToken}/>}
+            </div>
+          </div>
+        </div>
+        {inspectorOpen && <InspectorModal onClose={()=>setInspectorOpen(false)}/>}
+      </div>
+    );
+  }
+
+  // Mount
+  ReactDOM.createRoot(document.getElementById("root")).render(<App/>);
+</script>
+
+</body>
+</html>

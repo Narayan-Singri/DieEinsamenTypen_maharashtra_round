@@ -1,0 +1,49 @@
+{
+  "M0": {
+    "label": "Correct / No Misconception",
+    "description": "Learner's code is functionally correct and demonstrates conceptual understanding.",
+    "indicators": ["passes all tests", "correct accumulation", "returns result"]
+  },
+  "M1": {
+    "label": "Accumulator Reinitialisation Inside Loop",
+    "description": "Learner resets the accumulator variable inside the loop body, causing it to restart each iteration rather than cumulate.",
+    "indicators": ["assignment in loop body", "s = 0 inside for", "counter reset per iteration"],
+    "example_bug": "for n in nums:\n    s = 0\n    s += n\nreturn s"
+  },
+  "M2": {
+    "label": "Print vs Return Confusion",
+    "description": "Learner uses print() to output the result instead of return, causing the function to return None.",
+    "indicators": ["print() call instead of return", "function returns None", "no return statement"],
+    "example_bug": "for n in nums:\n    s += n\nprint(s)"
+  },
+  "M3": {
+    "label": "Off-by-One Range Error",
+    "description": "Learner uses range(len(nums) - 1) instead of range(len(nums)), skipping the last element.",
+    "indicators": ["range(len - 1)", "last element skipped", "range(len(nums)-1)"],
+    "example_bug": "for i in range(len(nums) - 1):\n    s += nums[i]"
+  },
+  "M4": {
+    "label": "Wrong Comparison Operator",
+    "description": "Learner uses the wrong comparator (e.g., < instead of > for finding max), leading to inverted logic.",
+    "indicators": ["inverted comparison", "wrong operator in condition", "min returned instead of max"],
+    "example_bug": "if n < m:\n    m = n"
+  },
+  "M5": {
+    "label": "Assignment vs Equality Confusion",
+    "description": "Learner uses = instead of == in a conditional, causing assignment instead of comparison.",
+    "indicators": ["= in if condition", "assignment in condition", "always-true branch"],
+    "example_bug": "if n % 2 = 0:"
+  },
+  "M6": {
+    "label": "Mutation vs New Collection Confusion",
+    "description": "Learner mutates the original list rather than building a new result, causing aliasing bugs.",
+    "indicators": ["in-place modification", "nums.reverse()", "result = nums"],
+    "example_bug": "nums.reverse()\nreturn nums"
+  },
+  "M7": {
+    "label": "Index Boundary Confusion",
+    "description": "Learner misunderstands index boundaries when iterating in reverse, leading to IndexError or skipped elements.",
+    "indicators": ["range(len(nums))", "off-by-one in reverse", "IndexError on empty list"],
+    "example_bug": "for i in range(len(nums) - 1, 0, -1):"
+  }
+}
