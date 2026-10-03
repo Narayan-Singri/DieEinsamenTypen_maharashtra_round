@@ -14,12 +14,9 @@
   <!-- App Styles -->
   <link rel="stylesheet" href="/static/styles.css" />
 
-  <!-- Monaco Editor via CDN -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.44.0/min/vs/loader.min.js"></script>
-
-  <!-- React 18 via CDN -->
-  <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
-  <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+  <!-- React 18 & ReactDOM via CDN -->
+  <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+  <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
 
   <!-- Babel Standalone (for JSX transpiling in browser) -->
   <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
@@ -92,44 +89,60 @@
 <!-- React Root -->
 <div id="root"></div>
 
-<!-- Monaco Loader: define the custom dark theme before editor init -->
+<!-- Dynamic Monaco Loader to prevent AMD define conflict with React/Babel -->
 <script>
-  require.config({ paths: { vs: 'https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.44.0/min/vs' } });
-  require(['vs/editor/editor.main'], function () {
-    // Register Re:Learn dark theme
-    monaco.editor.defineTheme('relearn-dark', {
-      base: 'vs-dark',
-      inherit: true,
-      rules: [
-        { token: 'keyword', foreground: '9f7aea', fontStyle: 'bold' },
-        { token: 'string', foreground: 'a8ff78' },
-        { token: 'number', foreground: 'f97316' },
-        { token: 'comment', foreground: '5a6080', fontStyle: 'italic' },
-        { token: 'function', foreground: '4f7cff' },
-        { token: 'type.identifier', foreground: '06b6d4' },
-        { token: 'identifier', foreground: 'e8eaf6' },
-      ],
-      colors: {
-        'editor.background': '#0d0f17',
-        'editor.foreground': '#e8eaf6',
-        'editorLineNumber.foreground': '#2e3452',
-        'editorLineNumber.activeForeground': '#5a6080',
-        'editor.lineHighlightBackground': '#131621',
-        'editorCursor.foreground': '#4f7cff',
-        'editor.selectionBackground': '#2a3050',
-        'editor.inactiveSelectionBackground': '#1e2233',
-        'editorIndentGuide.background': '#1e2233',
-        'editorIndentGuide.activeBackground': '#2e3452',
-        'scrollbarSlider.background': '#2e345288',
-        'scrollbarSlider.hoverBackground': '#3d447088',
+  window.__monacoReady = false;
+  function loadMonaco() {
+    const s = document.createElement("script");
+    s.src = "https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.44.0/min/vs/loader.min.js";
+    s.onload = () => {
+      const monacoRequire = window.require;
+      if (monacoRequire) {
+        monacoRequire.config({ paths: { vs: 'https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.44.0/min/vs' } });
+        monacoRequire(['vs/editor/editor.main'], function () {
+          monaco.editor.defineTheme('relearn-dark', {
+            base: 'vs-dark',
+            inherit: true,
+            rules: [
+              { token: 'keyword', foreground: '9f7aea', fontStyle: 'bold' },
+              { token: 'string', foreground: 'a8ff78' },
+              { token: 'number', foreground: 'f97316' },
+              { token: 'comment', foreground: '5a6080', fontStyle: 'italic' },
+              { token: 'function', foreground: '4f7cff' },
+              { token: 'type.identifier', foreground: '06b6d4' },
+              { token: 'identifier', foreground: 'e8eaf6' },
+            ],
+            colors: {
+              'editor.background': '#0d0f17',
+              'editor.foreground': '#e8eaf6',
+              'editorLineNumber.foreground': '#2e3452',
+              'editorLineNumber.activeForeground': '#5a6080',
+              'editor.lineHighlightBackground': '#131621',
+              'editorCursor.foreground': '#4f7cff',
+              'editor.selectionBackground': '#2a3050',
+              'editor.inactiveSelectionBackground': '#1e2233',
+              'editorIndentGuide.background': '#1e2233',
+              'editorIndentGuide.activeBackground': '#2e3452',
+              'scrollbarSlider.background': '#2e345288',
+              'scrollbarSlider.hoverBackground': '#3d447088',
+            }
+          });
+          window.__monacoReady = true;
+        });
       }
-    });
-    window.__monacoReady = true;
-  });
+    };
+    document.head.appendChild(s);
+  }
+  // Defer Monaco script injection until document is interactive
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', loadMonaco);
+  } else {
+    loadMonaco();
+  }
 </script>
 
 <!-- JSX Components — loaded as text/babel for in-browser transpiling -->
-<script type="text/babel" data-type="module" data-presets="react">
+<script type="text/babel">
   // ──────────────────────────────────────────
   // Load all component files inline
   // (Zero-build-step: CDN Babel transpiles JSX)
