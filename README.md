@@ -52,6 +52,8 @@ relearn/
 │       │   ├── Visualizer.jsx   # Interactive memory-box lifecycle timeline
 │       │   └── Inspector.jsx    # Instructor view, confusion matrix & LOPO stats
 ├── CONTEXT.md                   # Real-time state machine for agents
+├── NEXT_STEPS.md                # Task roadmap referencing RULES.md
+├── RULES.md                     # Agent roles, professional codes & conduct
 ├── PROMPT.md                    # Master agent execution directives
 ├── requirements.txt             # Python dependencies
 └── run.sh                       # One-command startup script

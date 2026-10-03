@@ -79,7 +79,9 @@
 ### Root
 - `requirements.txt` — Python deps
 - `run.sh` — One-command startup
-- `CONTEXT.md` — This file
+- `CONTEXT.md` — Active project state machine
+- `RULES.md` — Sub-agent roles, conduct & engineering guidelines
+- `NEXT_STEPS.md` — Task matrix and future execution roadmap
 
 ---
 
