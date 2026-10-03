@@ -70,5 +70,5 @@ def train():
 
 
 if __name__ == "__main__":
-    print("⚠️  Phase 5 is PAUSED. Uncomment train() below when approved.")
-    # train()
+    print("[+] Phase 5 Resumed: Training Random Forest Classifier...")
+    train()

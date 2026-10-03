@@ -1,0 +1,3202 @@
+[
+  {
+    "code": "def solution(nums):\n    nums.reverse()\n    return nums\n",
+    "label": "M6"
+  },
+  {
+    "code": "def solution(nums):\n    count = 0\n    for n in nums:\n        if n % 2 == 0:\n            count = count + 1\n    return count\n",
+    "label": "M5"
+  },
+  {
+    "code": "def solution(nums):\n    s = 0\n    for i in range(len(nums) - 1):\n        s += nums[i]\n    return s\n",
+    "label": "M3"
+  },
+  {
+    "code": "def solution(nums):\n    s = 0\n    for n in nums:\n        s += n\n    return s\n",
+    "label": "M0"
+  },
+  {
+    "code": "def solution(nums):\n    m = nums[0]\n    for n in nums:\n        if n < m:\n            m = n\n    return m\n",
+    "label": "M4"
+  },
+  {
+    "code": "def solution(nums):\n    s = 0\n    for n in nums:\n        s += n\n    return s\n",
+    "label": "M0"
+  },
+  {
+    "code": "def solution(nums):\n    s = 0\n    for i in range(len(nums) - 1):\n        s += nums[i]\n    return s\n",
+    "label": "M3"
+  },
+  {
+    "code": "def solution(nums):\n    s = 0\n    for n in nums:\n        s += n\n    return s\n",
+    "label": "M0"
+  },
+  {
+    "code": "def solution(nums):\n    nums.reverse()\n    return nums\n",
+    "label": "M6"
+  },
+  {
+    "code": "def solution(nums):\n    for n in nums:\n        total = 0\n        total = total + n\n    return total\n",
+    "label": "M1"
+  },
+  {
+    "code": "def solution(nums):\n    for n in nums:\n        s = 0\n        s += n\n    return s\n",
+    "label": "M1"
+  },
+  {
+    "code": "def solution(nums):\n    count = 0\n    for n in nums:\n        if n % 2 == 0:\n            count = count + 1\n    return count\n",
+    "label": "M5"
+  },
+  {
+    "code": "def solution(nums):\n    s = 0\n    for n in nums:\n        s += n\n    return s\n",
+    "label": "M0"
+  },
+  {
+    "code": "def solution(nums):\n    result = []\n    for i in range(len(nums) - 1, 0, -1):\n        result.append(nums[i])\n    return result\n",
+    "label": "M7"
+  },
+  {
+    "code": "def solution(nums):\n    nums.reverse()\n    return nums\n",
+    "label": "M6"
+  },
+  {
+    "code": "def solution(nums):\n    for n in nums:\n        total = 0\n        total = total + n\n    return total\n",
+    "label": "M1"
+  },
+  {
+    "code": "def solution(nums):\n    m = nums[0]\n    for n in nums:\n        if n < m:\n            m = n\n    return m\n",
+    "label": "M4"
+  },
+  {
+    "code": "def solution(nums):\n    m = nums[0]\n    for n in nums:\n        if n < m:\n            m = n\n    return m\n",
+    "label": "M4"
+  },
+  {
+    "code": "def solution(nums):\n    result = []\n    for i in range(len(nums) - 1, 0, -1):\n        result.append(nums[i])\n    return result\n",
+    "label": "M7"
+  },
+  {
+    "code": "def solution(nums):\n    result = []\n    for i in range(len(nums) - 1, 0, -1):\n        result.append(nums[i])\n    return result\n",
+    "label": "M7"
+  },
+  {
+    "code": "def solution(nums):\n    count = 0\n    for n in nums:\n        if n % 2 == 0:\n            count = count + 1\n    return count\n",
+    "label": "M5"
+  },
+  {
+    "code": "def solution(nums):\n    nums.reverse()\n    return nums\n",
+    "label": "M6"
+  },
+  {
+    "code": "def solution(nums):\n    s = 0\n    for i in range(len(nums) - 1):\n        s += nums[i]\n    return s\n",
+    "label": "M3"
+  },
+  {
+    "code": "def solution(nums):\n    s = 0\n    for n in nums:\n        s += n\n    print(s)\n",
+    "label": "M2"
+  },
+  {
+    "code": "def solution(nums):\n    count = 0\n    for n in nums:\n        if n % 2 == 0:\n            count = count + 1\n    return count\n",
+    "label": "M5"
+  },
+  {
+    "code": "def solution(nums):\n    nums.reverse()\n    return nums\n",
+    "label": "M6"
+  },
+  {
+    "code": "def solution(nums):\n    for n in nums:\n        total = 0\n        total = total + n\n    return total\n",
+    "label": "M1"
+  },
+  {
+    "code": "def solution(nums):\n    s = 0\n    for n in nums:\n        s += n\n    print(s)\n",
+    "label": "M2"
+  },
+  {
+    "code": "def solution(nums):\n    m = nums[0]\n    for n in nums:\n        if n < m:\n            m = n\n    return m\n",
+    "label": "M4"
+  },
+  {
+    "code": "def solution(nums):\n    nums.reverse()\n    return nums\n",
+    "label": "M6"
+  },
+  {
+    "code": "def solution(nums):\n    result = []\n    for i in range(len(nums) - 1, 0, -1):\n        result.append(nums[i])\n    return result\n",
+    "label": "M7"
+  },
+  {
+    "code": "def solution(nums):\n    count = 0\n    for n in nums:\n        if n % 2 == 0:\n            count = count + 1\n    return count\n",
+    "label": "M5"
+  },
+  {
+    "code": "def solution(nums):\n    result = []\n    for i in range(len(nums) - 1, 0, -1):\n        result.append(nums[i])\n    return result\n",
+    "label": "M7"
+  },
+  {
+    "code": "def solution(nums):\n    m = nums[0]\n    for n in nums:\n        if n < m:\n            m = n\n    return m\n",
+    "label": "M4"
+  },
+  {
+    "code": "def solution(nums):\n    count = 0\n    for n in nums:\n        if n % 2 == 0:\n            count = count + 1\n    return count\n",
+    "label": "M5"
+  },
+  {
+    "code": "def solution(nums):\n    result = []\n    for i in range(len(nums) - 1, 0, -1):\n        result.append(nums[i])\n    return result\n",
+    "label": "M7"
+  },
+  {
+    "code": "def solution(nums):\n    s = 0\n    for n in nums:\n        s += n\n    print(s)\n    return\n",
+    "label": "M2"
+  },
+  {
+    "code": "def solution(nums):\n    count = 0\n    for n in nums:\n        if n % 2 == 0:\n            count = count + 1\n    return count\n",
+    "label": "M5"
+  },
+  {
+    "code": "def solution(nums):\n    s = 0\n    for i in range(len(nums) - 1):\n        s += nums[i]\n    return s\n",
+    "label": "M3"
+  },
+  {
+    "code": "def solution(nums):\n    s = 0\n    for i in range(len(nums) - 1):\n        s += nums[i]\n    return s\n",
+    "label": "M3"
+  },
+  {
+    "code": "def solution(nums):\n    s = 0\n    for n in nums:\n        s += n\n    return s\n",
+    "label": "M0"
+  },
+  {
+    "code": "def solution(nums):\n    s = 0\n    for i in range(len(nums) - 1):\n        s += nums[i]\n    return s\n",
+    "label": "M3"
+  },
+  {
+    "code": "def solution(nums):\n    s = 0\n    for n in nums:\n        s += n\n    print(s)\n    return\n",
+    "label": "M2"
+  },
+  {
+    "code": "def solution(nums):\n    count = 0\n    for n in nums:\n        if n % 2 == 0:\n            count = count + 1\n    return count\n",
+    "label": "M5"
+  },
+  {
+    "code": "def solution(nums):\n    s = 0\n    for i in range(len(nums) - 1):\n        s += nums[i]\n    return s\n",
+    "label": "M3"
+  },
+  {
+    "code": "def solution(nums):\n    result = []\n    for i in range(len(nums) - 1, 0, -1):\n        result.append(nums[i])\n    return result\n",
+    "label": "M7"
+  },
+  {
+    "code": "def solution(nums):\n    for n in nums:\n        total = 0\n        total = total + n\n    return total\n",
+    "label": "M1"
+  },
+  {
+    "code": "def solution(nums):\n    m = nums[0]\n    for n in nums:\n        if n < m:\n            m = n\n    return m\n",
+    "label": "M4"
+  },
+  {
+    "code": "def solution(nums):\n    count = 0\n    for n in nums:\n        if n % 2 == 0:\n            count = count + 1\n    return count\n",
+    "label": "M5"
+  },
+  {
+    "code": "def solution(nums):\n    m = nums[0]\n    for n in nums:\n        if n < m:\n            m = n\n    return m\n",
+    "label": "M4"
+  },
+  {
+    "code": "def solution(nums):\n    m = nums[0]\n    for n in nums:\n        if n < m:\n            m = n\n    return m\n",
+    "label": "M4"
+  },
+  {
+    "code": "def solution(nums):\n    count = 0\n    for n in nums:\n        if n % 2 == 0:\n            count = count + 1\n    return count\n",
+    "label": "M5"
+  },
+  {
+    "code": "def solution(nums):\n    m = nums[0]\n    for n in nums:\n        if n < m:\n            m = n\n    return m\n",
+    "label": "M4"
+  },
+  {
+    "code": "def solution(nums):\n    s = 0\n    for n in nums:\n        s += n\n    print(s)\n    return\n",
+    "label": "M2"
+  },
+  {
+    "code": "def solution(nums):\n    s = 0\n    for i in range(len(nums) - 1):\n        s += nums[i]\n    return s\n",
+    "label": "M3"
+  },
+  {
+    "code": "def solution(nums):\n    s = 0\n    for n in nums:\n        s += n\n    return s\n",
+    "label": "M0"
+  },
+  {
+    "code": "def solution(nums):\n    s = 0\n    for n in nums:\n        s += n\n    return s\n",
+    "label": "M0"
+  },
+  {
+    "code": "def solution(nums):\n    result = []\n    for i in range(len(nums) - 1, 0, -1):\n        result.append(nums[i])\n    return result\n",
+    "label": "M7"
+  },
+  {
+    "code": "def solution(nums):\n    for n in nums:\n        s = 0\n        s += n\n    return s\n",
+    "label": "M1"
+  },
+  {
+    "code": "def solution(nums):\n    count = 0\n    for n in nums:\n        if n % 2 == 0:\n            count = count + 1\n    return count\n",
+    "label": "M5"
+  },
+  {
+    "code": "def solution(nums):\n    for n in nums:\n        total = 0\n        total = total + n\n    return total\n",
+    "label": "M1"
+  },
+  {
+    "code": "def solution(nums):\n    s = 0\n    for n in nums:\n        s += n\n    return s\n",
+    "label": "M0"
+  },
+  {
+    "code": "def solution(nums):\n    s = 0\n    for n in nums:\n        s += n\n    print(s)\n    return\n",
+    "label": "M2"
+  },
+  {
+    "code": "def solution(nums):\n    result = []\n    for i in range(len(nums) - 1, 0, -1):\n        result.append(nums[i])\n    return result\n",
+    "label": "M7"
+  },
+  {
+    "code": "def solution(nums):\n    for n in nums:\n        s = 0\n        s += n\n    return s\n",
+    "label": "M1"
+  },
+  {
+    "code": "def solution(nums):\n    nums.reverse()\n    return nums\n",
+    "label": "M6"
+  },
+  {
+    "code": "def solution(nums):\n    s = 0\n    for n in nums:\n        s += n\n    return s\n",
+    "label": "M0"
+  },
+  {
+    "code": "def solution(nums):\n    m = nums[0]\n    for n in nums:\n        if n < m:\n            m = n\n    return m\n",
+    "label": "M4"
+  },
+  {
+    "code": "def solution(nums):\n    s = 0\n    for n in nums:\n        s += n\n    return s\n",
+    "label": "M0"
+  },
+  {
+    "code": "def solution(nums):\n    m = nums[0]\n    for n in nums:\n        if n < m:\n            m = n\n    return m\n",
+    "label": "M4"
+  },
+  {
+    "code": "def solution(nums):\n    s = 0\n    for i in range(len(nums) - 1):\n        s += nums[i]\n    return s\n",
+    "label": "M3"
+  },
+  {
+    "code": "def solution(nums):\n    nums.reverse()\n    return nums\n",
+    "label": "M6"
+  },
+  {
+    "code": "def solution(nums):\n    s = 0\n    for n in nums:\n        s += n\n    print(s)\n",
+    "label": "M2"
+  },
+  {
+    "code": "def solution(nums):\n    count = 0\n    for n in nums:\n        if n % 2 == 0:\n            count = count + 1\n    return count\n",
+    "label": "M5"
+  },
+  {
+    "code": "def solution(nums):\n    count = 0\n    for n in nums:\n        if n % 2 == 0:\n            count = count + 1\n    return count\n",
+    "label": "M5"
+  },
+  {
+    "code": "def solution(nums):\n    nums.reverse()\n    return nums\n",
+    "label": "M6"
+  },
+  {
+    "code": "def solution(nums):\n    s = 0\n    for n in nums:\n        s += n\n    print(s)\n",
+    "label": "M2"
+  },
+  {
+    "code": "def solution(nums):\n    s = 0\n    for n in nums:\n        s += n\n    print(s)\n",
+    "label": "M2"
+  },
+  {
+    "code": "def solution(nums):\n    m = nums[0]\n    for n in nums:\n        if n < m:\n            m = n\n    return m\n",
+    "label": "M4"
+  },
+  {
+    "code": "def solution(nums):\n    count = 0\n    for n in nums:\n        if n % 2 == 0:\n            count = count + 1\n    return count\n",
+    "label": "M5"
+  },
+  {
+    "code": "def solution(nums):\n    s = 0\n    for n in nums:\n        s += n\n    return s\n",
+    "label": "M0"
+  },
+  {
+    "code": "def solution(nums):\n    for n in nums:\n        total = 0\n        total = total + n\n    return total\n",
+    "label": "M1"
+  },
+  {
+    "code": "def solution(nums):\n    s = 0\n    for n in nums:\n        s += n\n    return s\n",
+    "label": "M0"
+  },
+  {
+    "code": "def solution(nums):\n    m = nums[0]\n    for n in nums:\n        if n < m:\n            m = n\n    return m\n",
+    "label": "M4"
+  },
+  {
+    "code": "def solution(nums):\n    for n in nums:\n        s = 0\n        s += n\n    return s\n",
+    "label": "M1"
+  },
+  {
+    "code": "def solution(nums):\n    s = 0\n    for n in nums:\n        s += n\n    print(s)\n    return\n",
+    "label": "M2"
+  },
+  {
+    "code": "def solution(nums):\n    result = []\n    for i in range(len(nums) - 1, 0, -1):\n        result.append(nums[i])\n    return result\n",
+    "label": "M7"
+  },
+  {
+    "code": "def solution(nums):\n    s = 0\n    for n in nums:\n        s += n\n    print(s)\n    return\n",
+    "label": "M2"
+  },
+  {
+    "code": "def solution(nums):\n    count = 0\n    for n in nums:\n        if n % 2 == 0:\n            count = count + 1\n    return count\n",
+    "label": "M5"
+  },
+  {
+    "code": "def solution(nums):\n    m = nums[0]\n    for n in nums:\n        if n < m:\n            m = n\n    return m\n",
+    "label": "M4"
+  },
+  {
+    "code": "def solution(nums):\n    s = 0\n    for i in range(len(nums) - 1):\n        s += nums[i]\n    return s\n",
+    "label": "M3"
+  },
+  {
+    "code": "def solution(nums):\n    s = 0\n    for i in range(len(nums) - 1):\n        s += nums[i]\n    return s\n",
+    "label": "M3"
+  },
+  {
+    "code": "def solution(nums):\n    s = 0\n    for i in range(len(nums) - 1):\n        s += nums[i]\n    return s\n",
+    "label": "M3"
+  },
+  {
+    "code": "def solution(nums):\n    for n in nums:\n        s = 0\n        s += n\n    return s\n",
+    "label": "M1"
+  },
+  {
+    "code": "def solution(nums):\n    nums.reverse()\n    return nums\n",
+    "label": "M6"
+  },
+  {
+    "code": "def solution(nums):\n    count = 0\n    for n in nums:\n        if n % 2 == 0:\n            count = count + 1\n    return count\n",
+    "label": "M5"
+  },
+  {
+    "code": "def solution(nums):\n    nums.reverse()\n    return nums\n",
+    "label": "M6"
+  },
+  {
+    "code": "def solution(nums):\n    for n in nums:\n        s = 0\n        s += n\n    return s\n",
+    "label": "M1"
+  },
+  {
+    "code": "def solution(nums):\n    count = 0\n    for n in nums:\n        if n % 2 == 0:\n            count = count + 1\n    return count\n",
+    "label": "M5"
+  },
+  {
+    "code": "def solution(nums):\n    s = 0\n    for n in nums:\n        s += n\n    print(s)\n    return\n",
+    "label": "M2"
+  },
+  {
+    "code": "def solution(nums):\n    count = 0\n    for n in nums:\n        if n % 2 == 0:\n            count = count + 1\n    return count\n",
+    "label": "M5"
+  },
+  {
+    "code": "def solution(nums):\n    s = 0\n    for n in nums:\n        s += n\n    return s\n",
+    "label": "M0"
+  },
+  {
+    "code": "def solution(nums):\n    nums.reverse()\n    return nums\n",
+    "label": "M6"
+  },
+  {
+    "code": "def solution(nums):\n    for n in nums:\n        s = 0\n        s += n\n    return s\n",
+    "label": "M1"
+  },
+  {
+    "code": "def solution(nums):\n    m = nums[0]\n    for n in nums:\n        if n < m:\n            m = n\n    return m\n",
+    "label": "M4"
+  },
+  {
+    "code": "def solution(nums):\n    nums.reverse()\n    return nums\n",
+    "label": "M6"
+  },
+  {
+    "code": "def solution(nums):\n    s = 0\n    for n in nums:\n        s += n\n    print(s)\n",
+    "label": "M2"
+  },
+  {
+    "code": "def solution(nums):\n    s = 0\n    for n in nums:\n        s += n\n    print(s)\n",
+    "label": "M2"
+  },
+  {
+    "code": "def solution(nums):\n    count = 0\n    for n in nums:\n        if n % 2 == 0:\n            count = count + 1\n    return count\n",
+    "label": "M5"
+  },
+  {
+    "code": "def solution(nums):\n    s = 0\n    for n in nums:\n        s += n\n    return s\n",
+    "label": "M0"
+  },
+  {
+    "code": "def solution(nums):\n    m = nums[0]\n    for n in nums:\n        if n < m:\n            m = n\n    return m\n",
+    "label": "M4"
+  },
+  {
+    "code": "def solution(nums):\n    s = 0\n    for n in nums:\n        s += n\n    print(s)\n",
+    "label": "M2"
+  },
+  {
+    "code": "def solution(nums):\n    for n in nums:\n        total = 0\n        total = total + n\n    return total\n",
+    "label": "M1"
+  },
+  {
+    "code": "def solution(nums):\n    m = nums[0]\n    for n in nums:\n        if n < m:\n            m = n\n    return m\n",
+    "label": "M4"
+  },
+  {
+    "code": "def solution(nums):\n    result = []\n    for i in range(len(nums) - 1, 0, -1):\n        result.append(nums[i])\n    return result\n",
+    "label": "M7"
+  },
+  {
+    "code": "def solution(nums):\n    count = 0\n    for n in nums:\n        if n % 2 == 0:\n            count = count + 1\n    return count\n",
+    "label": "M5"
+  },
+  {
+    "code": "def solution(nums):\n    s = 0\n    for n in nums:\n        s += n\n    print(s)\n    return\n",
+    "label": "M2"
+  },
+  {
+    "code": "def solution(nums):\n    for n in nums:\n        s = 0\n        s += n\n    return s\n",
+    "label": "M1"
+  },
+  {
+    "code": "def solution(nums):\n    nums.reverse()\n    return nums\n",
+    "label": "M6"
+  },
+  {
+    "code": "def solution(nums):\n    m = nums[0]\n    for n in nums:\n        if n < m:\n            m = n\n    return m\n",
+    "label": "M4"
+  },
+  {
+    "code": "def solution(nums):\n    m = nums[0]\n    for n in nums:\n        if n < m:\n            m = n\n    return m\n",
+    "label": "M4"
+  },
+  {
+    "code": "def solution(nums):\n    s = 0\n    for i in range(len(nums) - 1):\n        s += nums[i]\n    return s\n",
+    "label": "M3"
+  },
+  {
+    "code": "def solution(nums):\n    s = 0\n    for i in range(len(nums) - 1):\n        s += nums[i]\n    return s\n",
+    "label": "M3"
+  },
+  {
+    "code": "def solution(nums):\n    result = []\n    for i in range(len(nums) - 1, 0, -1):\n        result.append(nums[i])\n    return result\n",
+    "label": "M7"
+  },
+  {
+    "code": "def solution(nums):\n    s = 0\n    for i in range(len(nums) - 1):\n        s += nums[i]\n    return s\n",
+    "label": "M3"
+  },
+  {
+    "code": "def solution(nums):\n    m = nums[0]\n    for n in nums:\n        if n < m:\n            m = n\n    return m\n",
+    "label": "M4"
+  },
+  {
+    "code": "def solution(nums):\n    m = nums[0]\n    for n in nums:\n        if n < m:\n            m = n\n    return m\n",
+    "label": "M4"
+  },
+  {
+    "code": "def solution(nums):\n    nums.reverse()\n    return nums\n",
+    "label": "M6"
+  },
+  {
+    "code": "def solution(nums):\n    count = 0\n    for n in nums:\n        if n % 2 == 0:\n            count = count + 1\n    return count\n",
+    "label": "M5"
+  },
+  {
+    "code": "def solution(nums):\n    s = 0\n    for n in nums:\n        s += n\n    print(s)\n",
+    "label": "M2"
+  },
+  {
+    "code": "def solution(nums):\n    nums.reverse()\n    return nums\n",
+    "label": "M6"
+  },
+  {
+    "code": "def solution(nums):\n    nums.reverse()\n    return nums\n",
+    "label": "M6"
+  },
+  {
+    "code": "def solution(nums):\n    result = []\n    for i in range(len(nums) - 1, 0, -1):\n        result.append(nums[i])\n    return result\n",
+    "label": "M7"
+  },
+  {
+    "code": "def solution(nums):\n    for n in nums:\n        total = 0\n        total = total + n\n    return total\n",
+    "label": "M1"
+  },
+  {
+    "code": "def solution(nums):\n    count = 0\n    for n in nums:\n        if n % 2 == 0:\n            count = count + 1\n    return count\n",
+    "label": "M5"
+  },
+  {
+    "code": "def solution(nums):\n    m = nums[0]\n    for n in nums:\n        if n < m:\n            m = n\n    return m\n",
+    "label": "M4"
+  },
+  {
+    "code": "def solution(nums):\n    m = nums[0]\n    for n in nums:\n        if n < m:\n            m = n\n    return m\n",
+    "label": "M4"
+  },
+  {
+    "code": "def solution(nums):\n    count = 0\n    for n in nums:\n        if n % 2 == 0:\n            count = count + 1\n    return count\n",
+    "label": "M5"
+  },
+  {
+    "code": "def solution(nums):\n    m = nums[0]\n    for n in nums:\n        if n < m:\n            m = n\n    return m\n",
+    "label": "M4"
+  },
+  {
+    "code": "def solution(nums):\n    for n in nums:\n        s = 0\n        s += n\n    return s\n",
+    "label": "M1"
+  },
+  {
+    "code": "def solution(nums):\n    s = 0\n    for n in nums:\n        s += n\n    return s\n",
+    "label": "M0"
+  },
+  {
+    "code": "def solution(nums):\n    for n in nums:\n        s = 0\n        s += n\n    return s\n",
+    "label": "M1"
+  },
+  {
+    "code": "def solution(nums):\n    count = 0\n    for n in nums:\n        if n % 2 == 0:\n            count = count + 1\n    return count\n",
+    "label": "M5"
+  },
+  {
+    "code": "def solution(nums):\n    s = 0\n    for i in range(len(nums) - 1):\n        s += nums[i]\n    return s\n",
+    "label": "M3"
+  },
+  {
+    "code": "def solution(nums):\n    m = nums[0]\n    for n in nums:\n        if n < m:\n            m = n\n    return m\n",
+    "label": "M4"
+  },
+  {
+    "code": "def solution(nums):\n    for n in nums:\n        total = 0\n        total = total + n\n    return total\n",
+    "label": "M1"
+  },
+  {
+    "code": "def solution(nums):\n    for n in nums:\n        total = 0\n        total = total + n\n    return total\n",
+    "label": "M1"
+  },
+  {
+    "code": "def solution(nums):\n    count = 0\n    for n in nums:\n        if n % 2 == 0:\n            count = count + 1\n    return count\n",
+    "label": "M5"
+  },
+  {
+    "code": "def solution(nums):\n    s = 0\n    for n in nums:\n        s += n\n    return s\n",
+    "label": "M0"
+  },
+  {
+    "code": "def solution(nums):\n    result = []\n    for i in range(len(nums) - 1, 0, -1):\n        result.append(nums[i])\n    return result\n",
+    "label": "M7"
+  },
+  {
+    "code": "def solution(nums):\n    result = []\n    for i in range(len(nums) - 1, 0, -1):\n        result.append(nums[i])\n    return result\n",
+    "label": "M7"
+  },
+  {
+    "code": "def solution(nums):\n    s = 0\n    for n in nums:\n        s += n\n    print(s)\n",
+    "label": "M2"
+  },
+  {
+    "code": "def solution(nums):\n    s = 0\n    for n in nums:\n        s += n\n    print(s)\n",
+    "label": "M2"
+  },
+  {
+    "code": "def solution(nums):\n    s = 0\n    for i in range(len(nums) - 1):\n        s += nums[i]\n    return s\n",
+    "label": "M3"
+  },
+  {
+    "code": "def solution(nums):\n    result = []\n    for i in range(len(nums) - 1, 0, -1):\n        result.append(nums[i])\n    return result\n",
+    "label": "M7"
+  },
+  {
+    "code": "def solution(nums):\n    m = nums[0]\n    for n in nums:\n        if n < m:\n            m = n\n    return m\n",
+    "label": "M4"
+  },
+  {
+    "code": "def solution(nums):\n    s = 0\n    for i in range(len(nums) - 1):\n        s += nums[i]\n    return s\n",
+    "label": "M3"
+  },
+  {
+    "code": "def solution(nums):\n    m = nums[0]\n    for n in nums:\n        if n < m:\n            m = n\n    return m\n",
+    "label": "M4"
+  },
+  {
+    "code": "def solution(nums):\n    m = nums[0]\n    for n in nums:\n        if n < m:\n            m = n\n    return m\n",
+    "label": "M4"
+  },
+  {
+    "code": "def solution(nums):\n    nums.reverse()\n    return nums\n",
+    "label": "M6"
+  },
+  {
+    "code": "def solution(nums):\n    s = 0\n    for n in nums:\n        s += n\n    print(s)\n    return\n",
+    "label": "M2"
+  },
+  {
+    "code": "def solution(nums):\n    result = []\n    for i in range(len(nums) - 1, 0, -1):\n        result.append(nums[i])\n    return result\n",
+    "label": "M7"
+  },
+  {
+    "code": "def solution(nums):\n    count = 0\n    for n in nums:\n        if n % 2 == 0:\n            count = count + 1\n    return count\n",
+    "label": "M5"
+  },
+  {
+    "code": "def solution(nums):\n    nums.reverse()\n    return nums\n",
+    "label": "M6"
+  },
+  {
+    "code": "def solution(nums):\n    for n in nums:\n        s = 0\n        s += n\n    return s\n",
+    "label": "M1"
+  },
+  {
+    "code": "def solution(nums):\n    for n in nums:\n        s = 0\n        s += n\n    return s\n",
+    "label": "M1"
+  },
+  {
+    "code": "def solution(nums):\n    s = 0\n    for i in range(len(nums) - 1):\n        s += nums[i]\n    return s\n",
+    "label": "M3"
+  },
+  {
+    "code": "def solution(nums):\n    s = 0\n    for i in range(len(nums) - 1):\n        s += nums[i]\n    return s\n",
+    "label": "M3"
+  },
+  {
+    "code": "def solution(nums):\n    for n in nums:\n        total = 0\n        total = total + n\n    return total\n",
+    "label": "M1"
+  },
+  {
+    "code": "def solution(nums):\n    s = 0\n    for i in range(len(nums) - 1):\n        s += nums[i]\n    return s\n",
+    "label": "M3"
+  },
+  {
+    "code": "def solution(nums):\n    s = 0\n    for n in nums:\n        s += n\n    print(s)\n    return\n",
+    "label": "M2"
+  },
+  {
+    "code": "def solution(nums):\n    result = []\n    for i in range(len(nums) - 1, 0, -1):\n        result.append(nums[i])\n    return result\n",
+    "label": "M7"
+  },
+  {
+    "code": "def solution(nums):\n    count = 0\n    for n in nums:\n        if n % 2 == 0:\n            count = count + 1\n    return count\n",
+    "label": "M5"
+  },
+  {
+    "code": "def solution(nums):\n    m = nums[0]\n    for n in nums:\n        if n < m:\n            m = n\n    return m\n",
+    "label": "M4"
+  },
+  {
+    "code": "def solution(nums):\n    result = []\n    for i in range(len(nums) - 1, 0, -1):\n        result.append(nums[i])\n    return result\n",
+    "label": "M7"
+  },
+  {
+    "code": "def solution(nums):\n    nums.reverse()\n    return nums\n",
+    "label": "M6"
+  },
+  {
+    "code": "def solution(nums):\n    m = nums[0]\n    for n in nums:\n        if n < m:\n            m = n\n    return m\n",
+    "label": "M4"
+  },
+  {
+    "code": "def solution(nums):\n    result = []\n    for i in range(len(nums) - 1, 0, -1):\n        result.append(nums[i])\n    return result\n",
+    "label": "M7"
+  },
+  {
+    "code": "def solution(nums):\n    for n in nums:\n        total = 0\n        total = total + n\n    return total\n",
+    "label": "M1"
+  },
+  {
+    "code": "def solution(nums):\n    s = 0\n    for i in range(len(nums) - 1):\n        s += nums[i]\n    return s\n",
+    "label": "M3"
+  },
+  {
+    "code": "def solution(nums):\n    result = []\n    for i in range(len(nums) - 1, 0, -1):\n        result.append(nums[i])\n    return result\n",
+    "label": "M7"
+  },
+  {
+    "code": "def solution(nums):\n    count = 0\n    for n in nums:\n        if n % 2 == 0:\n            count = count + 1\n    return count\n",
+    "label": "M5"
+  },
+  {
+    "code": "def solution(nums):\n    s = 0\n    for i in range(len(nums) - 1):\n        s += nums[i]\n    return s\n",
+    "label": "M3"
+  },
+  {
+    "code": "def solution(nums):\n    s = 0\n    for n in nums:\n        s += n\n    return s\n",
+    "label": "M0"
+  },
+  {
+    "code": "def solution(nums):\n    s = 0\n    for n in nums:\n        s += n\n    print(s)\n    return\n",
+    "label": "M2"
+  },
+  {
+    "code": "def solution(nums):\n    count = 0\n    for n in nums:\n        if n % 2 == 0:\n            count = count + 1\n    return count\n",
+    "label": "M5"
+  },
+  {
+    "code": "def solution(nums):\n    m = nums[0]\n    for n in nums:\n        if n < m:\n            m = n\n    return m\n",
+    "label": "M4"
+  },
+  {
+    "code": "def solution(nums):\n    s = 0\n    for n in nums:\n        s += n\n    print(s)\n",
+    "label": "M2"
+  },
+  {
+    "code": "def solution(nums):\n    nums.reverse()\n    return nums\n",
+    "label": "M6"
+  },
+  {
+    "code": "def solution(nums):\n    s = 0\n    for n in nums:\n        s += n\n    return s\n",
+    "label": "M0"
+  },
+  {
+    "code": "def solution(nums):\n    s = 0\n    for n in nums:\n        s += n\n    print(s)\n    return\n",
+    "label": "M2"
+  },
+  {
+    "code": "def solution(nums):\n    count = 0\n    for n in nums:\n        if n % 2 == 0:\n            count = count + 1\n    return count\n",
+    "label": "M5"
+  },
+  {
+    "code": "def solution(nums):\n    m = nums[0]\n    for n in nums:\n        if n < m:\n            m = n\n    return m\n",
+    "label": "M4"
+  },
+  {
+    "code": "def solution(nums):\n    result = []\n    for i in range(len(nums) - 1, 0, -1):\n        result.append(nums[i])\n    return result\n",
+    "label": "M7"
+  },
+  {
+    "code": "def solution(nums):\n    nums.reverse()\n    return nums\n",
+    "label": "M6"
+  },
+  {
+    "code": "def solution(nums):\n    s = 0\n    for n in nums:\n        s += n\n    return s\n",
+    "label": "M0"
+  },
+  {
+    "code": "def solution(nums):\n    s = 0\n    for n in nums:\n        s += n\n    return s\n",
+    "label": "M0"
+  },
+  {
+    "code": "def solution(nums):\n    s = 0\n    for n in nums:\n        s += n\n    return s\n",
+    "label": "M0"
+  },
+  {
+    "code": "def solution(nums):\n    count = 0\n    for n in nums:\n        if n % 2 == 0:\n            count = count + 1\n    return count\n",
+    "label": "M5"
+  },
+  {
+    "code": "def solution(nums):\n    s = 0\n    for n in nums:\n        s += n\n    return s\n",
+    "label": "M0"
+  },
+  {
+    "code": "def solution(nums):\n    s = 0\n    for i in range(len(nums) - 1):\n        s += nums[i]\n    return s\n",
+    "label": "M3"
+  },
+  {
+    "code": "def solution(nums):\n    result = []\n    for i in range(len(nums) - 1, 0, -1):\n        result.append(nums[i])\n    return result\n",
+    "label": "M7"
+  },
+  {
+    "code": "def solution(nums):\n    nums.reverse()\n    return nums\n",
+    "label": "M6"
+  },
+  {
+    "code": "def solution(nums):\n    nums.reverse()\n    return nums\n",
+    "label": "M6"
+  },
+  {
+    "code": "def solution(nums):\n    count = 0\n    for n in nums:\n        if n % 2 == 0:\n            count = count + 1\n    return count\n",
+    "label": "M5"
+  },
+  {
+    "code": "def solution(nums):\n    s = 0\n    for n in nums:\n        s += n\n    return s\n",
+    "label": "M0"
+  },
+  {
+    "code": "def solution(nums):\n    s = 0\n    for n in nums:\n        s += n\n    print(s)\n",
+    "label": "M2"
+  },
+  {
+    "code": "def solution(nums):\n    count = 0\n    for n in nums:\n        if n % 2 == 0:\n            count = count + 1\n    return count\n",
+    "label": "M5"
+  },
+  {
+    "code": "def solution(nums):\n    m = nums[0]\n    for n in nums:\n        if n < m:\n            m = n\n    return m\n",
+    "label": "M4"
+  },
+  {
+    "code": "def solution(nums):\n    s = 0\n    for n in nums:\n        s += n\n    print(s)\n",
+    "label": "M2"
+  },
+  {
+    "code": "def solution(nums):\n    nums.reverse()\n    return nums\n",
+    "label": "M6"
+  },
+  {
+    "code": "def solution(nums):\n    for n in nums:\n        s = 0\n        s += n\n    return s\n",
+    "label": "M1"
+  },
+  {
+    "code": "def solution(nums):\n    result = []\n    for i in range(len(nums) - 1, 0, -1):\n        result.append(nums[i])\n    return result\n",
+    "label": "M7"
+  },
+  {
+    "code": "def solution(nums):\n    nums.reverse()\n    return nums\n",
+    "label": "M6"
+  },
+  {
+    "code": "def solution(nums):\n    result = []\n    for i in range(len(nums) - 1, 0, -1):\n        result.append(nums[i])\n    return result\n",
+    "label": "M7"
+  },
+  {
+    "code": "def solution(nums):\n    s = 0\n    for i in range(len(nums) - 1):\n        s += nums[i]\n    return s\n",
+    "label": "M3"
+  },
+  {
+    "code": "def solution(nums):\n    m = nums[0]\n    for n in nums:\n        if n < m:\n            m = n\n    return m\n",
+    "label": "M4"
+  },
+  {
+    "code": "def solution(nums):\n    m = nums[0]\n    for n in nums:\n        if n < m:\n            m = n\n    return m\n",
+    "label": "M4"
+  },
+  {
+    "code": "def solution(nums):\n    count = 0\n    for n in nums:\n        if n % 2 == 0:\n            count = count + 1\n    return count\n",
+    "label": "M5"
+  },
+  {
+    "code": "def solution(nums):\n    s = 0\n    for n in nums:\n        s += n\n    return s\n",
+    "label": "M0"
+  },
+  {
+    "code": "def solution(nums):\n    count = 0\n    for n in nums:\n        if n % 2 == 0:\n            count = count + 1\n    return count\n",
+    "label": "M5"
+  },
+  {
+    "code": "def solution(nums):\n    for n in nums:\n        s = 0\n        s += n\n    return s\n",
+    "label": "M1"
+  },
+  {
+    "code": "def solution(nums):\n    count = 0\n    for n in nums:\n        if n % 2 == 0:\n            count = count + 1\n    return count\n",
+    "label": "M5"
+  },
+  {
+    "code": "def solution(nums):\n    s = 0\n    for n in nums:\n        s += n\n    return s\n",
+    "label": "M0"
+  },
+  {
+    "code": "def solution(nums):\n    s = 0\n    for n in nums:\n        s += n\n    print(s)\n    return\n",
+    "label": "M2"
+  },
+  {
+    "code": "def solution(nums):\n    result = []\n    for i in range(len(nums) - 1, 0, -1):\n        result.append(nums[i])\n    return result\n",
+    "label": "M7"
+  },
+  {
+    "code": "def solution(nums):\n    for n in nums:\n        total = 0\n        total = total + n\n    return total\n",
+    "label": "M1"
+  },
+  {
+    "code": "def solution(nums):\n    s = 0\n    for i in range(len(nums) - 1):\n        s += nums[i]\n    return s\n",
+    "label": "M3"
+  },
+  {
+    "code": "def solution(nums):\n    count = 0\n    for n in nums:\n        if n % 2 == 0:\n            count = count + 1\n    return count\n",
+    "label": "M5"
+  },
+  {
+    "code": "def solution(nums):\n    s = 0\n    for n in nums:\n        s += n\n    print(s)\n",
+    "label": "M2"
+  },
+  {
+    "code": "def solution(nums):\n    m = nums[0]\n    for n in nums:\n        if n < m:\n            m = n\n    return m\n",
+    "label": "M4"
+  },
+  {
+    "code": "def solution(nums):\n    nums.reverse()\n    return nums\n",
+    "label": "M6"
+  },
+  {
+    "code": "def solution(nums):\n    result = []\n    for i in range(len(nums) - 1, 0, -1):\n        result.append(nums[i])\n    return result\n",
+    "label": "M7"
+  },
+  {
+    "code": "def solution(nums):\n    s = 0\n    for i in range(len(nums) - 1):\n        s += nums[i]\n    return s\n",
+    "label": "M3"
+  },
+  {
+    "code": "def solution(nums):\n    for n in nums:\n        total = 0\n        total = total + n\n    return total\n",
+    "label": "M1"
+  },
+  {
+    "code": "def solution(nums):\n    nums.reverse()\n    return nums\n",
+    "label": "M6"
+  },
+  {
+    "code": "def solution(nums):\n    for n in nums:\n        total = 0\n        total = total + n\n    return total\n",
+    "label": "M1"
+  },
+  {
+    "code": "def solution(nums):\n    s = 0\n    for i in range(len(nums) - 1):\n        s += nums[i]\n    return s\n",
+    "label": "M3"
+  },
+  {
+    "code": "def solution(nums):\n    s = 0\n    for n in nums:\n        s += n\n    return s\n",
+    "label": "M0"
+  },
+  {
+    "code": "def solution(nums):\n    m = nums[0]\n    for n in nums:\n        if n < m:\n            m = n\n    return m\n",
+    "label": "M4"
+  },
+  {
+    "code": "def solution(nums):\n    result = []\n    for i in range(len(nums) - 1, 0, -1):\n        result.append(nums[i])\n    return result\n",
+    "label": "M7"
+  },
+  {
+    "code": "def solution(nums):\n    m = nums[0]\n    for n in nums:\n        if n < m:\n            m = n\n    return m\n",
+    "label": "M4"
+  },
+  {
+    "code": "def solution(nums):\n    s = 0\n    for i in range(len(nums) - 1):\n        s += nums[i]\n    return s\n",
+    "label": "M3"
+  },
+  {
+    "code": "def solution(nums):\n    for n in nums:\n        s = 0\n        s += n\n    return s\n",
+    "label": "M1"
+  },
+  {
+    "code": "def solution(nums):\n    result = []\n    for i in range(len(nums) - 1, 0, -1):\n        result.append(nums[i])\n    return result\n",
+    "label": "M7"
+  },
+  {
+    "code": "def solution(nums):\n    count = 0\n    for n in nums:\n        if n % 2 == 0:\n            count = count + 1\n    return count\n",
+    "label": "M5"
+  },
+  {
+    "code": "def solution(nums):\n    for n in nums:\n        total = 0\n        total = total + n\n    return total\n",
+    "label": "M1"
+  },
+  {
+    "code": "def solution(nums):\n    s = 0\n    for n in nums:\n        s += n\n    return s\n",
+    "label": "M0"
+  },
+  {
+    "code": "def solution(nums):\n    s = 0\n    for n in nums:\n        s += n\n    return s\n",
+    "label": "M0"
+  },
+  {
+    "code": "def solution(nums):\n    for n in nums:\n        s = 0\n        s += n\n    return s\n",
+    "label": "M1"
+  },
+  {
+    "code": "def solution(nums):\n    count = 0\n    for n in nums:\n        if n % 2 == 0:\n            count = count + 1\n    return count\n",
+    "label": "M5"
+  },
+  {
+    "code": "def solution(nums):\n    result = []\n    for i in range(len(nums) - 1, 0, -1):\n        result.append(nums[i])\n    return result\n",
+    "label": "M7"
+  },
+  {
+    "code": "def solution(nums):\n    for n in nums:\n        s = 0\n        s += n\n    return s\n",
+    "label": "M1"
+  },
+  {
+    "code": "def solution(nums):\n    s = 0\n    for n in nums:\n        s += n\n    print(s)\n",
+    "label": "M2"
+  },
+  {
+    "code": "def solution(nums):\n    s = 0\n    for i in range(len(nums) - 1):\n        s += nums[i]\n    return s\n",
+    "label": "M3"
+  },
+  {
+    "code": "def solution(nums):\n    count = 0\n    for n in nums:\n        if n % 2 == 0:\n            count = count + 1\n    return count\n",
+    "label": "M5"
+  },
+  {
+    "code": "def solution(nums):\n    result = []\n    for i in range(len(nums) - 1, 0, -1):\n        result.append(nums[i])\n    return result\n",
+    "label": "M7"
+  },
+  {
+    "code": "def solution(nums):\n    s = 0\n    for n in nums:\n        s += n\n    print(s)\n    return\n",
+    "label": "M2"
+  },
+  {
+    "code": "def solution(nums):\n    m = nums[0]\n    for n in nums:\n        if n < m:\n            m = n\n    return m\n",
+    "label": "M4"
+  },
+  {
+    "code": "def solution(nums):\n    s = 0\n    for n in nums:\n        s += n\n    return s\n",
+    "label": "M0"
+  },
+  {
+    "code": "def solution(nums):\n    nums.reverse()\n    return nums\n",
+    "label": "M6"
+  },
+  {
+    "code": "def solution(nums):\n    m = nums[0]\n    for n in nums:\n        if n < m:\n            m = n\n    return m\n",
+    "label": "M4"
+  },
+  {
+    "code": "def solution(nums):\n    s = 0\n    for n in nums:\n        s += n\n    print(s)\n",
+    "label": "M2"
+  },
+  {
+    "code": "def solution(nums):\n    nums.reverse()\n    return nums\n",
+    "label": "M6"
+  },
+  {
+    "code": "def solution(nums):\n    m = nums[0]\n    for n in nums:\n        if n < m:\n            m = n\n    return m\n",
+    "label": "M4"
+  },
+  {
+    "code": "def solution(nums):\n    s = 0\n    for n in nums:\n        s += n\n    return s\n",
+    "label": "M0"
+  },
+  {
+    "code": "def solution(nums):\n    count = 0\n    for n in nums:\n        if n % 2 == 0:\n            count = count + 1\n    return count\n",
+    "label": "M5"
+  },
+  {
+    "code": "def solution(nums):\n    nums.reverse()\n    return nums\n",
+    "label": "M6"
+  },
+  {
+    "code": "def solution(nums):\n    for n in nums:\n        s = 0\n        s += n\n    return s\n",
+    "label": "M1"
+  },
+  {
+    "code": "def solution(nums):\n    s = 0\n    for n in nums:\n        s += n\n    print(s)\n    return\n",
+    "label": "M2"
+  },
+  {
+    "code": "def solution(nums):\n    result = []\n    for i in range(len(nums) - 1, 0, -1):\n        result.append(nums[i])\n    return result\n",
+    "label": "M7"
+  },
+  {
+    "code": "def solution(nums):\n    s = 0\n    for i in range(len(nums) - 1):\n        s += nums[i]\n    return s\n",
+    "label": "M3"
+  },
+  {
+    "code": "def solution(nums):\n    for n in nums:\n        s = 0\n        s += n\n    return s\n",
+    "label": "M1"
+  },
+  {
+    "code": "def solution(nums):\n    nums.reverse()\n    return nums\n",
+    "label": "M6"
+  },
+  {
+    "code": "def solution(nums):\n    m = nums[0]\n    for n in nums:\n        if n < m:\n            m = n\n    return m\n",
+    "label": "M4"
+  },
+  {
+    "code": "def solution(nums):\n    s = 0\n    for n in nums:\n        s += n\n    return s\n",
+    "label": "M0"
+  },
+  {
+    "code": "def solution(nums):\n    nums.reverse()\n    return nums\n",
+    "label": "M6"
+  },
+  {
+    "code": "def solution(nums):\n    s = 0\n    for n in nums:\n        s += n\n    print(s)\n",
+    "label": "M2"
+  },
+  {
+    "code": "def solution(nums):\n    s = 0\n    for n in nums:\n        s += n\n    return s\n",
+    "label": "M0"
+  },
+  {
+    "code": "def solution(nums):\n    m = nums[0]\n    for n in nums:\n        if n < m:\n            m = n\n    return m\n",
+    "label": "M4"
+  },
+  {
+    "code": "def solution(nums):\n    s = 0\n    for n in nums:\n        s += n\n    print(s)\n",
+    "label": "M2"
+  },
+  {
+    "code": "def solution(nums):\n    s = 0\n    for n in nums:\n        s += n\n    print(s)\n    return\n",
+    "label": "M2"
+  },
+  {
+    "code": "def solution(nums):\n    m = nums[0]\n    for n in nums:\n        if n < m:\n            m = n\n    return m\n",
+    "label": "M4"
+  },
+  {
+    "code": "def solution(nums):\n    s = 0\n    for n in nums:\n        s += n\n    print(s)\n    return\n",
+    "label": "M2"
+  },
+  {
+    "code": "def solution(nums):\n    nums.reverse()\n    return nums\n",
+    "label": "M6"
+  },
+  {
+    "code": "def solution(nums):\n    s = 0\n    for n in nums:\n        s += n\n    print(s)\n",
+    "label": "M2"
+  },
+  {
+    "code": "def solution(nums):\n    s = 0\n    for i in range(len(nums) - 1):\n        s += nums[i]\n    return s\n",
+    "label": "M3"
+  },
+  {
+    "code": "def solution(nums):\n    count = 0\n    for n in nums:\n        if n % 2 == 0:\n            count = count + 1\n    return count\n",
+    "label": "M5"
+  },
+  {
+    "code": "def solution(nums):\n    s = 0\n    for i in range(len(nums) - 1):\n        s += nums[i]\n    return s\n",
+    "label": "M3"
+  },
+  {
+    "code": "def solution(nums):\n    s = 0\n    for i in range(len(nums) - 1):\n        s += nums[i]\n    return s\n",
+    "label": "M3"
+  },
+  {
+    "code": "def solution(nums):\n    s = 0\n    for n in nums:\n        s += n\n    return s\n",
+    "label": "M0"
+  },
+  {
+    "code": "def solution(nums):\n    s = 0\n    for n in nums:\n        s += n\n    print(s)\n    return\n",
+    "label": "M2"
+  },
+  {
+    "code": "def solution(nums):\n    s = 0\n    for n in nums:\n        s += n\n    print(s)\n    return\n",
+    "label": "M2"
+  },
+  {
+    "code": "def solution(nums):\n    s = 0\n    for n in nums:\n        s += n\n    return s\n",
+    "label": "M0"
+  },
+  {
+    "code": "def solution(nums):\n    m = nums[0]\n    for n in nums:\n        if n < m:\n            m = n\n    return m\n",
+    "label": "M4"
+  },
+  {
+    "code": "def solution(nums):\n    for n in nums:\n        s = 0\n        s += n\n    return s\n",
+    "label": "M1"
+  },
+  {
+    "code": "def solution(nums):\n    m = nums[0]\n    for n in nums:\n        if n < m:\n            m = n\n    return m\n",
+    "label": "M4"
+  },
+  {
+    "code": "def solution(nums):\n    m = nums[0]\n    for n in nums:\n        if n < m:\n            m = n\n    return m\n",
+    "label": "M4"
+  },
+  {
+    "code": "def solution(nums):\n    s = 0\n    for i in range(len(nums) - 1):\n        s += nums[i]\n    return s\n",
+    "label": "M3"
+  },
+  {
+    "code": "def solution(nums):\n    s = 0\n    for n in nums:\n        s += n\n    return s\n",
+    "label": "M0"
+  },
+  {
+    "code": "def solution(nums):\n    count = 0\n    for n in nums:\n        if n % 2 == 0:\n            count = count + 1\n    return count\n",
+    "label": "M5"
+  },
+  {
+    "code": "def solution(nums):\n    result = []\n    for i in range(len(nums) - 1, 0, -1):\n        result.append(nums[i])\n    return result\n",
+    "label": "M7"
+  },
+  {
+    "code": "def solution(nums):\n    count = 0\n    for n in nums:\n        if n % 2 == 0:\n            count = count + 1\n    return count\n",
+    "label": "M5"
+  },
+  {
+    "code": "def solution(nums):\n    s = 0\n    for n in nums:\n        s += n\n    print(s)\n    return\n",
+    "label": "M2"
+  },
+  {
+    "code": "def solution(nums):\n    count = 0\n    for n in nums:\n        if n % 2 == 0:\n            count = count + 1\n    return count\n",
+    "label": "M5"
+  },
+  {
+    "code": "def solution(nums):\n    s = 0\n    for n in nums:\n        s += n\n    print(s)\n    return\n",
+    "label": "M2"
+  },
+  {
+    "code": "def solution(nums):\n    count = 0\n    for n in nums:\n        if n % 2 == 0:\n            count = count + 1\n    return count\n",
+    "label": "M5"
+  },
+  {
+    "code": "def solution(nums):\n    nums.reverse()\n    return nums\n",
+    "label": "M6"
+  },
+  {
+    "code": "def solution(nums):\n    m = nums[0]\n    for n in nums:\n        if n < m:\n            m = n\n    return m\n",
+    "label": "M4"
+  },
+  {
+    "code": "def solution(nums):\n    m = nums[0]\n    for n in nums:\n        if n < m:\n            m = n\n    return m\n",
+    "label": "M4"
+  },
+  {
+    "code": "def solution(nums):\n    s = 0\n    for i in range(len(nums) - 1):\n        s += nums[i]\n    return s\n",
+    "label": "M3"
+  },
+  {
+    "code": "def solution(nums):\n    m = nums[0]\n    for n in nums:\n        if n < m:\n            m = n\n    return m\n",
+    "label": "M4"
+  },
+  {
+    "code": "def solution(nums):\n    result = []\n    for i in range(len(nums) - 1, 0, -1):\n        result.append(nums[i])\n    return result\n",
+    "label": "M7"
+  },
+  {
+    "code": "def solution(nums):\n    result = []\n    for i in range(len(nums) - 1, 0, -1):\n        result.append(nums[i])\n    return result\n",
+    "label": "M7"
+  },
+  {
+    "code": "def solution(nums):\n    s = 0\n    for n in nums:\n        s += n\n    print(s)\n    return\n",
+    "label": "M2"
+  },
+  {
+    "code": "def solution(nums):\n    s = 0\n    for n in nums:\n        s += n\n    return s\n",
+    "label": "M0"
+  },
+  {
+    "code": "def solution(nums):\n    s = 0\n    for i in range(len(nums) - 1):\n        s += nums[i]\n    return s\n",
+    "label": "M3"
+  },
+  {
+    "code": "def solution(nums):\n    s = 0\n    for n in nums:\n        s += n\n    print(s)\n    return\n",
+    "label": "M2"
+  },
+  {
+    "code": "def solution(nums):\n    nums.reverse()\n    return nums\n",
+    "label": "M6"
+  },
+  {
+    "code": "def solution(nums):\n    s = 0\n    for i in range(len(nums) - 1):\n        s += nums[i]\n    return s\n",
+    "label": "M3"
+  },
+  {
+    "code": "def solution(nums):\n    nums.reverse()\n    return nums\n",
+    "label": "M6"
+  },
+  {
+    "code": "def solution(nums):\n    count = 0\n    for n in nums:\n        if n % 2 == 0:\n            count = count + 1\n    return count\n",
+    "label": "M5"
+  },
+  {
+    "code": "def solution(nums):\n    for n in nums:\n        total = 0\n        total = total + n\n    return total\n",
+    "label": "M1"
+  },
+  {
+    "code": "def solution(nums):\n    for n in nums:\n        total = 0\n        total = total + n\n    return total\n",
+    "label": "M1"
+  },
+  {
+    "code": "def solution(nums):\n    for n in nums:\n        total = 0\n        total = total + n\n    return total\n",
+    "label": "M1"
+  },
+  {
+    "code": "def solution(nums):\n    result = []\n    for i in range(len(nums) - 1, 0, -1):\n        result.append(nums[i])\n    return result\n",
+    "label": "M7"
+  },
+  {
+    "code": "def solution(nums):\n    s = 0\n    for n in nums:\n        s += n\n    return s\n",
+    "label": "M0"
+  },
+  {
+    "code": "def solution(nums):\n    s = 0\n    for i in range(len(nums) - 1):\n        s += nums[i]\n    return s\n",
+    "label": "M3"
+  },
+  {
+    "code": "def solution(nums):\n    s = 0\n    for i in range(len(nums) - 1):\n        s += nums[i]\n    return s\n",
+    "label": "M3"
+  },
+  {
+    "code": "def solution(nums):\n    s = 0\n    for n in nums:\n        s += n\n    return s\n",
+    "label": "M0"
+  },
+  {
+    "code": "def solution(nums):\n    s = 0\n    for n in nums:\n        s += n\n    print(s)\n    return\n",
+    "label": "M2"
+  },
+  {
+    "code": "def solution(nums):\n    m = nums[0]\n    for n in nums:\n        if n < m:\n            m = n\n    return m\n",
+    "label": "M4"
+  },
+  {
+    "code": "def solution(nums):\n    count = 0\n    for n in nums:\n        if n % 2 == 0:\n            count = count + 1\n    return count\n",
+    "label": "M5"
+  },
+  {
+    "code": "def solution(nums):\n    result = []\n    for i in range(len(nums) - 1, 0, -1):\n        result.append(nums[i])\n    return result\n",
+    "label": "M7"
+  },
+  {
+    "code": "def solution(nums):\n    for n in nums:\n        s = 0\n        s += n\n    return s\n",
+    "label": "M1"
+  },
+  {
+    "code": "def solution(nums):\n    s = 0\n    for n in nums:\n        s += n\n    return s\n",
+    "label": "M0"
+  },
+  {
+    "code": "def solution(nums):\n    m = nums[0]\n    for n in nums:\n        if n < m:\n            m = n\n    return m\n",
+    "label": "M4"
+  },
+  {
+    "code": "def solution(nums):\n    s = 0\n    for n in nums:\n        s += n\n    print(s)\n    return\n",
+    "label": "M2"
+  },
+  {
+    "code": "def solution(nums):\n    for n in nums:\n        s = 0\n        s += n\n    return s\n",
+    "label": "M1"
+  },
+  {
+    "code": "def solution(nums):\n    for n in nums:\n        total = 0\n        total = total + n\n    return total\n",
+    "label": "M1"
+  },
+  {
+    "code": "def solution(nums):\n    count = 0\n    for n in nums:\n        if n % 2 == 0:\n            count = count + 1\n    return count\n",
+    "label": "M5"
+  },
+  {
+    "code": "def solution(nums):\n    for n in nums:\n        total = 0\n        total = total + n\n    return total\n",
+    "label": "M1"
+  },
+  {
+    "code": "def solution(nums):\n    s = 0\n    for i in range(len(nums) - 1):\n        s += nums[i]\n    return s\n",
+    "label": "M3"
+  },
+  {
+    "code": "def solution(nums):\n    m = nums[0]\n    for n in nums:\n        if n < m:\n            m = n\n    return m\n",
+    "label": "M4"
+  },
+  {
+    "code": "def solution(nums):\n    m = nums[0]\n    for n in nums:\n        if n < m:\n            m = n\n    return m\n",
+    "label": "M4"
+  },
+  {
+    "code": "def solution(nums):\n    s = 0\n    for n in nums:\n        s += n\n    print(s)\n    return\n",
+    "label": "M2"
+  },
+  {
+    "code": "def solution(nums):\n    for n in nums:\n        total = 0\n        total = total + n\n    return total\n",
+    "label": "M1"
+  },
+  {
+    "code": "def solution(nums):\n    s = 0\n    for n in nums:\n        s += n\n    print(s)\n",
+    "label": "M2"
+  },
+  {
+    "code": "def solution(nums):\n    count = 0\n    for n in nums:\n        if n % 2 == 0:\n            count = count + 1\n    return count\n",
+    "label": "M5"
+  },
+  {
+    "code": "def solution(nums):\n    s = 0\n    for n in nums:\n        s += n\n    return s\n",
+    "label": "M0"
+  },
+  {
+    "code": "def solution(nums):\n    s = 0\n    for n in nums:\n        s += n\n    print(s)\n    return\n",
+    "label": "M2"
+  },
+  {
+    "code": "def solution(nums):\n    result = []\n    for i in range(len(nums) - 1, 0, -1):\n        result.append(nums[i])\n    return result\n",
+    "label": "M7"
+  },
+  {
+    "code": "def solution(nums):\n    s = 0\n    for i in range(len(nums) - 1):\n        s += nums[i]\n    return s\n",
+    "label": "M3"
+  },
+  {
+    "code": "def solution(nums):\n    for n in nums:\n        total = 0\n        total = total + n\n    return total\n",
+    "label": "M1"
+  },
+  {
+    "code": "def solution(nums):\n    for n in nums:\n        s = 0\n        s += n\n    return s\n",
+    "label": "M1"
+  },
+  {
+    "code": "def solution(nums):\n    result = []\n    for i in range(len(nums) - 1, 0, -1):\n        result.append(nums[i])\n    return result\n",
+    "label": "M7"
+  },
+  {
+    "code": "def solution(nums):\n    s = 0\n    for i in range(len(nums) - 1):\n        s += nums[i]\n    return s\n",
+    "label": "M3"
+  },
+  {
+    "code": "def solution(nums):\n    count = 0\n    for n in nums:\n        if n % 2 == 0:\n            count = count + 1\n    return count\n",
+    "label": "M5"
+  },
+  {
+    "code": "def solution(nums):\n    s = 0\n    for n in nums:\n        s += n\n    return s\n",
+    "label": "M0"
+  },
+  {
+    "code": "def solution(nums):\n    s = 0\n    for n in nums:\n        s += n\n    print(s)\n",
+    "label": "M2"
+  },
+  {
+    "code": "def solution(nums):\n    m = nums[0]\n    for n in nums:\n        if n < m:\n            m = n\n    return m\n",
+    "label": "M4"
+  },
+  {
+    "code": "def solution(nums):\n    nums.reverse()\n    return nums\n",
+    "label": "M6"
+  },
+  {
+    "code": "def solution(nums):\n    result = []\n    for i in range(len(nums) - 1, 0, -1):\n        result.append(nums[i])\n    return result\n",
+    "label": "M7"
+  },
+  {
+    "code": "def solution(nums):\n    m = nums[0]\n    for n in nums:\n        if n < m:\n            m = n\n    return m\n",
+    "label": "M4"
+  },
+  {
+    "code": "def solution(nums):\n    for n in nums:\n        s = 0\n        s += n\n    return s\n",
+    "label": "M1"
+  },
+  {
+    "code": "def solution(nums):\n    nums.reverse()\n    return nums\n",
+    "label": "M6"
+  },
+  {
+    "code": "def solution(nums):\n    for n in nums:\n        total = 0\n        total = total + n\n    return total\n",
+    "label": "M1"
+  },
+  {
+    "code": "def solution(nums):\n    nums.reverse()\n    return nums\n",
+    "label": "M6"
+  },
+  {
+    "code": "def solution(nums):\n    s = 0\n    for n in nums:\n        s += n\n    print(s)\n    return\n",
+    "label": "M2"
+  },
+  {
+    "code": "def solution(nums):\n    s = 0\n    for i in range(len(nums) - 1):\n        s += nums[i]\n    return s\n",
+    "label": "M3"
+  },
+  {
+    "code": "def solution(nums):\n    s = 0\n    for i in range(len(nums) - 1):\n        s += nums[i]\n    return s\n",
+    "label": "M3"
+  },
+  {
+    "code": "def solution(nums):\n    m = nums[0]\n    for n in nums:\n        if n < m:\n            m = n\n    return m\n",
+    "label": "M4"
+  },
+  {
+    "code": "def solution(nums):\n    for n in nums:\n        total = 0\n        total = total + n\n    return total\n",
+    "label": "M1"
+  },
+  {
+    "code": "def solution(nums):\n    result = []\n    for i in range(len(nums) - 1, 0, -1):\n        result.append(nums[i])\n    return result\n",
+    "label": "M7"
+  },
+  {
+    "code": "def solution(nums):\n    s = 0\n    for n in nums:\n        s += n\n    print(s)\n",
+    "label": "M2"
+  },
+  {
+    "code": "def solution(nums):\n    nums.reverse()\n    return nums\n",
+    "label": "M6"
+  },
+  {
+    "code": "def solution(nums):\n    nums.reverse()\n    return nums\n",
+    "label": "M6"
+  },
+  {
+    "code": "def solution(nums):\n    s = 0\n    for n in nums:\n        s += n\n    return s\n",
+    "label": "M0"
+  },
+  {
+    "code": "def solution(nums):\n    s = 0\n    for n in nums:\n        s += n\n    print(s)\n",
+    "label": "M2"
+  },
+  {
+    "code": "def solution(nums):\n    s = 0\n    for i in range(len(nums) - 1):\n        s += nums[i]\n    return s\n",
+    "label": "M3"
+  },
+  {
+    "code": "def solution(nums):\n    nums.reverse()\n    return nums\n",
+    "label": "M6"
+  },
+  {
+    "code": "def solution(nums):\n    s = 0\n    for i in range(len(nums) - 1):\n        s += nums[i]\n    return s\n",
+    "label": "M3"
+  },
+  {
+    "code": "def solution(nums):\n    s = 0\n    for n in nums:\n        s += n\n    return s\n",
+    "label": "M0"
+  },
+  {
+    "code": "def solution(nums):\n    m = nums[0]\n    for n in nums:\n        if n < m:\n            m = n\n    return m\n",
+    "label": "M4"
+  },
+  {
+    "code": "def solution(nums):\n    s = 0\n    for n in nums:\n        s += n\n    print(s)\n",
+    "label": "M2"
+  },
+  {
+    "code": "def solution(nums):\n    s = 0\n    for n in nums:\n        s += n\n    print(s)\n",
+    "label": "M2"
+  },
+  {
+    "code": "def solution(nums):\n    s = 0\n    for n in nums:\n        s += n\n    return s\n",
+    "label": "M0"
+  },
+  {
+    "code": "def solution(nums):\n    s = 0\n    for i in range(len(nums) - 1):\n        s += nums[i]\n    return s\n",
+    "label": "M3"
+  },
+  {
+    "code": "def solution(nums):\n    s = 0\n    for i in range(len(nums) - 1):\n        s += nums[i]\n    return s\n",
+    "label": "M3"
+  },
+  {
+    "code": "def solution(nums):\n    s = 0\n    for n in nums:\n        s += n\n    print(s)\n    return\n",
+    "label": "M2"
+  },
+  {
+    "code": "def solution(nums):\n    count = 0\n    for n in nums:\n        if n % 2 == 0:\n            count = count + 1\n    return count\n",
+    "label": "M5"
+  },
+  {
+    "code": "def solution(nums):\n    for n in nums:\n        s = 0\n        s += n\n    return s\n",
+    "label": "M1"
+  },
+  {
+    "code": "def solution(nums):\n    nums.reverse()\n    return nums\n",
+    "label": "M6"
+  },
+  {
+    "code": "def solution(nums):\n    s = 0\n    for n in nums:\n        s += n\n    print(s)\n    return\n",
+    "label": "M2"
+  },
+  {
+    "code": "def solution(nums):\n    s = 0\n    for n in nums:\n        s += n\n    print(s)\n",
+    "label": "M2"
+  },
+  {
+    "code": "def solution(nums):\n    s = 0\n    for i in range(len(nums) - 1):\n        s += nums[i]\n    return s\n",
+    "label": "M3"
+  },
+  {
+    "code": "def solution(nums):\n    m = nums[0]\n    for n in nums:\n        if n < m:\n            m = n\n    return m\n",
+    "label": "M4"
+  },
+  {
+    "code": "def solution(nums):\n    count = 0\n    for n in nums:\n        if n % 2 == 0:\n            count = count + 1\n    return count\n",
+    "label": "M5"
+  },
+  {
+    "code": "def solution(nums):\n    nums.reverse()\n    return nums\n",
+    "label": "M6"
+  },
+  {
+    "code": "def solution(nums):\n    count = 0\n    for n in nums:\n        if n % 2 == 0:\n            count = count + 1\n    return count\n",
+    "label": "M5"
+  },
+  {
+    "code": "def solution(nums):\n    m = nums[0]\n    for n in nums:\n        if n < m:\n            m = n\n    return m\n",
+    "label": "M4"
+  },
+  {
+    "code": "def solution(nums):\n    count = 0\n    for n in nums:\n        if n % 2 == 0:\n            count = count + 1\n    return count\n",
+    "label": "M5"
+  },
+  {
+    "code": "def solution(nums):\n    for n in nums:\n        total = 0\n        total = total + n\n    return total\n",
+    "label": "M1"
+  },
+  {
+    "code": "def solution(nums):\n    s = 0\n    for n in nums:\n        s += n\n    print(s)\n",
+    "label": "M2"
+  },
+  {
+    "code": "def solution(nums):\n    s = 0\n    for i in range(len(nums) - 1):\n        s += nums[i]\n    return s\n",
+    "label": "M3"
+  },
+  {
+    "code": "def solution(nums):\n    count = 0\n    for n in nums:\n        if n % 2 == 0:\n            count = count + 1\n    return count\n",
+    "label": "M5"
+  },
+  {
+    "code": "def solution(nums):\n    nums.reverse()\n    return nums\n",
+    "label": "M6"
+  },
+  {
+    "code": "def solution(nums):\n    s = 0\n    for i in range(len(nums) - 1):\n        s += nums[i]\n    return s\n",
+    "label": "M3"
+  },
+  {
+    "code": "def solution(nums):\n    s = 0\n    for i in range(len(nums) - 1):\n        s += nums[i]\n    return s\n",
+    "label": "M3"
+  },
+  {
+    "code": "def solution(nums):\n    result = []\n    for i in range(len(nums) - 1, 0, -1):\n        result.append(nums[i])\n    return result\n",
+    "label": "M7"
+  },
+  {
+    "code": "def solution(nums):\n    s = 0\n    for n in nums:\n        s += n\n    return s\n",
+    "label": "M0"
+  },
+  {
+    "code": "def solution(nums):\n    s = 0\n    for n in nums:\n        s += n\n    return s\n",
+    "label": "M0"
+  },
+  {
+    "code": "def solution(nums):\n    count = 0\n    for n in nums:\n        if n % 2 == 0:\n            count = count + 1\n    return count\n",
+    "label": "M5"
+  },
+  {
+    "code": "def solution(nums):\n    s = 0\n    for i in range(len(nums) - 1):\n        s += nums[i]\n    return s\n",
+    "label": "M3"
+  },
+  {
+    "code": "def solution(nums):\n    for n in nums:\n        total = 0\n        total = total + n\n    return total\n",
+    "label": "M1"
+  },
+  {
+    "code": "def solution(nums):\n    for n in nums:\n        total = 0\n        total = total + n\n    return total\n",
+    "label": "M1"
+  },
+  {
+    "code": "def solution(nums):\n    s = 0\n    for n in nums:\n        s += n\n    return s\n",
+    "label": "M0"
+  },
+  {
+    "code": "def solution(nums):\n    nums.reverse()\n    return nums\n",
+    "label": "M6"
+  },
+  {
+    "code": "def solution(nums):\n    s = 0\n    for n in nums:\n        s += n\n    return s\n",
+    "label": "M0"
+  },
+  {
+    "code": "def solution(nums):\n    s = 0\n    for i in range(len(nums) - 1):\n        s += nums[i]\n    return s\n",
+    "label": "M3"
+  },
+  {
+    "code": "def solution(nums):\n    count = 0\n    for n in nums:\n        if n % 2 == 0:\n            count = count + 1\n    return count\n",
+    "label": "M5"
+  },
+  {
+    "code": "def solution(nums):\n    s = 0\n    for n in nums:\n        s += n\n    print(s)\n",
+    "label": "M2"
+  },
+  {
+    "code": "def solution(nums):\n    for n in nums:\n        s = 0\n        s += n\n    return s\n",
+    "label": "M1"
+  },
+  {
+    "code": "def solution(nums):\n    nums.reverse()\n    return nums\n",
+    "label": "M6"
+  },
+  {
+    "code": "def solution(nums):\n    result = []\n    for i in range(len(nums) - 1, 0, -1):\n        result.append(nums[i])\n    return result\n",
+    "label": "M7"
+  },
+  {
+    "code": "def solution(nums):\n    count = 0\n    for n in nums:\n        if n % 2 == 0:\n            count = count + 1\n    return count\n",
+    "label": "M5"
+  },
+  {
+    "code": "def solution(nums):\n    s = 0\n    for i in range(len(nums) - 1):\n        s += nums[i]\n    return s\n",
+    "label": "M3"
+  },
+  {
+    "code": "def solution(nums):\n    result = []\n    for i in range(len(nums) - 1, 0, -1):\n        result.append(nums[i])\n    return result\n",
+    "label": "M7"
+  },
+  {
+    "code": "def solution(nums):\n    m = nums[0]\n    for n in nums:\n        if n < m:\n            m = n\n    return m\n",
+    "label": "M4"
+  },
+  {
+    "code": "def solution(nums):\n    result = []\n    for i in range(len(nums) - 1, 0, -1):\n        result.append(nums[i])\n    return result\n",
+    "label": "M7"
+  },
+  {
+    "code": "def solution(nums):\n    for n in nums:\n        s = 0\n        s += n\n    return s\n",
+    "label": "M1"
+  },
+  {
+    "code": "def solution(nums):\n    s = 0\n    for n in nums:\n        s += n\n    print(s)\n",
+    "label": "M2"
+  },
+  {
+    "code": "def solution(nums):\n    s = 0\n    for n in nums:\n        s += n\n    print(s)\n    return\n",
+    "label": "M2"
+  },
+  {
+    "code": "def solution(nums):\n    s = 0\n    for n in nums:\n        s += n\n    return s\n",
+    "label": "M0"
+  },
+  {
+    "code": "def solution(nums):\n    s = 0\n    for n in nums:\n        s += n\n    print(s)\n",
+    "label": "M2"
+  },
+  {
+    "code": "def solution(nums):\n    m = nums[0]\n    for n in nums:\n        if n < m:\n            m = n\n    return m\n",
+    "label": "M4"
+  },
+  {
+    "code": "def solution(nums):\n    for n in nums:\n        total = 0\n        total = total + n\n    return total\n",
+    "label": "M1"
+  },
+  {
+    "code": "def solution(nums):\n    s = 0\n    for n in nums:\n        s += n\n    return s\n",
+    "label": "M0"
+  },
+  {
+    "code": "def solution(nums):\n    s = 0\n    for i in range(len(nums) - 1):\n        s += nums[i]\n    return s\n",
+    "label": "M3"
+  },
+  {
+    "code": "def solution(nums):\n    nums.reverse()\n    return nums\n",
+    "label": "M6"
+  },
+  {
+    "code": "def solution(nums):\n    result = []\n    for i in range(len(nums) - 1, 0, -1):\n        result.append(nums[i])\n    return result\n",
+    "label": "M7"
+  },
+  {
+    "code": "def solution(nums):\n    s = 0\n    for n in nums:\n        s += n\n    return s\n",
+    "label": "M0"
+  },
+  {
+    "code": "def solution(nums):\n    nums.reverse()\n    return nums\n",
+    "label": "M6"
+  },
+  {
+    "code": "def solution(nums):\n    nums.reverse()\n    return nums\n",
+    "label": "M6"
+  },
+  {
+    "code": "def solution(nums):\n    for n in nums:\n        s = 0\n        s += n\n    return s\n",
+    "label": "M1"
+  },
+  {
+    "code": "def solution(nums):\n    count = 0\n    for n in nums:\n        if n % 2 == 0:\n            count = count + 1\n    return count\n",
+    "label": "M5"
+  },
+  {
+    "code": "def solution(nums):\n    s = 0\n    for i in range(len(nums) - 1):\n        s += nums[i]\n    return s\n",
+    "label": "M3"
+  },
+  {
+    "code": "def solution(nums):\n    for n in nums:\n        total = 0\n        total = total + n\n    return total\n",
+    "label": "M1"
+  },
+  {
+    "code": "def solution(nums):\n    result = []\n    for i in range(len(nums) - 1, 0, -1):\n        result.append(nums[i])\n    return result\n",
+    "label": "M7"
+  },
+  {
+    "code": "def solution(nums):\n    s = 0\n    for n in nums:\n        s += n\n    return s\n",
+    "label": "M0"
+  },
+  {
+    "code": "def solution(nums):\n    m = nums[0]\n    for n in nums:\n        if n < m:\n            m = n\n    return m\n",
+    "label": "M4"
+  },
+  {
+    "code": "def solution(nums):\n    count = 0\n    for n in nums:\n        if n % 2 == 0:\n            count = count + 1\n    return count\n",
+    "label": "M5"
+  },
+  {
+    "code": "def solution(nums):\n    result = []\n    for i in range(len(nums) - 1, 0, -1):\n        result.append(nums[i])\n    return result\n",
+    "label": "M7"
+  },
+  {
+    "code": "def solution(nums):\n    m = nums[0]\n    for n in nums:\n        if n < m:\n            m = n\n    return m\n",
+    "label": "M4"
+  },
+  {
+    "code": "def solution(nums):\n    m = nums[0]\n    for n in nums:\n        if n < m:\n            m = n\n    return m\n",
+    "label": "M4"
+  },
+  {
+    "code": "def solution(nums):\n    result = []\n    for i in range(len(nums) - 1, 0, -1):\n        result.append(nums[i])\n    return result\n",
+    "label": "M7"
+  },
+  {
+    "code": "def solution(nums):\n    s = 0\n    for n in nums:\n        s += n\n    return s\n",
+    "label": "M0"
+  },
+  {
+    "code": "def solution(nums):\n    s = 0\n    for i in range(len(nums) - 1):\n        s += nums[i]\n    return s\n",
+    "label": "M3"
+  },
+  {
+    "code": "def solution(nums):\n    result = []\n    for i in range(len(nums) - 1, 0, -1):\n        result.append(nums[i])\n    return result\n",
+    "label": "M7"
+  },
+  {
+    "code": "def solution(nums):\n    result = []\n    for i in range(len(nums) - 1, 0, -1):\n        result.append(nums[i])\n    return result\n",
+    "label": "M7"
+  },
+  {
+    "code": "def solution(nums):\n    s = 0\n    for n in nums:\n        s += n\n    return s\n",
+    "label": "M0"
+  },
+  {
+    "code": "def solution(nums):\n    m = nums[0]\n    for n in nums:\n        if n < m:\n            m = n\n    return m\n",
+    "label": "M4"
+  },
+  {
+    "code": "def solution(nums):\n    result = []\n    for i in range(len(nums) - 1, 0, -1):\n        result.append(nums[i])\n    return result\n",
+    "label": "M7"
+  },
+  {
+    "code": "def solution(nums):\n    s = 0\n    for n in nums:\n        s += n\n    print(s)\n",
+    "label": "M2"
+  },
+  {
+    "code": "def solution(nums):\n    nums.reverse()\n    return nums\n",
+    "label": "M6"
+  },
+  {
+    "code": "def solution(nums):\n    result = []\n    for i in range(len(nums) - 1, 0, -1):\n        result.append(nums[i])\n    return result\n",
+    "label": "M7"
+  },
+  {
+    "code": "def solution(nums):\n    s = 0\n    for n in nums:\n        s += n\n    return s\n",
+    "label": "M0"
+  },
+  {
+    "code": "def solution(nums):\n    nums.reverse()\n    return nums\n",
+    "label": "M6"
+  },
+  {
+    "code": "def solution(nums):\n    count = 0\n    for n in nums:\n        if n % 2 == 0:\n            count = count + 1\n    return count\n",
+    "label": "M5"
+  },
+  {
+    "code": "def solution(nums):\n    nums.reverse()\n    return nums\n",
+    "label": "M6"
+  },
+  {
+    "code": "def solution(nums):\n    count = 0\n    for n in nums:\n        if n % 2 == 0:\n            count = count + 1\n    return count\n",
+    "label": "M5"
+  },
+  {
+    "code": "def solution(nums):\n    for n in nums:\n        s = 0\n        s += n\n    return s\n",
+    "label": "M1"
+  },
+  {
+    "code": "def solution(nums):\n    count = 0\n    for n in nums:\n        if n % 2 == 0:\n            count = count + 1\n    return count\n",
+    "label": "M5"
+  },
+  {
+    "code": "def solution(nums):\n    s = 0\n    for n in nums:\n        s += n\n    return s\n",
+    "label": "M0"
+  },
+  {
+    "code": "def solution(nums):\n    s = 0\n    for n in nums:\n        s += n\n    return s\n",
+    "label": "M0"
+  },
+  {
+    "code": "def solution(nums):\n    for n in nums:\n        s = 0\n        s += n\n    return s\n",
+    "label": "M1"
+  },
+  {
+    "code": "def solution(nums):\n    result = []\n    for i in range(len(nums) - 1, 0, -1):\n        result.append(nums[i])\n    return result\n",
+    "label": "M7"
+  },
+  {
+    "code": "def solution(nums):\n    result = []\n    for i in range(len(nums) - 1, 0, -1):\n        result.append(nums[i])\n    return result\n",
+    "label": "M7"
+  },
+  {
+    "code": "def solution(nums):\n    m = nums[0]\n    for n in nums:\n        if n < m:\n            m = n\n    return m\n",
+    "label": "M4"
+  },
+  {
+    "code": "def solution(nums):\n    s = 0\n    for n in nums:\n        s += n\n    return s\n",
+    "label": "M0"
+  },
+  {
+    "code": "def solution(nums):\n    s = 0\n    for n in nums:\n        s += n\n    print(s)\n",
+    "label": "M2"
+  },
+  {
+    "code": "def solution(nums):\n    s = 0\n    for i in range(len(nums) - 1):\n        s += nums[i]\n    return s\n",
+    "label": "M3"
+  },
+  {
+    "code": "def solution(nums):\n    for n in nums:\n        s = 0\n        s += n\n    return s\n",
+    "label": "M1"
+  },
+  {
+    "code": "def solution(nums):\n    result = []\n    for i in range(len(nums) - 1, 0, -1):\n        result.append(nums[i])\n    return result\n",
+    "label": "M7"
+  },
+  {
+    "code": "def solution(nums):\n    result = []\n    for i in range(len(nums) - 1, 0, -1):\n        result.append(nums[i])\n    return result\n",
+    "label": "M7"
+  },
+  {
+    "code": "def solution(nums):\n    nums.reverse()\n    return nums\n",
+    "label": "M6"
+  },
+  {
+    "code": "def solution(nums):\n    s = 0\n    for n in nums:\n        s += n\n    return s\n",
+    "label": "M0"
+  },
+  {
+    "code": "def solution(nums):\n    s = 0\n    for n in nums:\n        s += n\n    print(s)\n    return\n",
+    "label": "M2"
+  },
+  {
+    "code": "def solution(nums):\n    result = []\n    for i in range(len(nums) - 1, 0, -1):\n        result.append(nums[i])\n    return result\n",
+    "label": "M7"
+  },
+  {
+    "code": "def solution(nums):\n    s = 0\n    for i in range(len(nums) - 1):\n        s += nums[i]\n    return s\n",
+    "label": "M3"
+  },
+  {
+    "code": "def solution(nums):\n    s = 0\n    for n in nums:\n        s += n\n    return s\n",
+    "label": "M0"
+  },
+  {
+    "code": "def solution(nums):\n    s = 0\n    for i in range(len(nums) - 1):\n        s += nums[i]\n    return s\n",
+    "label": "M3"
+  },
+  {
+    "code": "def solution(nums):\n    count = 0\n    for n in nums:\n        if n % 2 == 0:\n            count = count + 1\n    return count\n",
+    "label": "M5"
+  },
+  {
+    "code": "def solution(nums):\n    s = 0\n    for n in nums:\n        s += n\n    return s\n",
+    "label": "M0"
+  },
+  {
+    "code": "def solution(nums):\n    m = nums[0]\n    for n in nums:\n        if n < m:\n            m = n\n    return m\n",
+    "label": "M4"
+  },
+  {
+    "code": "def solution(nums):\n    s = 0\n    for i in range(len(nums) - 1):\n        s += nums[i]\n    return s\n",
+    "label": "M3"
+  },
+  {
+    "code": "def solution(nums):\n    result = []\n    for i in range(len(nums) - 1, 0, -1):\n        result.append(nums[i])\n    return result\n",
+    "label": "M7"
+  },
+  {
+    "code": "def solution(nums):\n    count = 0\n    for n in nums:\n        if n % 2 == 0:\n            count = count + 1\n    return count\n",
+    "label": "M5"
+  },
+  {
+    "code": "def solution(nums):\n    nums.reverse()\n    return nums\n",
+    "label": "M6"
+  },
+  {
+    "code": "def solution(nums):\n    s = 0\n    for i in range(len(nums) - 1):\n        s += nums[i]\n    return s\n",
+    "label": "M3"
+  },
+  {
+    "code": "def solution(nums):\n    m = nums[0]\n    for n in nums:\n        if n < m:\n            m = n\n    return m\n",
+    "label": "M4"
+  },
+  {
+    "code": "def solution(nums):\n    s = 0\n    for n in nums:\n        s += n\n    return s\n",
+    "label": "M0"
+  },
+  {
+    "code": "def solution(nums):\n    result = []\n    for i in range(len(nums) - 1, 0, -1):\n        result.append(nums[i])\n    return result\n",
+    "label": "M7"
+  },
+  {
+    "code": "def solution(nums):\n    s = 0\n    for n in nums:\n        s += n\n    return s\n",
+    "label": "M0"
+  },
+  {
+    "code": "def solution(nums):\n    s = 0\n    for n in nums:\n        s += n\n    print(s)\n",
+    "label": "M2"
+  },
+  {
+    "code": "def solution(nums):\n    for n in nums:\n        s = 0\n        s += n\n    return s\n",
+    "label": "M1"
+  },
+  {
+    "code": "def solution(nums):\n    count = 0\n    for n in nums:\n        if n % 2 == 0:\n            count = count + 1\n    return count\n",
+    "label": "M5"
+  },
+  {
+    "code": "def solution(nums):\n    nums.reverse()\n    return nums\n",
+    "label": "M6"
+  },
+  {
+    "code": "def solution(nums):\n    s = 0\n    for n in nums:\n        s += n\n    return s\n",
+    "label": "M0"
+  },
+  {
+    "code": "def solution(nums):\n    s = 0\n    for n in nums:\n        s += n\n    print(s)\n",
+    "label": "M2"
+  },
+  {
+    "code": "def solution(nums):\n    s = 0\n    for n in nums:\n        s += n\n    return s\n",
+    "label": "M0"
+  },
+  {
+    "code": "def solution(nums):\n    s = 0\n    for n in nums:\n        s += n\n    return s\n",
+    "label": "M0"
+  },
+  {
+    "code": "def solution(nums):\n    for n in nums:\n        total = 0\n        total = total + n\n    return total\n",
+    "label": "M1"
+  },
+  {
+    "code": "def solution(nums):\n    m = nums[0]\n    for n in nums:\n        if n < m:\n            m = n\n    return m\n",
+    "label": "M4"
+  },
+  {
+    "code": "def solution(nums):\n    count = 0\n    for n in nums:\n        if n % 2 == 0:\n            count = count + 1\n    return count\n",
+    "label": "M5"
+  },
+  {
+    "code": "def solution(nums):\n    s = 0\n    for i in range(len(nums) - 1):\n        s += nums[i]\n    return s\n",
+    "label": "M3"
+  },
+  {
+    "code": "def solution(nums):\n    result = []\n    for i in range(len(nums) - 1, 0, -1):\n        result.append(nums[i])\n    return result\n",
+    "label": "M7"
+  },
+  {
+    "code": "def solution(nums):\n    result = []\n    for i in range(len(nums) - 1, 0, -1):\n        result.append(nums[i])\n    return result\n",
+    "label": "M7"
+  },
+  {
+    "code": "def solution(nums):\n    count = 0\n    for n in nums:\n        if n % 2 == 0:\n            count = count + 1\n    return count\n",
+    "label": "M5"
+  },
+  {
+    "code": "def solution(nums):\n    count = 0\n    for n in nums:\n        if n % 2 == 0:\n            count = count + 1\n    return count\n",
+    "label": "M5"
+  },
+  {
+    "code": "def solution(nums):\n    count = 0\n    for n in nums:\n        if n % 2 == 0:\n            count = count + 1\n    return count\n",
+    "label": "M5"
+  },
+  {
+    "code": "def solution(nums):\n    nums.reverse()\n    return nums\n",
+    "label": "M6"
+  },
+  {
+    "code": "def solution(nums):\n    s = 0\n    for n in nums:\n        s += n\n    return s\n",
+    "label": "M0"
+  },
+  {
+    "code": "def solution(nums):\n    result = []\n    for i in range(len(nums) - 1, 0, -1):\n        result.append(nums[i])\n    return result\n",
+    "label": "M7"
+  },
+  {
+    "code": "def solution(nums):\n    s = 0\n    for n in nums:\n        s += n\n    print(s)\n    return\n",
+    "label": "M2"
+  },
+  {
+    "code": "def solution(nums):\n    result = []\n    for i in range(len(nums) - 1, 0, -1):\n        result.append(nums[i])\n    return result\n",
+    "label": "M7"
+  },
+  {
+    "code": "def solution(nums):\n    s = 0\n    for i in range(len(nums) - 1):\n        s += nums[i]\n    return s\n",
+    "label": "M3"
+  },
+  {
+    "code": "def solution(nums):\n    m = nums[0]\n    for n in nums:\n        if n < m:\n            m = n\n    return m\n",
+    "label": "M4"
+  },
+  {
+    "code": "def solution(nums):\n    s = 0\n    for n in nums:\n        s += n\n    print(s)\n    return\n",
+    "label": "M2"
+  },
+  {
+    "code": "def solution(nums):\n    m = nums[0]\n    for n in nums:\n        if n < m:\n            m = n\n    return m\n",
+    "label": "M4"
+  },
+  {
+    "code": "def solution(nums):\n    m = nums[0]\n    for n in nums:\n        if n < m:\n            m = n\n    return m\n",
+    "label": "M4"
+  },
+  {
+    "code": "def solution(nums):\n    for n in nums:\n        s = 0\n        s += n\n    return s\n",
+    "label": "M1"
+  },
+  {
+    "code": "def solution(nums):\n    count = 0\n    for n in nums:\n        if n % 2 == 0:\n            count = count + 1\n    return count\n",
+    "label": "M5"
+  },
+  {
+    "code": "def solution(nums):\n    s = 0\n    for i in range(len(nums) - 1):\n        s += nums[i]\n    return s\n",
+    "label": "M3"
+  },
+  {
+    "code": "def solution(nums):\n    s = 0\n    for n in nums:\n        s += n\n    print(s)\n    return\n",
+    "label": "M2"
+  },
+  {
+    "code": "def solution(nums):\n    for n in nums:\n        total = 0\n        total = total + n\n    return total\n",
+    "label": "M1"
+  },
+  {
+    "code": "def solution(nums):\n    result = []\n    for i in range(len(nums) - 1, 0, -1):\n        result.append(nums[i])\n    return result\n",
+    "label": "M7"
+  },
+  {
+    "code": "def solution(nums):\n    count = 0\n    for n in nums:\n        if n % 2 == 0:\n            count = count + 1\n    return count\n",
+    "label": "M5"
+  },
+  {
+    "code": "def solution(nums):\n    count = 0\n    for n in nums:\n        if n % 2 == 0:\n            count = count + 1\n    return count\n",
+    "label": "M5"
+  },
+  {
+    "code": "def solution(nums):\n    count = 0\n    for n in nums:\n        if n % 2 == 0:\n            count = count + 1\n    return count\n",
+    "label": "M5"
+  },
+  {
+    "code": "def solution(nums):\n    m = nums[0]\n    for n in nums:\n        if n < m:\n            m = n\n    return m\n",
+    "label": "M4"
+  },
+  {
+    "code": "def solution(nums):\n    s = 0\n    for n in nums:\n        s += n\n    print(s)\n",
+    "label": "M2"
+  },
+  {
+    "code": "def solution(nums):\n    result = []\n    for i in range(len(nums) - 1, 0, -1):\n        result.append(nums[i])\n    return result\n",
+    "label": "M7"
+  },
+  {
+    "code": "def solution(nums):\n    result = []\n    for i in range(len(nums) - 1, 0, -1):\n        result.append(nums[i])\n    return result\n",
+    "label": "M7"
+  },
+  {
+    "code": "def solution(nums):\n    result = []\n    for i in range(len(nums) - 1, 0, -1):\n        result.append(nums[i])\n    return result\n",
+    "label": "M7"
+  },
+  {
+    "code": "def solution(nums):\n    s = 0\n    for i in range(len(nums) - 1):\n        s += nums[i]\n    return s\n",
+    "label": "M3"
+  },
+  {
+    "code": "def solution(nums):\n    s = 0\n    for n in nums:\n        s += n\n    return s\n",
+    "label": "M0"
+  },
+  {
+    "code": "def solution(nums):\n    s = 0\n    for n in nums:\n        s += n\n    return s\n",
+    "label": "M0"
+  },
+  {
+    "code": "def solution(nums):\n    s = 0\n    for i in range(len(nums) - 1):\n        s += nums[i]\n    return s\n",
+    "label": "M3"
+  },
+  {
+    "code": "def solution(nums):\n    nums.reverse()\n    return nums\n",
+    "label": "M6"
+  },
+  {
+    "code": "def solution(nums):\n    result = []\n    for i in range(len(nums) - 1, 0, -1):\n        result.append(nums[i])\n    return result\n",
+    "label": "M7"
+  },
+  {
+    "code": "def solution(nums):\n    nums.reverse()\n    return nums\n",
+    "label": "M6"
+  },
+  {
+    "code": "def solution(nums):\n    count = 0\n    for n in nums:\n        if n % 2 == 0:\n            count = count + 1\n    return count\n",
+    "label": "M5"
+  },
+  {
+    "code": "def solution(nums):\n    for n in nums:\n        total = 0\n        total = total + n\n    return total\n",
+    "label": "M1"
+  },
+  {
+    "code": "def solution(nums):\n    count = 0\n    for n in nums:\n        if n % 2 == 0:\n            count = count + 1\n    return count\n",
+    "label": "M5"
+  },
+  {
+    "code": "def solution(nums):\n    nums.reverse()\n    return nums\n",
+    "label": "M6"
+  },
+  {
+    "code": "def solution(nums):\n    result = []\n    for i in range(len(nums) - 1, 0, -1):\n        result.append(nums[i])\n    return result\n",
+    "label": "M7"
+  },
+  {
+    "code": "def solution(nums):\n    nums.reverse()\n    return nums\n",
+    "label": "M6"
+  },
+  {
+    "code": "def solution(nums):\n    nums.reverse()\n    return nums\n",
+    "label": "M6"
+  },
+  {
+    "code": "def solution(nums):\n    result = []\n    for i in range(len(nums) - 1, 0, -1):\n        result.append(nums[i])\n    return result\n",
+    "label": "M7"
+  },
+  {
+    "code": "def solution(nums):\n    s = 0\n    for n in nums:\n        s += n\n    return s\n",
+    "label": "M0"
+  },
+  {
+    "code": "def solution(nums):\n    m = nums[0]\n    for n in nums:\n        if n < m:\n            m = n\n    return m\n",
+    "label": "M4"
+  },
+  {
+    "code": "def solution(nums):\n    s = 0\n    for n in nums:\n        s += n\n    print(s)\n    return\n",
+    "label": "M2"
+  },
+  {
+    "code": "def solution(nums):\n    nums.reverse()\n    return nums\n",
+    "label": "M6"
+  },
+  {
+    "code": "def solution(nums):\n    nums.reverse()\n    return nums\n",
+    "label": "M6"
+  },
+  {
+    "code": "def solution(nums):\n    s = 0\n    for n in nums:\n        s += n\n    return s\n",
+    "label": "M0"
+  },
+  {
+    "code": "def solution(nums):\n    result = []\n    for i in range(len(nums) - 1, 0, -1):\n        result.append(nums[i])\n    return result\n",
+    "label": "M7"
+  },
+  {
+    "code": "def solution(nums):\n    s = 0\n    for n in nums:\n        s += n\n    return s\n",
+    "label": "M0"
+  },
+  {
+    "code": "def solution(nums):\n    s = 0\n    for i in range(len(nums) - 1):\n        s += nums[i]\n    return s\n",
+    "label": "M3"
+  },
+  {
+    "code": "def solution(nums):\n    nums.reverse()\n    return nums\n",
+    "label": "M6"
+  },
+  {
+    "code": "def solution(nums):\n    for n in nums:\n        total = 0\n        total = total + n\n    return total\n",
+    "label": "M1"
+  },
+  {
+    "code": "def solution(nums):\n    m = nums[0]\n    for n in nums:\n        if n < m:\n            m = n\n    return m\n",
+    "label": "M4"
+  },
+  {
+    "code": "def solution(nums):\n    s = 0\n    for i in range(len(nums) - 1):\n        s += nums[i]\n    return s\n",
+    "label": "M3"
+  },
+  {
+    "code": "def solution(nums):\n    result = []\n    for i in range(len(nums) - 1, 0, -1):\n        result.append(nums[i])\n    return result\n",
+    "label": "M7"
+  },
+  {
+    "code": "def solution(nums):\n    m = nums[0]\n    for n in nums:\n        if n < m:\n            m = n\n    return m\n",
+    "label": "M4"
+  },
+  {
+    "code": "def solution(nums):\n    s = 0\n    for n in nums:\n        s += n\n    print(s)\n",
+    "label": "M2"
+  },
+  {
+    "code": "def solution(nums):\n    nums.reverse()\n    return nums\n",
+    "label": "M6"
+  },
+  {
+    "code": "def solution(nums):\n    m = nums[0]\n    for n in nums:\n        if n < m:\n            m = n\n    return m\n",
+    "label": "M4"
+  },
+  {
+    "code": "def solution(nums):\n    s = 0\n    for n in nums:\n        s += n\n    print(s)\n",
+    "label": "M2"
+  },
+  {
+    "code": "def solution(nums):\n    s = 0\n    for n in nums:\n        s += n\n    print(s)\n",
+    "label": "M2"
+  },
+  {
+    "code": "def solution(nums):\n    for n in nums:\n        total = 0\n        total = total + n\n    return total\n",
+    "label": "M1"
+  },
+  {
+    "code": "def solution(nums):\n    result = []\n    for i in range(len(nums) - 1, 0, -1):\n        result.append(nums[i])\n    return result\n",
+    "label": "M7"
+  },
+  {
+    "code": "def solution(nums):\n    result = []\n    for i in range(len(nums) - 1, 0, -1):\n        result.append(nums[i])\n    return result\n",
+    "label": "M7"
+  },
+  {
+    "code": "def solution(nums):\n    for n in nums:\n        total = 0\n        total = total + n\n    return total\n",
+    "label": "M1"
+  },
+  {
+    "code": "def solution(nums):\n    s = 0\n    for n in nums:\n        s += n\n    print(s)\n    return\n",
+    "label": "M2"
+  },
+  {
+    "code": "def solution(nums):\n    s = 0\n    for n in nums:\n        s += n\n    return s\n",
+    "label": "M0"
+  },
+  {
+    "code": "def solution(nums):\n    m = nums[0]\n    for n in nums:\n        if n < m:\n            m = n\n    return m\n",
+    "label": "M4"
+  },
+  {
+    "code": "def solution(nums):\n    s = 0\n    for i in range(len(nums) - 1):\n        s += nums[i]\n    return s\n",
+    "label": "M3"
+  },
+  {
+    "code": "def solution(nums):\n    m = nums[0]\n    for n in nums:\n        if n < m:\n            m = n\n    return m\n",
+    "label": "M4"
+  },
+  {
+    "code": "def solution(nums):\n    for n in nums:\n        s = 0\n        s += n\n    return s\n",
+    "label": "M1"
+  },
+  {
+    "code": "def solution(nums):\n    count = 0\n    for n in nums:\n        if n % 2 == 0:\n            count = count + 1\n    return count\n",
+    "label": "M5"
+  },
+  {
+    "code": "def solution(nums):\n    result = []\n    for i in range(len(nums) - 1, 0, -1):\n        result.append(nums[i])\n    return result\n",
+    "label": "M7"
+  },
+  {
+    "code": "def solution(nums):\n    nums.reverse()\n    return nums\n",
+    "label": "M6"
+  },
+  {
+    "code": "def solution(nums):\n    count = 0\n    for n in nums:\n        if n % 2 == 0:\n            count = count + 1\n    return count\n",
+    "label": "M5"
+  },
+  {
+    "code": "def solution(nums):\n    for n in nums:\n        s = 0\n        s += n\n    return s\n",
+    "label": "M1"
+  },
+  {
+    "code": "def solution(nums):\n    m = nums[0]\n    for n in nums:\n        if n < m:\n            m = n\n    return m\n",
+    "label": "M4"
+  },
+  {
+    "code": "def solution(nums):\n    nums.reverse()\n    return nums\n",
+    "label": "M6"
+  },
+  {
+    "code": "def solution(nums):\n    s = 0\n    for i in range(len(nums) - 1):\n        s += nums[i]\n    return s\n",
+    "label": "M3"
+  },
+  {
+    "code": "def solution(nums):\n    s = 0\n    for i in range(len(nums) - 1):\n        s += nums[i]\n    return s\n",
+    "label": "M3"
+  },
+  {
+    "code": "def solution(nums):\n    s = 0\n    for i in range(len(nums) - 1):\n        s += nums[i]\n    return s\n",
+    "label": "M3"
+  },
+  {
+    "code": "def solution(nums):\n    s = 0\n    for n in nums:\n        s += n\n    return s\n",
+    "label": "M0"
+  },
+  {
+    "code": "def solution(nums):\n    s = 0\n    for n in nums:\n        s += n\n    return s\n",
+    "label": "M0"
+  },
+  {
+    "code": "def solution(nums):\n    count = 0\n    for n in nums:\n        if n % 2 == 0:\n            count = count + 1\n    return count\n",
+    "label": "M5"
+  },
+  {
+    "code": "def solution(nums):\n    nums.reverse()\n    return nums\n",
+    "label": "M6"
+  },
+  {
+    "code": "def solution(nums):\n    m = nums[0]\n    for n in nums:\n        if n < m:\n            m = n\n    return m\n",
+    "label": "M4"
+  },
+  {
+    "code": "def solution(nums):\n    s = 0\n    for n in nums:\n        s += n\n    print(s)\n    return\n",
+    "label": "M2"
+  },
+  {
+    "code": "def solution(nums):\n    nums.reverse()\n    return nums\n",
+    "label": "M6"
+  },
+  {
+    "code": "def solution(nums):\n    s = 0\n    for n in nums:\n        s += n\n    return s\n",
+    "label": "M0"
+  },
+  {
+    "code": "def solution(nums):\n    for n in nums:\n        total = 0\n        total = total + n\n    return total\n",
+    "label": "M1"
+  },
+  {
+    "code": "def solution(nums):\n    s = 0\n    for n in nums:\n        s += n\n    print(s)\n    return\n",
+    "label": "M2"
+  },
+  {
+    "code": "def solution(nums):\n    count = 0\n    for n in nums:\n        if n % 2 == 0:\n            count = count + 1\n    return count\n",
+    "label": "M5"
+  },
+  {
+    "code": "def solution(nums):\n    count = 0\n    for n in nums:\n        if n % 2 == 0:\n            count = count + 1\n    return count\n",
+    "label": "M5"
+  },
+  {
+    "code": "def solution(nums):\n    m = nums[0]\n    for n in nums:\n        if n < m:\n            m = n\n    return m\n",
+    "label": "M4"
+  },
+  {
+    "code": "def solution(nums):\n    nums.reverse()\n    return nums\n",
+    "label": "M6"
+  },
+  {
+    "code": "def solution(nums):\n    s = 0\n    for n in nums:\n        s += n\n    print(s)\n",
+    "label": "M2"
+  },
+  {
+    "code": "def solution(nums):\n    s = 0\n    for i in range(len(nums) - 1):\n        s += nums[i]\n    return s\n",
+    "label": "M3"
+  },
+  {
+    "code": "def solution(nums):\n    nums.reverse()\n    return nums\n",
+    "label": "M6"
+  },
+  {
+    "code": "def solution(nums):\n    s = 0\n    for n in nums:\n        s += n\n    print(s)\n",
+    "label": "M2"
+  },
+  {
+    "code": "def solution(nums):\n    s = 0\n    for n in nums:\n        s += n\n    print(s)\n    return\n",
+    "label": "M2"
+  },
+  {
+    "code": "def solution(nums):\n    result = []\n    for i in range(len(nums) - 1, 0, -1):\n        result.append(nums[i])\n    return result\n",
+    "label": "M7"
+  },
+  {
+    "code": "def solution(nums):\n    nums.reverse()\n    return nums\n",
+    "label": "M6"
+  },
+  {
+    "code": "def solution(nums):\n    s = 0\n    for i in range(len(nums) - 1):\n        s += nums[i]\n    return s\n",
+    "label": "M3"
+  },
+  {
+    "code": "def solution(nums):\n    result = []\n    for i in range(len(nums) - 1, 0, -1):\n        result.append(nums[i])\n    return result\n",
+    "label": "M7"
+  },
+  {
+    "code": "def solution(nums):\n    s = 0\n    for i in range(len(nums) - 1):\n        s += nums[i]\n    return s\n",
+    "label": "M3"
+  },
+  {
+    "code": "def solution(nums):\n    m = nums[0]\n    for n in nums:\n        if n < m:\n            m = n\n    return m\n",
+    "label": "M4"
+  },
+  {
+    "code": "def solution(nums):\n    count = 0\n    for n in nums:\n        if n % 2 == 0:\n            count = count + 1\n    return count\n",
+    "label": "M5"
+  },
+  {
+    "code": "def solution(nums):\n    nums.reverse()\n    return nums\n",
+    "label": "M6"
+  },
+  {
+    "code": "def solution(nums):\n    for n in nums:\n        s = 0\n        s += n\n    return s\n",
+    "label": "M1"
+  },
+  {
+    "code": "def solution(nums):\n    s = 0\n    for i in range(len(nums) - 1):\n        s += nums[i]\n    return s\n",
+    "label": "M3"
+  },
+  {
+    "code": "def solution(nums):\n    s = 0\n    for n in nums:\n        s += n\n    return s\n",
+    "label": "M0"
+  },
+  {
+    "code": "def solution(nums):\n    result = []\n    for i in range(len(nums) - 1, 0, -1):\n        result.append(nums[i])\n    return result\n",
+    "label": "M7"
+  },
+  {
+    "code": "def solution(nums):\n    for n in nums:\n        total = 0\n        total = total + n\n    return total\n",
+    "label": "M1"
+  },
+  {
+    "code": "def solution(nums):\n    nums.reverse()\n    return nums\n",
+    "label": "M6"
+  },
+  {
+    "code": "def solution(nums):\n    for n in nums:\n        s = 0\n        s += n\n    return s\n",
+    "label": "M1"
+  },
+  {
+    "code": "def solution(nums):\n    for n in nums:\n        s = 0\n        s += n\n    return s\n",
+    "label": "M1"
+  },
+  {
+    "code": "def solution(nums):\n    count = 0\n    for n in nums:\n        if n % 2 == 0:\n            count = count + 1\n    return count\n",
+    "label": "M5"
+  },
+  {
+    "code": "def solution(nums):\n    for n in nums:\n        s = 0\n        s += n\n    return s\n",
+    "label": "M1"
+  },
+  {
+    "code": "def solution(nums):\n    s = 0\n    for n in nums:\n        s += n\n    return s\n",
+    "label": "M0"
+  },
+  {
+    "code": "def solution(nums):\n    nums.reverse()\n    return nums\n",
+    "label": "M6"
+  },
+  {
+    "code": "def solution(nums):\n    nums.reverse()\n    return nums\n",
+    "label": "M6"
+  },
+  {
+    "code": "def solution(nums):\n    m = nums[0]\n    for n in nums:\n        if n < m:\n            m = n\n    return m\n",
+    "label": "M4"
+  },
+  {
+    "code": "def solution(nums):\n    result = []\n    for i in range(len(nums) - 1, 0, -1):\n        result.append(nums[i])\n    return result\n",
+    "label": "M7"
+  },
+  {
+    "code": "def solution(nums):\n    for n in nums:\n        total = 0\n        total = total + n\n    return total\n",
+    "label": "M1"
+  },
+  {
+    "code": "def solution(nums):\n    nums.reverse()\n    return nums\n",
+    "label": "M6"
+  },
+  {
+    "code": "def solution(nums):\n    s = 0\n    for n in nums:\n        s += n\n    return s\n",
+    "label": "M0"
+  },
+  {
+    "code": "def solution(nums):\n    count = 0\n    for n in nums:\n        if n % 2 == 0:\n            count = count + 1\n    return count\n",
+    "label": "M5"
+  },
+  {
+    "code": "def solution(nums):\n    s = 0\n    for n in nums:\n        s += n\n    print(s)\n",
+    "label": "M2"
+  },
+  {
+    "code": "def solution(nums):\n    s = 0\n    for n in nums:\n        s += n\n    return s\n",
+    "label": "M0"
+  },
+  {
+    "code": "def solution(nums):\n    s = 0\n    for n in nums:\n        s += n\n    print(s)\n    return\n",
+    "label": "M2"
+  },
+  {
+    "code": "def solution(nums):\n    s = 0\n    for n in nums:\n        s += n\n    return s\n",
+    "label": "M0"
+  },
+  {
+    "code": "def solution(nums):\n    s = 0\n    for n in nums:\n        s += n\n    print(s)\n    return\n",
+    "label": "M2"
+  },
+  {
+    "code": "def solution(nums):\n    for n in nums:\n        total = 0\n        total = total + n\n    return total\n",
+    "label": "M1"
+  },
+  {
+    "code": "def solution(nums):\n    s = 0\n    for n in nums:\n        s += n\n    return s\n",
+    "label": "M0"
+  },
+  {
+    "code": "def solution(nums):\n    for n in nums:\n        s = 0\n        s += n\n    return s\n",
+    "label": "M1"
+  },
+  {
+    "code": "def solution(nums):\n    s = 0\n    for n in nums:\n        s += n\n    print(s)\n    return\n",
+    "label": "M2"
+  },
+  {
+    "code": "def solution(nums):\n    for n in nums:\n        total = 0\n        total = total + n\n    return total\n",
+    "label": "M1"
+  },
+  {
+    "code": "def solution(nums):\n    s = 0\n    for i in range(len(nums) - 1):\n        s += nums[i]\n    return s\n",
+    "label": "M3"
+  },
+  {
+    "code": "def solution(nums):\n    m = nums[0]\n    for n in nums:\n        if n < m:\n            m = n\n    return m\n",
+    "label": "M4"
+  },
+  {
+    "code": "def solution(nums):\n    for n in nums:\n        s = 0\n        s += n\n    return s\n",
+    "label": "M1"
+  },
+  {
+    "code": "def solution(nums):\n    s = 0\n    for n in nums:\n        s += n\n    return s\n",
+    "label": "M0"
+  },
+  {
+    "code": "def solution(nums):\n    for n in nums:\n        s = 0\n        s += n\n    return s\n",
+    "label": "M1"
+  },
+  {
+    "code": "def solution(nums):\n    nums.reverse()\n    return nums\n",
+    "label": "M6"
+  },
+  {
+    "code": "def solution(nums):\n    s = 0\n    for i in range(len(nums) - 1):\n        s += nums[i]\n    return s\n",
+    "label": "M3"
+  },
+  {
+    "code": "def solution(nums):\n    s = 0\n    for n in nums:\n        s += n\n    print(s)\n",
+    "label": "M2"
+  },
+  {
+    "code": "def solution(nums):\n    s = 0\n    for i in range(len(nums) - 1):\n        s += nums[i]\n    return s\n",
+    "label": "M3"
+  },
+  {
+    "code": "def solution(nums):\n    for n in nums:\n        total = 0\n        total = total + n\n    return total\n",
+    "label": "M1"
+  },
+  {
+    "code": "def solution(nums):\n    nums.reverse()\n    return nums\n",
+    "label": "M6"
+  },
+  {
+    "code": "def solution(nums):\n    for n in nums:\n        total = 0\n        total = total + n\n    return total\n",
+    "label": "M1"
+  },
+  {
+    "code": "def solution(nums):\n    s = 0\n    for n in nums:\n        s += n\n    return s\n",
+    "label": "M0"
+  },
+  {
+    "code": "def solution(nums):\n    m = nums[0]\n    for n in nums:\n        if n < m:\n            m = n\n    return m\n",
+    "label": "M4"
+  },
+  {
+    "code": "def solution(nums):\n    m = nums[0]\n    for n in nums:\n        if n < m:\n            m = n\n    return m\n",
+    "label": "M4"
+  },
+  {
+    "code": "def solution(nums):\n    s = 0\n    for n in nums:\n        s += n\n    return s\n",
+    "label": "M0"
+  },
+  {
+    "code": "def solution(nums):\n    count = 0\n    for n in nums:\n        if n % 2 == 0:\n            count = count + 1\n    return count\n",
+    "label": "M5"
+  },
+  {
+    "code": "def solution(nums):\n    result = []\n    for i in range(len(nums) - 1, 0, -1):\n        result.append(nums[i])\n    return result\n",
+    "label": "M7"
+  },
+  {
+    "code": "def solution(nums):\n    nums.reverse()\n    return nums\n",
+    "label": "M6"
+  },
+  {
+    "code": "def solution(nums):\n    s = 0\n    for n in nums:\n        s += n\n    return s\n",
+    "label": "M0"
+  },
+  {
+    "code": "def solution(nums):\n    m = nums[0]\n    for n in nums:\n        if n < m:\n            m = n\n    return m\n",
+    "label": "M4"
+  },
+  {
+    "code": "def solution(nums):\n    nums.reverse()\n    return nums\n",
+    "label": "M6"
+  },
+  {
+    "code": "def solution(nums):\n    m = nums[0]\n    for n in nums:\n        if n < m:\n            m = n\n    return m\n",
+    "label": "M4"
+  },
+  {
+    "code": "def solution(nums):\n    for n in nums:\n        total = 0\n        total = total + n\n    return total\n",
+    "label": "M1"
+  },
+  {
+    "code": "def solution(nums):\n    m = nums[0]\n    for n in nums:\n        if n < m:\n            m = n\n    return m\n",
+    "label": "M4"
+  },
+  {
+    "code": "def solution(nums):\n    s = 0\n    for n in nums:\n        s += n\n    return s\n",
+    "label": "M0"
+  },
+  {
+    "code": "def solution(nums):\n    s = 0\n    for i in range(len(nums) - 1):\n        s += nums[i]\n    return s\n",
+    "label": "M3"
+  },
+  {
+    "code": "def solution(nums):\n    result = []\n    for i in range(len(nums) - 1, 0, -1):\n        result.append(nums[i])\n    return result\n",
+    "label": "M7"
+  },
+  {
+    "code": "def solution(nums):\n    m = nums[0]\n    for n in nums:\n        if n < m:\n            m = n\n    return m\n",
+    "label": "M4"
+  },
+  {
+    "code": "def solution(nums):\n    s = 0\n    for i in range(len(nums) - 1):\n        s += nums[i]\n    return s\n",
+    "label": "M3"
+  },
+  {
+    "code": "def solution(nums):\n    count = 0\n    for n in nums:\n        if n % 2 == 0:\n            count = count + 1\n    return count\n",
+    "label": "M5"
+  },
+  {
+    "code": "def solution(nums):\n    nums.reverse()\n    return nums\n",
+    "label": "M6"
+  },
+  {
+    "code": "def solution(nums):\n    s = 0\n    for i in range(len(nums) - 1):\n        s += nums[i]\n    return s\n",
+    "label": "M3"
+  },
+  {
+    "code": "def solution(nums):\n    result = []\n    for i in range(len(nums) - 1, 0, -1):\n        result.append(nums[i])\n    return result\n",
+    "label": "M7"
+  },
+  {
+    "code": "def solution(nums):\n    for n in nums:\n        s = 0\n        s += n\n    return s\n",
+    "label": "M1"
+  },
+  {
+    "code": "def solution(nums):\n    s = 0\n    for i in range(len(nums) - 1):\n        s += nums[i]\n    return s\n",
+    "label": "M3"
+  },
+  {
+    "code": "def solution(nums):\n    s = 0\n    for n in nums:\n        s += n\n    print(s)\n",
+    "label": "M2"
+  },
+  {
+    "code": "def solution(nums):\n    result = []\n    for i in range(len(nums) - 1, 0, -1):\n        result.append(nums[i])\n    return result\n",
+    "label": "M7"
+  },
+  {
+    "code": "def solution(nums):\n    s = 0\n    for n in nums:\n        s += n\n    return s\n",
+    "label": "M0"
+  },
+  {
+    "code": "def solution(nums):\n    result = []\n    for i in range(len(nums) - 1, 0, -1):\n        result.append(nums[i])\n    return result\n",
+    "label": "M7"
+  },
+  {
+    "code": "def solution(nums):\n    for n in nums:\n        total = 0\n        total = total + n\n    return total\n",
+    "label": "M1"
+  },
+  {
+    "code": "def solution(nums):\n    result = []\n    for i in range(len(nums) - 1, 0, -1):\n        result.append(nums[i])\n    return result\n",
+    "label": "M7"
+  },
+  {
+    "code": "def solution(nums):\n    m = nums[0]\n    for n in nums:\n        if n < m:\n            m = n\n    return m\n",
+    "label": "M4"
+  },
+  {
+    "code": "def solution(nums):\n    s = 0\n    for i in range(len(nums) - 1):\n        s += nums[i]\n    return s\n",
+    "label": "M3"
+  },
+  {
+    "code": "def solution(nums):\n    result = []\n    for i in range(len(nums) - 1, 0, -1):\n        result.append(nums[i])\n    return result\n",
+    "label": "M7"
+  },
+  {
+    "code": "def solution(nums):\n    nums.reverse()\n    return nums\n",
+    "label": "M6"
+  },
+  {
+    "code": "def solution(nums):\n    s = 0\n    for n in nums:\n        s += n\n    print(s)\n    return\n",
+    "label": "M2"
+  },
+  {
+    "code": "def solution(nums):\n    count = 0\n    for n in nums:\n        if n % 2 == 0:\n            count = count + 1\n    return count\n",
+    "label": "M5"
+  },
+  {
+    "code": "def solution(nums):\n    s = 0\n    for i in range(len(nums) - 1):\n        s += nums[i]\n    return s\n",
+    "label": "M3"
+  },
+  {
+    "code": "def solution(nums):\n    result = []\n    for i in range(len(nums) - 1, 0, -1):\n        result.append(nums[i])\n    return result\n",
+    "label": "M7"
+  },
+  {
+    "code": "def solution(nums):\n    s = 0\n    for n in nums:\n        s += n\n    return s\n",
+    "label": "M0"
+  },
+  {
+    "code": "def solution(nums):\n    count = 0\n    for n in nums:\n        if n % 2 == 0:\n            count = count + 1\n    return count\n",
+    "label": "M5"
+  },
+  {
+    "code": "def solution(nums):\n    s = 0\n    for n in nums:\n        s += n\n    return s\n",
+    "label": "M0"
+  },
+  {
+    "code": "def solution(nums):\n    nums.reverse()\n    return nums\n",
+    "label": "M6"
+  },
+  {
+    "code": "def solution(nums):\n    s = 0\n    for i in range(len(nums) - 1):\n        s += nums[i]\n    return s\n",
+    "label": "M3"
+  },
+  {
+    "code": "def solution(nums):\n    s = 0\n    for i in range(len(nums) - 1):\n        s += nums[i]\n    return s\n",
+    "label": "M3"
+  },
+  {
+    "code": "def solution(nums):\n    for n in nums:\n        total = 0\n        total = total + n\n    return total\n",
+    "label": "M1"
+  },
+  {
+    "code": "def solution(nums):\n    count = 0\n    for n in nums:\n        if n % 2 == 0:\n            count = count + 1\n    return count\n",
+    "label": "M5"
+  },
+  {
+    "code": "def solution(nums):\n    nums.reverse()\n    return nums\n",
+    "label": "M6"
+  },
+  {
+    "code": "def solution(nums):\n    nums.reverse()\n    return nums\n",
+    "label": "M6"
+  },
+  {
+    "code": "def solution(nums):\n    s = 0\n    for i in range(len(nums) - 1):\n        s += nums[i]\n    return s\n",
+    "label": "M3"
+  },
+  {
+    "code": "def solution(nums):\n    m = nums[0]\n    for n in nums:\n        if n < m:\n            m = n\n    return m\n",
+    "label": "M4"
+  },
+  {
+    "code": "def solution(nums):\n    count = 0\n    for n in nums:\n        if n % 2 == 0:\n            count = count + 1\n    return count\n",
+    "label": "M5"
+  },
+  {
+    "code": "def solution(nums):\n    s = 0\n    for i in range(len(nums) - 1):\n        s += nums[i]\n    return s\n",
+    "label": "M3"
+  },
+  {
+    "code": "def solution(nums):\n    s = 0\n    for i in range(len(nums) - 1):\n        s += nums[i]\n    return s\n",
+    "label": "M3"
+  },
+  {
+    "code": "def solution(nums):\n    s = 0\n    for n in nums:\n        s += n\n    print(s)\n    return\n",
+    "label": "M2"
+  },
+  {
+    "code": "def solution(nums):\n    result = []\n    for i in range(len(nums) - 1, 0, -1):\n        result.append(nums[i])\n    return result\n",
+    "label": "M7"
+  },
+  {
+    "code": "def solution(nums):\n    result = []\n    for i in range(len(nums) - 1, 0, -1):\n        result.append(nums[i])\n    return result\n",
+    "label": "M7"
+  },
+  {
+    "code": "def solution(nums):\n    result = []\n    for i in range(len(nums) - 1, 0, -1):\n        result.append(nums[i])\n    return result\n",
+    "label": "M7"
+  },
+  {
+    "code": "def solution(nums):\n    for n in nums:\n        total = 0\n        total = total + n\n    return total\n",
+    "label": "M1"
+  },
+  {
+    "code": "def solution(nums):\n    s = 0\n    for n in nums:\n        s += n\n    return s\n",
+    "label": "M0"
+  },
+  {
+    "code": "def solution(nums):\n    s = 0\n    for n in nums:\n        s += n\n    return s\n",
+    "label": "M0"
+  },
+  {
+    "code": "def solution(nums):\n    m = nums[0]\n    for n in nums:\n        if n < m:\n            m = n\n    return m\n",
+    "label": "M4"
+  },
+  {
+    "code": "def solution(nums):\n    nums.reverse()\n    return nums\n",
+    "label": "M6"
+  },
+  {
+    "code": "def solution(nums):\n    nums.reverse()\n    return nums\n",
+    "label": "M6"
+  },
+  {
+    "code": "def solution(nums):\n    for n in nums:\n        s = 0\n        s += n\n    return s\n",
+    "label": "M1"
+  },
+  {
+    "code": "def solution(nums):\n    for n in nums:\n        total = 0\n        total = total + n\n    return total\n",
+    "label": "M1"
+  },
+  {
+    "code": "def solution(nums):\n    result = []\n    for i in range(len(nums) - 1, 0, -1):\n        result.append(nums[i])\n    return result\n",
+    "label": "M7"
+  },
+  {
+    "code": "def solution(nums):\n    s = 0\n    for n in nums:\n        s += n\n    print(s)\n",
+    "label": "M2"
+  },
+  {
+    "code": "def solution(nums):\n    s = 0\n    for n in nums:\n        s += n\n    return s\n",
+    "label": "M0"
+  },
+  {
+    "code": "def solution(nums):\n    count = 0\n    for n in nums:\n        if n % 2 == 0:\n            count = count + 1\n    return count\n",
+    "label": "M5"
+  },
+  {
+    "code": "def solution(nums):\n    s = 0\n    for n in nums:\n        s += n\n    return s\n",
+    "label": "M0"
+  },
+  {
+    "code": "def solution(nums):\n    s = 0\n    for n in nums:\n        s += n\n    print(s)\n",
+    "label": "M2"
+  },
+  {
+    "code": "def solution(nums):\n    m = nums[0]\n    for n in nums:\n        if n < m:\n            m = n\n    return m\n",
+    "label": "M4"
+  },
+  {
+    "code": "def solution(nums):\n    nums.reverse()\n    return nums\n",
+    "label": "M6"
+  },
+  {
+    "code": "def solution(nums):\n    nums.reverse()\n    return nums\n",
+    "label": "M6"
+  },
+  {
+    "code": "def solution(nums):\n    for n in nums:\n        s = 0\n        s += n\n    return s\n",
+    "label": "M1"
+  },
+  {
+    "code": "def solution(nums):\n    s = 0\n    for n in nums:\n        s += n\n    return s\n",
+    "label": "M0"
+  },
+  {
+    "code": "def solution(nums):\n    for n in nums:\n        s = 0\n        s += n\n    return s\n",
+    "label": "M1"
+  },
+  {
+    "code": "def solution(nums):\n    s = 0\n    for n in nums:\n        s += n\n    print(s)\n",
+    "label": "M2"
+  },
+  {
+    "code": "def solution(nums):\n    result = []\n    for i in range(len(nums) - 1, 0, -1):\n        result.append(nums[i])\n    return result\n",
+    "label": "M7"
+  },
+  {
+    "code": "def solution(nums):\n    for n in nums:\n        total = 0\n        total = total + n\n    return total\n",
+    "label": "M1"
+  },
+  {
+    "code": "def solution(nums):\n    s = 0\n    for n in nums:\n        s += n\n    return s\n",
+    "label": "M0"
+  },
+  {
+    "code": "def solution(nums):\n    m = nums[0]\n    for n in nums:\n        if n < m:\n            m = n\n    return m\n",
+    "label": "M4"
+  },
+  {
+    "code": "def solution(nums):\n    nums.reverse()\n    return nums\n",
+    "label": "M6"
+  },
+  {
+    "code": "def solution(nums):\n    s = 0\n    for i in range(len(nums) - 1):\n        s += nums[i]\n    return s\n",
+    "label": "M3"
+  },
+  {
+    "code": "def solution(nums):\n    count = 0\n    for n in nums:\n        if n % 2 == 0:\n            count = count + 1\n    return count\n",
+    "label": "M5"
+  },
+  {
+    "code": "def solution(nums):\n    result = []\n    for i in range(len(nums) - 1, 0, -1):\n        result.append(nums[i])\n    return result\n",
+    "label": "M7"
+  },
+  {
+    "code": "def solution(nums):\n    for n in nums:\n        total = 0\n        total = total + n\n    return total\n",
+    "label": "M1"
+  },
+  {
+    "code": "def solution(nums):\n    nums.reverse()\n    return nums\n",
+    "label": "M6"
+  },
+  {
+    "code": "def solution(nums):\n    for n in nums:\n        total = 0\n        total = total + n\n    return total\n",
+    "label": "M1"
+  },
+  {
+    "code": "def solution(nums):\n    nums.reverse()\n    return nums\n",
+    "label": "M6"
+  },
+  {
+    "code": "def solution(nums):\n    for n in nums:\n        total = 0\n        total = total + n\n    return total\n",
+    "label": "M1"
+  },
+  {
+    "code": "def solution(nums):\n    result = []\n    for i in range(len(nums) - 1, 0, -1):\n        result.append(nums[i])\n    return result\n",
+    "label": "M7"
+  },
+  {
+    "code": "def solution(nums):\n    count = 0\n    for n in nums:\n        if n % 2 == 0:\n            count = count + 1\n    return count\n",
+    "label": "M5"
+  },
+  {
+    "code": "def solution(nums):\n    s = 0\n    for i in range(len(nums) - 1):\n        s += nums[i]\n    return s\n",
+    "label": "M3"
+  },
+  {
+    "code": "def solution(nums):\n    s = 0\n    for n in nums:\n        s += n\n    return s\n",
+    "label": "M0"
+  },
+  {
+    "code": "def solution(nums):\n    s = 0\n    for n in nums:\n        s += n\n    return s\n",
+    "label": "M0"
+  },
+  {
+    "code": "def solution(nums):\n    result = []\n    for i in range(len(nums) - 1, 0, -1):\n        result.append(nums[i])\n    return result\n",
+    "label": "M7"
+  },
+  {
+    "code": "def solution(nums):\n    nums.reverse()\n    return nums\n",
+    "label": "M6"
+  },
+  {
+    "code": "def solution(nums):\n    result = []\n    for i in range(len(nums) - 1, 0, -1):\n        result.append(nums[i])\n    return result\n",
+    "label": "M7"
+  },
+  {
+    "code": "def solution(nums):\n    s = 0\n    for n in nums:\n        s += n\n    print(s)\n    return\n",
+    "label": "M2"
+  },
+  {
+    "code": "def solution(nums):\n    nums.reverse()\n    return nums\n",
+    "label": "M6"
+  },
+  {
+    "code": "def solution(nums):\n    nums.reverse()\n    return nums\n",
+    "label": "M6"
+  },
+  {
+    "code": "def solution(nums):\n    count = 0\n    for n in nums:\n        if n % 2 == 0:\n            count = count + 1\n    return count\n",
+    "label": "M5"
+  },
+  {
+    "code": "def solution(nums):\n    s = 0\n    for n in nums:\n        s += n\n    return s\n",
+    "label": "M0"
+  },
+  {
+    "code": "def solution(nums):\n    s = 0\n    for n in nums:\n        s += n\n    return s\n",
+    "label": "M0"
+  },
+  {
+    "code": "def solution(nums):\n    s = 0\n    for i in range(len(nums) - 1):\n        s += nums[i]\n    return s\n",
+    "label": "M3"
+  },
+  {
+    "code": "def solution(nums):\n    s = 0\n    for n in nums:\n        s += n\n    print(s)\n    return\n",
+    "label": "M2"
+  },
+  {
+    "code": "def solution(nums):\n    s = 0\n    for n in nums:\n        s += n\n    print(s)\n",
+    "label": "M2"
+  },
+  {
+    "code": "def solution(nums):\n    result = []\n    for i in range(len(nums) - 1, 0, -1):\n        result.append(nums[i])\n    return result\n",
+    "label": "M7"
+  },
+  {
+    "code": "def solution(nums):\n    count = 0\n    for n in nums:\n        if n % 2 == 0:\n            count = count + 1\n    return count\n",
+    "label": "M5"
+  },
+  {
+    "code": "def solution(nums):\n    s = 0\n    for i in range(len(nums) - 1):\n        s += nums[i]\n    return s\n",
+    "label": "M3"
+  },
+  {
+    "code": "def solution(nums):\n    count = 0\n    for n in nums:\n        if n % 2 == 0:\n            count = count + 1\n    return count\n",
+    "label": "M5"
+  },
+  {
+    "code": "def solution(nums):\n    nums.reverse()\n    return nums\n",
+    "label": "M6"
+  },
+  {
+    "code": "def solution(nums):\n    count = 0\n    for n in nums:\n        if n % 2 == 0:\n            count = count + 1\n    return count\n",
+    "label": "M5"
+  },
+  {
+    "code": "def solution(nums):\n    s = 0\n    for i in range(len(nums) - 1):\n        s += nums[i]\n    return s\n",
+    "label": "M3"
+  },
+  {
+    "code": "def solution(nums):\n    m = nums[0]\n    for n in nums:\n        if n < m:\n            m = n\n    return m\n",
+    "label": "M4"
+  },
+  {
+    "code": "def solution(nums):\n    s = 0\n    for i in range(len(nums) - 1):\n        s += nums[i]\n    return s\n",
+    "label": "M3"
+  },
+  {
+    "code": "def solution(nums):\n    for n in nums:\n        s = 0\n        s += n\n    return s\n",
+    "label": "M1"
+  },
+  {
+    "code": "def solution(nums):\n    s = 0\n    for n in nums:\n        s += n\n    print(s)\n    return\n",
+    "label": "M2"
+  },
+  {
+    "code": "def solution(nums):\n    s = 0\n    for n in nums:\n        s += n\n    print(s)\n",
+    "label": "M2"
+  },
+  {
+    "code": "def solution(nums):\n    result = []\n    for i in range(len(nums) - 1, 0, -1):\n        result.append(nums[i])\n    return result\n",
+    "label": "M7"
+  },
+  {
+    "code": "def solution(nums):\n    s = 0\n    for n in nums:\n        s += n\n    print(s)\n    return\n",
+    "label": "M2"
+  },
+  {
+    "code": "def solution(nums):\n    m = nums[0]\n    for n in nums:\n        if n < m:\n            m = n\n    return m\n",
+    "label": "M4"
+  },
+  {
+    "code": "def solution(nums):\n    s = 0\n    for n in nums:\n        s += n\n    print(s)\n",
+    "label": "M2"
+  },
+  {
+    "code": "def solution(nums):\n    nums.reverse()\n    return nums\n",
+    "label": "M6"
+  },
+  {
+    "code": "def solution(nums):\n    result = []\n    for i in range(len(nums) - 1, 0, -1):\n        result.append(nums[i])\n    return result\n",
+    "label": "M7"
+  },
+  {
+    "code": "def solution(nums):\n    s = 0\n    for n in nums:\n        s += n\n    print(s)\n    return\n",
+    "label": "M2"
+  },
+  {
+    "code": "def solution(nums):\n    count = 0\n    for n in nums:\n        if n % 2 == 0:\n            count = count + 1\n    return count\n",
+    "label": "M5"
+  },
+  {
+    "code": "def solution(nums):\n    m = nums[0]\n    for n in nums:\n        if n < m:\n            m = n\n    return m\n",
+    "label": "M4"
+  },
+  {
+    "code": "def solution(nums):\n    s = 0\n    for i in range(len(nums) - 1):\n        s += nums[i]\n    return s\n",
+    "label": "M3"
+  },
+  {
+    "code": "def solution(nums):\n    for n in nums:\n        s = 0\n        s += n\n    return s\n",
+    "label": "M1"
+  },
+  {
+    "code": "def solution(nums):\n    count = 0\n    for n in nums:\n        if n % 2 == 0:\n            count = count + 1\n    return count\n",
+    "label": "M5"
+  }
+]

@@ -20,7 +20,7 @@
 | **Phase 2** | Tracer (`sys.settrace`), API Endpoints | Backend + Security | ✅ Completed | `feat(api): add execution tracer and diagnosis endpoints` |
 | **Phase 3** | Dual-Pane Workspace, Monaco Editor, Radar Bars | Frontend | ✅ Completed | `feat(ui): complete unified workspace and micro-probe feed` |
 | **Phase 4** | Multimodal Variable Memory-Box Component | Frontend + AI/ML | ✅ Completed | `feat(multimodal): add interactive memory-box trace visualizer` |
-| **Phase 5** | Model Training, Calibration & Eval *(PAUSED on local request)* | AI/ML | **PAUSED (Waiting User Go-Ahead)** | — |
+| **Phase 5** | Model Training, Calibration & Eval | AI/ML | ✅ Completed | `feat(ml): train random forest classifier with isotonic calibration` |
 | **Phase 6** | Pre-seeded SQLite Presets & Model Inspector | DB + Frontend | ✅ Completed | `feat(eval): add fragile knowledge detection and model inspector` |
 | **Phase 7** | Full Integration, Zero-Crash Smoke Test & Freeze | Integration + Security | 🔄 In Progress | — |
 

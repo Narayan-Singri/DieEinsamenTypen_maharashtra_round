@@ -61,10 +61,9 @@ def generate_dataset(n_per_class: int = 50) -> List[Dict]:
 
 
 if __name__ == "__main__":
-    print("⚠️  Phase 5 is PAUSED. This script should not be run until approved.")
-    print("    When approved, uncomment the block below and run this script.")
-    # os.makedirs(os.path.dirname(OUTPUT_PATH), exist_ok=True)
-    # data = generate_dataset(n_per_class=100)
-    # with open(OUTPUT_PATH, "w") as f:
-    #     json.dump(data, f, indent=2)
-    # print(f"✅ Dataset written to {OUTPUT_PATH} ({len(data)} samples)")
+    print("[+] Phase 5 Resumed: Generating synthetic dataset...")
+    os.makedirs(os.path.dirname(OUTPUT_PATH), exist_ok=True)
+    data = generate_dataset(n_per_class=100)
+    with open(OUTPUT_PATH, "w") as f:
+        json.dump(data, f, indent=2)
+    print(f"[OK] Dataset written to {OUTPUT_PATH} ({len(data)} samples)")
