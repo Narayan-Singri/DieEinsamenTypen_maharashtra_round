@@ -11,8 +11,7 @@
    ===================================================================== */
 
 /* Default / Light Theme */
-:root,
-[data-theme="light"] {
+:root, [data-theme="light"] {
   color-scheme: light;
 
   /* Surfaces */
@@ -172,16 +171,13 @@
 /* =====================================================================
    2. Base & Reset
    ===================================================================== */
-*,
-*::before,
-*::after {
+*, *::before, *::after {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
 }
 
-html,
-body {
+html, body {
   height: 100%;
   overflow: hidden;
   background-color: var(--bg-page);
@@ -207,16 +203,13 @@ body {
   width: 6px;
   height: 6px;
 }
-
 ::-webkit-scrollbar-track {
   background: transparent;
 }
-
 ::-webkit-scrollbar-thumb {
   background: var(--border-main);
   border-radius: var(--radius-full);
 }
-
 ::-webkit-scrollbar-thumb:hover {
   background: var(--border-strong);
 }
@@ -227,10 +220,7 @@ body {
   outline-offset: 2px;
 }
 
-button,
-input,
-select,
-textarea {
+button, input, select, textarea {
   font-family: inherit;
   font-size: inherit;
   color: inherit;
@@ -254,8 +244,7 @@ select:focus {
   border-color: var(--border-focus);
 }
 
-select option,
-select optgroup {
+select option, select optgroup {
   background-color: var(--surface-main);
   color: var(--text-main);
   padding: 8px 12px;
@@ -273,11 +262,7 @@ select optgroup {
   color: #171717 !important;
 }
 
-code,
-pre,
-kbd,
-samp,
-.font-mono {
+code, pre, kbd, samp, .font-mono {
   font-family: 'IBM Plex Mono', 'JetBrains Mono', 'Fira Code', Menlo, Consolas, monospace;
 }
 
@@ -316,33 +301,34 @@ code {
   text-decoration: none;
 }
 
-.brand-mark {
-  width: 34px;
-  height: 34px;
-  background: var(--yellow-brand);
-  color: #171717;
-  border-radius: var(--radius-md);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-weight: 800;
-  font-size: 17px;
-  letter-spacing: -0.5px;
-  flex-shrink: 0;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+.brand-logo-img {
+  height: 38px;
+  width: auto;
+  object-fit: contain;
+  display: block;
 }
 
-.brand-titles {
-  display: flex;
-  flex-direction: column;
+/* Theme switching for logo */
+[data-theme="light"] .theme-logo-dark {
+  display: none !important;
 }
 
-.brand-name {
-  font-size: 20px;
-  font-weight: 800;
-  color: var(--text-main);
-  letter-spacing: -0.5px;
-  line-height: 1.15;
+[data-theme="light"] .theme-logo-light {
+  display: block !important;
+}
+
+[data-theme="dark"] .theme-logo-light {
+  display: none !important;
+}
+
+[data-theme="dark"] .theme-logo-dark {
+  display: block !important;
+}
+
+.brand-divider {
+  width: 1px;
+  height: 22px;
+  background: var(--border-main);
 }
 
 .brand-tagline {
@@ -350,6 +336,14 @@ code {
   color: var(--text-secondary);
   font-weight: 500;
   line-height: 1.2;
+}
+
+/* Loading screen logo */
+.loading-logo-img {
+  width: 64px;
+  height: 64px;
+  object-fit: contain;
+  filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.15));
 }
 
 .header-center {
@@ -483,15 +477,8 @@ code {
 }
 
 @keyframes dropFade {
-  from {
-    opacity: 0;
-    transform: translateY(-4px);
-  }
-
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+  from { opacity: 0; transform: translateY(-4px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
 .dropdown-group-heading {
@@ -1043,23 +1030,10 @@ code {
   gap: 6px;
 }
 
-.console-line.info {
-  color: var(--text-secondary);
-}
-
-.console-line.pass {
-  color: var(--status-success);
-  font-weight: 600;
-}
-
-.console-line.fail {
-  color: var(--status-error);
-}
-
-.console-line.error {
-  color: var(--status-error);
-  font-weight: 600;
-}
+.console-line.info { color: var(--text-secondary); }
+.console-line.pass { color: var(--status-success); font-weight: 600; }
+.console-line.fail { color: var(--status-error); }
+.console-line.error { color: var(--status-error); font-weight: 600; }
 
 /* Test Cases Table */
 .tests-list {
@@ -1800,15 +1774,8 @@ code {
 }
 
 @keyframes modalEnter {
-  from {
-    opacity: 0;
-    transform: scale(0.96) translateY(8px);
-  }
-
-  to {
-    opacity: 1;
-    transform: scale(1) translateY(0);
-  }
+  from { opacity: 0; transform: scale(0.96) translateY(8px); }
+  to { opacity: 1; transform: scale(1) translateY(0); }
 }
 
 .modal-header {
@@ -1903,8 +1870,7 @@ code {
   font-size: 11.5px;
 }
 
-.matrix-table th,
-.matrix-table td {
+.matrix-table th, .matrix-table td {
   padding: 6px 8px;
   text-align: center;
   border: 1px solid var(--border-main);
@@ -1979,17 +1945,12 @@ code {
 }
 
 @keyframes spin {
-  to {
-    transform: rotate(360deg);
-  }
+  to { transform: rotate(360deg); }
 }
 
 /* Reduced Motion */
 @media (prefers-reduced-motion: reduce) {
-
-  *,
-  *::before,
-  *::after {
+  *, *::before, *::after {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
@@ -2008,10 +1969,7 @@ code {
 }
 
 @media (max-width: 980px) {
-
-  html,
-  body,
-  #root {
+  html, body, #root {
     overflow-y: auto;
     height: auto;
     min-height: 100vh;
@@ -2024,9 +1982,7 @@ code {
     overflow: visible;
   }
 
-  .pane-brief,
-  .pane-center,
-  .pane-feedback {
+  .pane-brief, .pane-center, .pane-feedback {
     min-height: auto;
   }
 
