@@ -46,6 +46,11 @@ MUTANTS = {
     "M7": [
         "def solution(nums):\n    result = []\n    for i in range(len(nums) - 1, 0, -1):\n        result.append(nums[i])\n    return result\n",
     ],
+    "M8": [
+        "def solution(nums):\n    s = 0\n    for n in nums:\ns += n\n    return s\n",
+        "def solution(nums):\n    s = 0\nfor n in nums:\n    s += n\nreturn s\n",
+        "def solution(nums):\n    s = 0\n    for n in nums:\n        if n > 0:\n        s += n\n    return s\n",
+    ],
 }
 
 

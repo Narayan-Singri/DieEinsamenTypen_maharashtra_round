@@ -1223,3 +1223,192 @@ body {
 .mt-2 { margin-top: 8px; }
 .mt-3 { margin-top: 12px; }
 .w-full { width: 100%; }
+
+/* =====================================================================
+   Visual Explanations & Flow Diagrams
+   ===================================================================== */
+.visual-explanation-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  padding: 14px;
+  margin-top: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.ve-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.ve-title {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--text-primary);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.ve-severity-tag {
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  padding: 2px 8px;
+  border-radius: 12px;
+}
+.ve-severity-tag.high { background: rgba(239, 68, 68, 0.15); color: var(--accent-red); border: 1px solid rgba(239, 68, 68, 0.3); }
+.ve-severity-tag.medium { background: rgba(249, 115, 22, 0.15); color: var(--accent-orange); border: 1px solid rgba(249, 115, 22, 0.3); }
+.ve-severity-tag.low { background: rgba(59, 130, 246, 0.15); color: var(--accent-blue); border: 1px solid rgba(59, 130, 246, 0.3); }
+
+.ve-blocks-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+@media (max-width: 600px) {
+  .ve-blocks-grid { grid-template-columns: 1fr; }
+}
+
+.ve-block {
+  border-radius: var(--radius-md);
+  padding: 10px 12px;
+  font-size: 11px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.ve-block.wrong {
+  background: rgba(239, 68, 68, 0.06);
+  border: 1px solid rgba(239, 68, 68, 0.25);
+}
+.ve-block.correct {
+  background: rgba(34, 197, 94, 0.06);
+  border: 1px solid rgba(34, 197, 94, 0.25);
+}
+.ve-block.highlight {
+  background: rgba(159, 122, 234, 0.06);
+  border: 1px solid rgba(159, 122, 234, 0.25);
+}
+
+.ve-block-label {
+  font-size: 11px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+.ve-block.wrong .ve-block-label { color: var(--accent-red); }
+.ve-block.correct .ve-block-label { color: var(--accent-green); }
+.ve-block.highlight .ve-block-label { color: var(--accent-purple); }
+
+.ve-code-snippet {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  line-height: 1.6;
+  background: var(--bg-secondary);
+  border-radius: 4px;
+  padding: 6px 8px;
+  overflow-x: auto;
+}
+.ve-code-line {
+  display: flex;
+  gap: 8px;
+}
+.ve-line-num {
+  color: var(--text-muted);
+  user-select: none;
+  min-width: 18px;
+  text-align: right;
+}
+.ve-line-text.highlight {
+  color: #ff9999;
+  font-weight: 600;
+}
+.ve-line-text.fix {
+  color: #99ff99;
+  font-weight: 600;
+}
+
+/* Flow Diagram */
+.ve-flow-container {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  padding: 10px 12px;
+}
+.ve-flow-title {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 8px;
+}
+.ve-flow-steps {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.ve-flow-step {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  font-size: 11px;
+  padding: 4px 8px;
+  border-radius: 4px;
+}
+.ve-flow-step.correct { background: rgba(34, 197, 94, 0.08); color: var(--text-primary); }
+.ve-flow-step.error { background: rgba(239, 68, 68, 0.12); color: #ff8888; border-left: 2px solid var(--accent-red); }
+.ve-flow-step-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  margin-top: 5px;
+  flex-shrink: 0;
+}
+.ve-flow-step.correct .ve-flow-step-dot { background: var(--accent-green); }
+.ve-flow-step.error .ve-flow-step-dot { background: var(--accent-red); }
+
+/* Mode Switcher */
+.mode-toggle-group {
+  display: flex;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-normal);
+  border-radius: var(--radius-md);
+  padding: 2px;
+  gap: 2px;
+}
+.mode-toggle-btn {
+  padding: 4px 10px;
+  font-size: 11px;
+  font-weight: 600;
+  border: none;
+  background: transparent;
+  color: var(--text-muted);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+.mode-toggle-btn.active {
+  background: var(--accent-blue);
+  color: #fff;
+  box-shadow: 0 0 10px rgba(79, 124, 255, 0.3);
+}
+
+/* Monaco Misconception Decorations */
+.monaco-misconception-line {
+  background: rgba(239, 68, 68, 0.12) !important;
+  border-left: 3px solid #ef4444 !important;
+}
+.monaco-misconception-glyph {
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23ef4444'%3E%3Cpath d='M12 2L1 21h22L12 2zm0 3.5L20.3 19H3.7L12 5.5zM11 10v4h2v-4h-2zm0 6v2h2v-2h-2z'/%3E%3C/svg%3E") no-repeat center center;
+  background-size: 12px;
+  cursor: pointer;
+}
+

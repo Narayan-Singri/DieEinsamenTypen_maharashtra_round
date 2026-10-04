@@ -82,6 +82,19 @@ INTERVENTION_TEMPLATES = {
         ),
         "hint": "Use `range(len(nums) - 1, -1, -1)` to include the element at index 0.",
     },
+    "M8": {
+        "badge": "⚠️ M8: Indentation Misconception",
+        "color": "#f472b6",
+        "message": (
+            "Your code has an **indentation issue**. In Python, indentation defines "
+            "which statements belong to a block (if, for, while, def). Statements "
+            "inside a block must be indented with consistent spacing."
+        ),
+        "hint": (
+            "Make sure all statements inside a block are indented by 4 spaces. "
+            "After a line ending with `:`, the next line must be indented further."
+        ),
+    },
 }
 
 

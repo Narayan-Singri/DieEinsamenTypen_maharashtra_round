@@ -154,23 +154,25 @@
   const M_COLORS = {
     M0: "#22c55e", M1: "#f97316", M2: "#9f7aea",
     M3: "#eab308", M4: "#ef4444", M5: "#06b6d4",
-    M6: "#8b5cf6", M7: "#ec4899"
+    M6: "#8b5cf6", M7: "#ec4899", M8: "#f43f5e"
   };
 
   const M_LABELS = {
     M0: "Correct", M1: "Accum. Reinit", M2: "Print vs Return",
     M3: "Off-by-One Range", M4: "Wrong Comparator",
     M5: "Assign in Cond.", M6: "Mutation vs New", M7: "Index Boundary",
+    M8: "Indentation Issue",
   };
 
   const { useState, useEffect, useRef, useCallback } = React;
 
   // ────────────────────────────────────────
-  // Monaco Editor
+  // Monaco Editor with Misconception Highlights
   // ────────────────────────────────────────
-  function EditorPane({ code, onChange }) {
+  function EditorPane({ code, onChange, misconceptions }) {
     const containerRef = useRef(null);
     const editorRef = useRef(null);
+    const decorationsRef = useRef([]);
 
     useEffect(() => {
       if (!containerRef.current) return;
@@ -221,6 +223,33 @@
       }
     }, [code]);
 
+    // Apply misconception line decorations
+    useEffect(() => {
+      if (!editorRef.current || !window.monaco) return;
+      const model = editorRef.current.getModel();
+      if (!model) return;
+
+      if (!misconceptions || misconceptions.length === 0) {
+        decorationsRef.current = editorRef.current.deltaDecorations(decorationsRef.current, []);
+        return;
+      }
+
+      const newDecorations = misconceptions.map(m => {
+        const line = Math.max(1, Math.min(m.line || 1, model.getLineCount()));
+        return {
+          range: new monaco.Range(line, 1, line, model.getLineMaxColumn(line)),
+          options: {
+            isWholeLine: true,
+            className: "monaco-misconception-line",
+            glyphMarginClassName: "monaco-misconception-glyph",
+            hoverMessage: { value: `**⚠️ ${m.label || m.type}** (${Math.round((m.confidence || 0) * 100)}% conf)\n\n${m.explanation || m.title || ''}` }
+          }
+        };
+      });
+
+      decorationsRef.current = editorRef.current.deltaDecorations(decorationsRef.current, newDecorations);
+    }, [misconceptions]);
+
     return <div className="editor-container" ref={containerRef} id="monaco-editor" />;
   }
 
@@ -259,23 +288,38 @@
   // ────────────────────────────────────────
   // Problem Bar
   // ────────────────────────────────────────
-  function ProblemBar({ problems, selectedId, onSelect, problem }) {
+  function ProblemBar({ problems, selectedId, onSelect, problem, mode, onModeChange }) {
     return (
       <>
-        <div className="problem-bar">
-          <span style={{fontSize:11,color:'var(--text-muted)',fontWeight:600,textTransform:'uppercase',letterSpacing:'0.5px'}}>
-            Problem
-          </span>
-          <select id="problem-select" className="problem-select" value={selectedId||""} onChange={e=>onSelect(Number(e.target.value))}>
-            {problems.map(p=>(
-              <option key={p.id} value={p.id}>#{p.id} — {p.title}</option>
-            ))}
-          </select>
+        <div className="problem-bar" style={{display:'flex',alignItems:'center',justifyContent:'space-between'}}>
+          <div style={{display:'flex',alignItems:'center',gap:8}}>
+            <div className="mode-toggle-group">
+              <button id="mode-problem-btn" className={`mode-toggle-btn ${mode==="problem"?"active":""}`} onClick={()=>onModeChange("problem")}>
+                📋 Problem Mode
+              </button>
+              <button id="mode-practice-btn" className={`mode-toggle-btn ${mode==="practice"?"active":""}`} onClick={()=>onModeChange("practice")}>
+                ✨ Playground Mode
+              </button>
+            </div>
+            {mode === "problem" && (
+              <select id="problem-select" className="problem-select" value={selectedId||""} onChange={e=>onSelect(Number(e.target.value))}>
+                {problems.map(p=>(
+                  <option key={p.id} value={p.id}>#{p.id} — {p.title}</option>
+                ))}
+              </select>
+            )}
+          </div>
         </div>
-        {problem && (
+        {mode === "problem" && problem && (
           <div className="problem-description">
             <h3><span style={{color:'var(--accent-blue)'}}>📋</span> {problem.title}</h3>
             <p style={{whiteSpace:'pre-wrap'}}>{problem.description}</p>
+          </div>
+        )}
+        {mode === "practice" && (
+          <div className="problem-description" style={{borderLeftColor:'var(--accent-purple)'}}>
+            <h3><span style={{color:'var(--accent-purple)'}}>✨</span> Python Practice Playground</h3>
+            <p>Write and test any Python code freely. The adaptive engine executes your code, traces variable state in memory boxes, and detects misconceptions in real time.</p>
           </div>
         )}
       </>
@@ -285,23 +329,26 @@
   // ────────────────────────────────────────
   // Editor Toolbar
   // ────────────────────────────────────────
-  function EditorToolbar({ onSubmit, isSubmitting, diagnosisResult }) {
+  function EditorToolbar({ onSubmit, isSubmitting, diagnosisResult, mode }) {
     const passed = diagnosisResult?.passed ?? null;
     const total  = diagnosisResult?.total  ?? null;
     let badgeClass = "", badgeText = "";
-    if (passed !== null) {
+    if (mode === "problem" && passed !== null) {
       if (passed === total)  { badgeClass="pass";    badgeText=`✅ ${passed}/${total}`; }
       else if (passed === 0) { badgeClass="fail";    badgeText=`❌ ${passed}/${total}`; }
       else                   { badgeClass="partial"; badgeText=`⚡ ${passed}/${total}`; }
+    } else if (mode === "practice" && diagnosisResult) {
+      badgeClass = diagnosisResult.status === "success" ? "pass" : "fail";
+      badgeText = diagnosisResult.status === "success" ? "✅ Executed" : "❌ Error";
     }
     return (
       <div className="editor-toolbar">
         <button id="submit-btn" className="btn btn-primary" onClick={onSubmit} disabled={isSubmitting}>
-          {isSubmitting ? <><span className="loading-spinner"/> Analysing…</> : <>▶ Run &amp; Diagnose</>}
+          {isSubmitting ? <><span className="loading-spinner"/> Analysing…</> : mode === "practice" ? <>▶ Run &amp; Diagnose Playground</> : <>▶ Run &amp; Diagnose</>}
         </button>
         <div className="test-status">
           {badgeText && <span className={`test-badge ${badgeClass}`}>{badgeText}</span>}
-          <span>Tests</span>
+          <span>{mode === "practice" ? "Status" : "Tests"}</span>
         </div>
       </div>
     );
@@ -609,7 +656,9 @@
                       <div className="metric-label">Macro F1</div>
                     </div>
                     <div className="metric-card">
-                      <div className="metric-value" style={{color:'var(--accent-purple)'}}>8</div>
+                      <div className="metric-value" style={{color:'var(--accent-purple)'}}>
+                        {Object.keys(data.lopo_metrics||{}).length || 9}
+                      </div>
                       <div className="metric-label">M Classes</div>
                     </div>
                     <div className="metric-card">
@@ -688,6 +737,63 @@
   }
 
   // ────────────────────────────────────────
+  // Visual Explanation Component
+  // ────────────────────────────────────────
+  function VisualExplanation({ explanation }) {
+    if (!explanation || explanation.type === "none" || !explanation.blocks || explanation.blocks.length === 0) return null;
+    return (
+      <div className="visual-explanation-card">
+        <div className="ve-header">
+          <div className="ve-title">
+            <span>🔍</span> {explanation.title}
+          </div>
+          {explanation.severity && (
+            <span className={`ve-severity-tag ${explanation.severity}`}>{explanation.severity} impact</span>
+          )}
+        </div>
+        {explanation.description && (
+          <div style={{fontSize: 12, color: 'var(--text-secondary)', lineHeight: 1.5}}>
+            {explanation.description}
+          </div>
+        )}
+        <div className="ve-blocks-grid">
+          {explanation.blocks.map((b, idx) => (
+            <div key={idx} className={`ve-block ${b.type}`}>
+              <div className="ve-block-label">{b.label}</div>
+              <div className="ve-code-snippet">
+                {b.lines.map((ln, lIdx) => (
+                  <div key={lIdx} className="ve-code-line">
+                    <span className="ve-line-num">L{ln.line}</span>
+                    <span className={`ve-line-text ${b.type === 'wrong' ? 'highlight' : b.type === 'correct' ? 'fix' : ''}`}>
+                      {ln.text}
+                    </span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          ))}
+        </div>
+        {explanation.flow && explanation.flow.steps && (
+          <div className="ve-flow-container">
+            <div className="ve-flow-title">📊 {explanation.flow.title || "Execution Flow"}</div>
+            <div className="ve-flow-steps">
+              {explanation.flow.steps.map((st, sIdx) => (
+                <div key={sIdx} className={`ve-flow-step ${st.status || 'correct'}`}>
+                  <div className="ve-flow-step-dot" />
+                  <div>
+                    <strong style={{marginRight: 6}}>{st.label}:</strong>
+                    <span>{st.detail}</span>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+      </div>
+    );
+  }
+
+  // ────────────────────────────────────────
   // Diagnosis Pane
   // ────────────────────────────────────────
   function DiagnosisPane({ result }) {
@@ -707,13 +813,14 @@
     const conf  = probeData ? probeData.confidence        : result.confidence;
     const probs = probeData ? probeData.updated_probabilities : result.probabilities;
     const color = M_COLORS[topM]||"#888";
+    const visualExpl = result.visual_explanation;
 
     return (
       <>
         <div className="diagnosis-badge" style={{borderColor:`${color}44`,background:`${color}11`,color}}>
-          <div className="diagnosis-badge-icon">{eff?.badge?.split(" ")[0]}</div>
-          <div className="diagnosis-badge-label">{topM}: {M_LABELS[topM]}</div>
-          <div className="diagnosis-badge-sub">{eff?.badge?.replace(/^[^\s]+\s/,"")}</div>
+          <div className="diagnosis-badge-icon">{eff?.badge?.split(" ")[0] || "⚠️"}</div>
+          <div className="diagnosis-badge-label">{topM}: {M_LABELS[topM] || topM}</div>
+          <div className="diagnosis-badge-sub">{eff?.badge?.replace(/^[^\s]+\s/,"") || ""}</div>
           <div className="diagnosis-badge-confidence">
             <ConfidenceRing value={conf} color={color}/>
             <div style={{fontSize:12}}>
@@ -728,6 +835,8 @@
         <RadarFeed probabilities={probs}/>
 
         <MicroProbe result={result} onProbeAnswer={setProbeData}/>
+
+        <VisualExplanation explanation={visualExpl}/>
 
         {eff && (
           <div className="intervention-card" style={{borderColor:`${color}44`,background:`${color}08`,color}}>
@@ -842,10 +951,12 @@
   // Main App
   // ────────────────────────────────────────
   function App() {
+    const [mode,        setMode]        = useState("problem"); // "problem" | "practice"
     const [problems,    setProblems]    = useState([]);
     const [selectedId,  setSelectedId]  = useState(null);
     const [problem,     setProblem]     = useState(null);
-    const [code,        setCode]        = useState("def solution(nums):\n    # your code here\n    pass\n");
+    const [problemCode, setProblemCode] = useState("def solution(nums):\n    # your code here\n    pass\n");
+    const [practiceCode, setPracticeCode] = useState("# Practice Playground — write arbitrary Python code\ndef solution(nums):\n    total = 0\n    for n in nums:\n        total += n\n    return total\n\nprint(solution([1, 2, 3, 4]))\n");
     const [result,      setResult]      = useState(null);
     const [isLoading,   setIsLoading]   = useState(false);
     const [activeTab,   setActiveTab]   = useState("diagnosis");
@@ -853,6 +964,9 @@
     const [consoleLines, setConsoleLines]   = useState([]);
     const [presets,     setPresets]     = useState([]);
     const [sessionToken, setSessionToken] = useState(() => localStorage.getItem("rl_session")||null);
+
+    const code = mode === "problem" ? problemCode : practiceCode;
+    const setCode = mode === "problem" ? setProblemCode : setPracticeCode;
 
     const addConsole = useCallback((type, text) => {
       setConsoleLines(prev => [...prev.slice(-60), {type, text, id: Date.now()+Math.random()}]);
@@ -874,20 +988,59 @@
     }, []);
 
     useEffect(()=>{
-      if (selectedId) {
+      if (selectedId && mode === "problem") {
         const p = problems.find(x=>x.id===selectedId);
         if(p){setProblem(p);setResult(null);}
       }
-    },[selectedId,problems]);
+    },[selectedId,problems,mode]);
 
     const handleSubmit = async () => {
-      if (!selectedId) return;
       setIsLoading(true); setConsoleLines([]);
+
+      if (mode === "practice") {
+        addConsole("info", "Executing in Practice Playground sandbox…");
+        try {
+          const res = await fetch(`${API_BASE}/api/practice`, {
+            method: "POST", headers: {"Content-Type": "application/json"},
+            body: JSON.stringify({ code: practiceCode }),
+          });
+          const data = await res.json();
+          if (!res.ok) throw new Error(data.detail || "Execution failed");
+          setResult(data);
+
+          if (data.status === "success") {
+            addConsole("pass", "✅ Execution completed successfully");
+          } else {
+            addConsole("error", `❌ Status: ${data.status}`);
+          }
+
+          if (data.stdout) {
+            data.stdout.split("\n").forEach(l => {
+              if (l) addConsole("info", `[stdout] ${l}`);
+            });
+          }
+          if (data.result !== undefined && data.result !== null) {
+            addConsole("pass", `Return value: ${JSON.stringify(data.result)}`);
+          }
+          if (data.error) {
+            addConsole("error", `Error: ${data.error}`);
+          }
+          if (data.top_misconception && data.top_misconception !== "M0") {
+            addConsole("fail", `⚡ Misconception detected: ${data.top_misconception} (${Math.round(data.confidence * 100)}% conf)`);
+          }
+          setActiveTab("diagnosis");
+        } catch(e) {
+          addConsole("error", `❌ ${e.message}`);
+        } finally { setIsLoading(false); }
+        return;
+      }
+
+      if (!selectedId) return;
       addConsole("info",`Submitting to problem #${selectedId}…`);
       try {
         const res = await fetch(`${API_BASE}/api/submit`,{
           method:"POST",headers:{"Content-Type":"application/json"},
-          body:JSON.stringify({code,problem_id:selectedId,session_token:sessionToken}),
+          body:JSON.stringify({code:problemCode,problem_id:selectedId,session_token:sessionToken}),
         });
         const data = await res.json();
         if (!res.ok) throw new Error(data.detail||"Submit failed");
@@ -912,9 +1065,10 @@
         <div className="workspace">
           {/* Left */}
           <div className="pane-editor">
-            <ProblemBar problems={problems} selectedId={selectedId} onSelect={setSelectedId} problem={problem}/>
-            <EditorPane code={code} onChange={setCode}/>
-            <EditorToolbar onSubmit={handleSubmit} isSubmitting={isLoading} diagnosisResult={result}/>
+            <ProblemBar problems={problems} selectedId={selectedId} onSelect={setSelectedId} problem={problem}
+              mode={mode} onModeChange={m=>{setMode(m);setResult(null);}}/>
+            <EditorPane code={code} onChange={setCode} misconceptions={result?.misconceptions||[]}/>
+            <EditorToolbar onSubmit={handleSubmit} isSubmitting={isLoading} diagnosisResult={result} mode={mode}/>
             <ConsolePanel lines={consoleLines}/>
           </div>
           {/* Right */}

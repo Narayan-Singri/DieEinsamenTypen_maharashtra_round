@@ -10,7 +10,7 @@ import os
 
 from backend.app.config import settings
 from backend.app.db import init_db
-from backend.app.api import submit, probe, reassess, inspector
+from backend.app.api import submit, probe, reassess, inspector, practice
 
 # ---------------------------------------------------------------------------
 # App initialisation
@@ -58,6 +58,7 @@ app.include_router(submit.router, prefix="/api", tags=["Submission"])
 app.include_router(probe.router, prefix="/api", tags=["Probe"])
 app.include_router(reassess.router, prefix="/api", tags=["Reassessment"])
 app.include_router(inspector.router, prefix="/api", tags=["Inspector"])
+app.include_router(practice.router, prefix="/api", tags=["Practice"])
 
 # ---------------------------------------------------------------------------
 # Static file serving for frontend

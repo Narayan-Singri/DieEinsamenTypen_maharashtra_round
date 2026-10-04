@@ -88,9 +88,9 @@ class ASTFeatureExtractor(ast.NodeVisitor):
 
         # Detect range(len(x) - 1) vs range(len(x))
         if isinstance(node.func, ast.Name) and node.func.id == "range":
-            if node.args:
+            if len(node.args) == 1:
                 arg0 = node.args[0]
-                # range(len(x) - 1)
+                # range(len(x) - 1) -> M3 bug
                 if (
                     isinstance(arg0, ast.BinOp)
                     and isinstance(arg0.op, ast.Sub)
@@ -102,7 +102,7 @@ class ASTFeatureExtractor(ast.NodeVisitor):
                 ):
                     self.features["uses_range_len_minus_one"] = True
 
-                # range(len(x))
+                # range(len(x)) -> standard iteration
                 elif (
                     isinstance(arg0, ast.Call)
                     and isinstance(arg0.func, ast.Name)
@@ -110,24 +110,24 @@ class ASTFeatureExtractor(ast.NodeVisitor):
                 ):
                     self.features["uses_range_len"] = True
 
+            elif len(node.args) == 3:
                 # range(len(x) - 1, -1, -1) — correct reverse
                 # range(len(x) - 1, 0, -1) — excludes index 0 (M7)
-                if len(node.args) == 3:
-                    stop_arg = node.args[1]
-                    step_arg = node.args[2]
-                    step_is_neg = (
-                        isinstance(step_arg, ast.UnaryOp)
-                        and isinstance(step_arg.op, ast.USub)
-                        and isinstance(step_arg.operand, ast.Constant)
-                        and step_arg.operand.value == 1
-                    ) or (
-                        isinstance(step_arg, ast.Constant)
-                        and step_arg.value == -1
-                    )
-                    if step_is_neg:
-                        # stop == 0  => range(..., 0, -1) => excludes index 0
-                        if isinstance(stop_arg, ast.Constant) and stop_arg.value == 0:
-                            self.features["reverse_range_excludes_zero"] = True
+                stop_arg = node.args[1]
+                step_arg = node.args[2]
+                step_is_neg = (
+                    isinstance(step_arg, ast.UnaryOp)
+                    and isinstance(step_arg.op, ast.USub)
+                    and isinstance(step_arg.operand, ast.Constant)
+                    and step_arg.operand.value == 1
+                ) or (
+                    isinstance(step_arg, ast.Constant)
+                    and step_arg.value == -1
+                )
+                if step_is_neg:
+                    # stop == 0  => range(..., 0, -1) => excludes index 0
+                    if isinstance(stop_arg, ast.Constant) and stop_arg.value == 0:
+                        self.features["reverse_range_excludes_zero"] = True
 
         self.generic_visit(node)
 
@@ -149,9 +149,14 @@ class ASTFeatureExtractor(ast.NodeVisitor):
 
     def _scan_loop_assigns(self, body: list):
         """
-        Check if any name that was assigned before the loop is being
-        re-assigned inside the loop body at depth 1 (reinit accumulator).
+        Check if any accumulator variable is initialized or reset inside the loop body.
+        Covers both:
+          1. Variables declared before loop and reset inside loop: s = 0; for ...: s = 0
+          2. Variables initialized inside loop and accumulated: for ...: s = 0; s += n
         """
+        loop_assigned_constants = set()
+        loop_augassigned = set()
+
         for stmt in body:
             if isinstance(stmt, ast.Assign):
                 for target in stmt.targets:
@@ -159,9 +164,15 @@ class ASTFeatureExtractor(ast.NodeVisitor):
                         self.features["assign_in_loop_body"] = True
                         if target.id in self._pre_loop_assigns:
                             self.features["accumulator_inside_loop"] = True
+                        if isinstance(stmt.value, (ast.Constant, ast.List, ast.Dict, ast.Set)):
+                            loop_assigned_constants.add(target.id)
             elif isinstance(stmt, ast.AugAssign):
-                # += is fine — it's the regular accumulation
-                pass
+                if isinstance(stmt.target, ast.Name):
+                    loop_augassigned.add(stmt.target.id)
+
+        # If a variable is initialized with a constant inside the loop and also augassigned
+        if loop_assigned_constants & loop_augassigned:
+            self.features["accumulator_inside_loop"] = True
 
     def visit_Assign(self, node: ast.Assign):
         if self._loop_depth == 0:
@@ -218,15 +229,79 @@ def extract_ast_features(code: str) -> Dict[str, Any]:
         "has_for_loop": False,
         "has_while_loop": False,
         "parse_error": False,
+        # M8 — Indentation features
+        "has_indentation_issue": False,
+        "indentation_after_colon_missing": False,
+        "mixed_tabs_spaces": False,
     }
     try:
         tree = ast.parse(textwrap.dedent(code))
         extractor = ASTFeatureExtractor()
         extractor.visit(tree)
         features.update(extractor.features)
-    except SyntaxError:
+    except SyntaxError as e:
         features["parse_error"] = True
+        err_msg = str(e).lower()
+        if "indent" in err_msg or "unexpected indent" in err_msg or "expected an indented block" in err_msg:
+            features["has_indentation_issue"] = True
+
+    # Run indentation analysis (works even on unparsable code)
+    indent_features = _detect_indentation_issues(code)
+    features.update(indent_features)
+
     return features
+
+
+def _detect_indentation_issues(code: str) -> Dict[str, Any]:
+    """
+    Detect indentation-related issues using line-by-line analysis.
+    Works even when AST parsing fails.
+    """
+    result = {
+        "has_indentation_issue": False,
+        "indentation_after_colon_missing": False,
+        "mixed_tabs_spaces": False,
+    }
+
+    lines = code.splitlines()
+    has_tabs = False
+    has_spaces = False
+
+    for i, line in enumerate(lines):
+        if not line.strip():
+            continue
+
+        # Check for mixed tabs/spaces
+        leading = line[:len(line) - len(line.lstrip())]
+        if "\t" in leading:
+            has_tabs = True
+        if "    " in leading or "  " in leading:
+            has_spaces = True
+
+        stripped = line.strip()
+
+        # Check if line ends with colon (block opener)
+        if stripped.endswith(":") and any(stripped.startswith(kw) for kw in
+                                          ["if ", "elif ", "else:", "for ", "while ",
+                                           "def ", "class ", "try:", "except", "finally:", "with "]):
+            current_indent = len(line) - len(line.lstrip())
+            # Check next non-blank line
+            for j in range(i + 1, len(lines)):
+                next_line = lines[j]
+                next_stripped = next_line.strip()
+                if not next_stripped or next_stripped.startswith("#"):
+                    continue
+                next_indent = len(next_line) - len(next_line.lstrip())
+                if next_indent <= current_indent:
+                    result["indentation_after_colon_missing"] = True
+                    result["has_indentation_issue"] = True
+                break
+
+    if has_tabs and has_spaces:
+        result["mixed_tabs_spaces"] = True
+        result["has_indentation_issue"] = True
+
+    return result
 
 
 # ---------------------------------------------------------------------------

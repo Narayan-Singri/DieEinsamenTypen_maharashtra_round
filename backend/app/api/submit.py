@@ -1,7 +1,8 @@
 """
 POST /api/submit
 Runs learner code, computes execution signature + AST features,
-returns diagnosis probabilities, probe requirement, and trace frames.
+returns diagnosis probabilities, probe requirement, trace frames,
+misconception locations, visual explanations, and inspector data.
 """
 from fastapi import APIRouter, Depends, HTTPException
 from pydantic import BaseModel
@@ -13,8 +14,11 @@ from backend.app.db import get_db
 from backend.app.models import Learner, Problem, Submission, Diagnosis
 from backend.app.core.sandbox import run_in_sandbox
 from backend.app.core.features import extract_ast_features, generate_execution_signature
-from backend.app.core.tracer import trace_code
-from backend.app.core.classifier import classify, get_top_misconception, needs_probe
+from backend.app.core.tracer import trace_code, trace_arbitrary, extract_inspector_data
+from backend.app.core.classifier import (
+    classify, get_top_misconception, needs_probe,
+    localize_misconceptions, build_visual_explanation,
+)
 from backend.app.core.probe_bank import select_probe
 from backend.app.core.interventions import get_intervention, build_memory_boxes
 
@@ -41,7 +45,13 @@ class SubmitResponse(BaseModel):
     intervention: Dict
     memory_boxes: List[Dict]
     trace_frames: List[Dict]
-    error: Optional[str]
+    misconception_locations: List[Dict] = []
+    misconceptions: List[Dict] = []
+    visual_explanation: Dict
+    inspector_data: Dict
+    model_answer: Optional[Dict] = None
+    error: Optional[str] = None
+    stdout: Optional[str] = None
 
 
 @router.post("/submit", response_model=SubmitResponse)
@@ -68,7 +78,12 @@ def submit_code(req: SubmitRequest, db: Session = Depends(get_db)):
 
     # --- Trace (use first failing test input for visualization, or [1,2,3]) ---
     trace_input = [1, 2, 3]
-    trace_frames = trace_code(req.code, trace_input)
+    trace_frames = []
+    try:
+        trace_frames = trace_code(req.code, trace_input)
+    except Exception:
+        pass
+
     memory_boxes = build_memory_boxes(trace_frames)
 
     # --- Classify ---
@@ -91,6 +106,36 @@ def submit_code(req: SubmitRequest, db: Session = Depends(get_db)):
                 }
 
     intervention = get_intervention(top_m)
+
+    # --- Line-level misconception localization ---
+    misconception_locations = []
+    try:
+        misconception_locations = localize_misconceptions(req.code, ast_feats, probs)
+    except Exception:
+        pass
+
+    # --- Visual explanation ---
+    visual_explanation = {}
+    try:
+        visual_explanation = build_visual_explanation(req.code, misconception_locations, top_m)
+    except Exception:
+        visual_explanation = {"type": "none", "title": "Explanation unavailable", "blocks": []}
+
+    # --- Inspector data from trace ---
+    inspector_data = {}
+    try:
+        inspector_data = extract_inspector_data(trace_frames)
+    except Exception:
+        inspector_data = {"variables": [], "total_steps": 0, "has_functions": False, "functions": []}
+
+    # --- Model answer ---
+    model_answer = None
+    if problem.reference_solution:
+        model_answer = {
+            "code": problem.reference_solution,
+            "title": f"Reference Solution — {problem.title}",
+            "explanation": intervention.get("message", ""),
+        }
 
     # --- Persist ---
     submission = Submission(
@@ -134,5 +179,11 @@ def submit_code(req: SubmitRequest, db: Session = Depends(get_db)):
         intervention=intervention,
         memory_boxes=memory_boxes,
         trace_frames=trace_frames[:50],
+        misconception_locations=misconception_locations,
+        misconceptions=misconception_locations,
+        visual_explanation=visual_explanation,
+        inspector_data=inspector_data,
+        model_answer=model_answer,
         error=sandbox_result["error"],
+        stdout=sandbox_result.get("stdout", ""),
     )

@@ -56,14 +56,27 @@ DEMO_METRICS = {
 @router.get("/inspector")
 def get_inspector_data():
     """Returns model inspection metrics for the Instructor view."""
+    metrics = dict(DEMO_METRICS)
     # Try to load real metrics if training has been run
     if os.path.exists(METRICS_PATH):
         try:
             with open(METRICS_PATH, "r") as f:
-                return json.load(f)
+                trained = json.load(f)
+                if "macro_f1" in trained:
+                    metrics["macro_f1"] = trained["macro_f1"]
+                if "classes" in trained:
+                    metrics["model_info"]["classes"] = trained["classes"]
+                if "confusion_matrix" in trained:
+                    metrics["confusion_matrix"] = trained["confusion_matrix"]
+                if "lopo_metrics" in trained:
+                    metrics["lopo_metrics"] = trained["lopo_metrics"]
+                if "differentiation_gain" in trained:
+                    metrics["differentiation_gain"] = trained["differentiation_gain"]
+                if "overall_accuracy" in trained:
+                    metrics["overall_accuracy"] = trained["overall_accuracy"]
         except Exception:
             pass
-    return DEMO_METRICS
+    return metrics
 
 
 @router.get("/inspector/problems")

@@ -22,16 +22,16 @@
 | **Phase 4** | Multimodal Variable Memory-Box Component | Frontend + AI/ML | ✅ Completed | `feat(multimodal): add interactive memory-box trace visualizer` |
 | **Phase 5** | Model Training, Calibration & Eval | AI/ML | ✅ Completed | `feat(ml): train random forest classifier with isotonic calibration` |
 | **Phase 6** | Pre-seeded SQLite Presets & Model Inspector | DB + Frontend | ✅ Completed | `feat(eval): add fragile knowledge detection and model inspector` |
-| **Phase 7** | Full Integration, Zero-Crash Smoke Test & Freeze | Integration + Security | 🔄 In Progress | — |
+| **Phase 7** | Full Integration, Practice Sandbox, M8 & Zero-Crash Tests | Integration + Security | ✅ Completed | `feat(all): 18/18 pytest suite passing with full M0-M8 coverage` |
 
 ---
 
 ## 3. High-Priority Architectural Rules
 1. **No External LLM Runtime Dependency:** Diagnosis and interventions run via deterministic ML classification, AST extraction, and pre-computed visual memory traces to eliminate latency and hallucination.
 2. **Minimal-Click Probes:** Ambiguities (e.g., M1 vs. M2) are disambiguated by a single 3-button micro-probe rather than chat inputs.
-3. **Multimodality via Dual-Coding:** Visual timeline scrubbers show memory addresses/values updating at every loop iteration.
+3. **Multimodality via Dual-Coding:** Visual timeline scrubbers show memory addresses/values updating at every loop iteration, paired with side-by-side visual explanations.
 4. **Fragile Knowledge Detection:** A learner passing a transfer problem but failing a counter-probe is marked `SUPPRESSED`.
-5. **Local Compute Guardrail:** ML training and heavyweight tasks are held until the user explicitly permits or provides mock/pre-trained weights.
+5. **Practice Sandbox & M0–M8 Coverage:** Supports both structured Problem Mode and open-ended Playground Mode with real-time AST/token-based misconception detection including indentation scoping (M8).
 
 ---
 
@@ -42,20 +42,22 @@
 - `backend/app/config.py` — Runtime config (DB path, sandbox limits, CORS)
 - `backend/app/db.py` — SQLAlchemy session factory + `init_db()` + `get_db()` dep
 - `backend/app/models.py` — 7 SQLAlchemy models: `learners`, `problems`, `submissions`, `diagnoses`, `probe_events`, `reassessments`, `learner_misconceptions`
-- `backend/app/main.py` — FastAPI app with CORS, auto-seed on startup, static serving
-- `backend/app/api/submit.py` — `POST /api/submit`
-- `backend/app/api/probe.py` — `POST /api/probe/answer`
-- `backend/app/api/reassess.py` — `POST /api/reassess` (RESOLVED/SUPPRESSED/UNRESOLVED)
+- `backend/app/main.py` — FastAPI app with CORS, auto-seed on startup, static serving, and routers
+- `backend/app/api/submit.py` — `POST /api/submit` (Runs code, extracts AST, triggers diagnosis, visual explanations)
+- `backend/app/api/practice.py` — `POST /api/practice` (Arbitrary code execution, AST extraction, tracing, and misconception diagnosis)
+- `backend/app/api/probe.py` — `POST /api/probe/answer` (Bayesian update on micro-probes)
+- `backend/app/api/reassess.py` — `POST /api/reassess` (Dual-gate transfer & counter-probe)
 - `backend/app/api/inspector.py` — `GET /api/inspector`, `/api/inspector/problems`, `/api/inspector/learners`
-- `backend/app/core/sandbox.py` — AST import blocker + 2s threading timeout runner
-- `backend/app/core/tracer.py` — `sys.settrace` frame snapshot engine
-- `backend/app/core/features.py` — AST structural parser (M0–M7) + execution signature generator
-- `backend/app/core/classifier.py` — Heuristic Bayesian classifier (Phase 5 RF on hold)
-- `backend/app/core/probe_bank.py` — 4 micro-probes + Bayesian update logic
+- `backend/app/core/sandbox.py` — Isolated execution runner + timeout guard
+- `backend/app/core/tracer.py` — `sys.settrace` frame snapshot engine + arbitrary code tracer
+- `backend/app/core/features.py` — AST structural parser (M0–M8) + execution signature generator
+- `backend/app/core/classifier.py` — Calibrated heuristic classifier + line-level localization + visual explanation builder
+- `backend/app/core/probe_bank.py` — Discriminating micro-probes + Bayesian update logic
 - `backend/app/core/interventions.py` — Socratic intervention templates + memory-box builder
+- `backend/tests/test_all_features.py` — 18/18 integration and unit test suite
 
 ### Data
-- `backend/data/taxonomy.json` — 8-class misconception taxonomy
+- `backend/data/taxonomy.json` — 9-class misconception taxonomy (M0–M8)
 - `backend/data/seed_data.py` — 5 problems + 5 preset judge learners
 
 ### ML (Phase 5 — PAUSED)

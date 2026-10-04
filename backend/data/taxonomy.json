@@ -45,5 +45,11 @@
     "description": "Learner misunderstands index boundaries when iterating in reverse, leading to IndexError or skipped elements.",
     "indicators": ["range(len(nums))", "off-by-one in reverse", "IndexError on empty list"],
     "example_bug": "for i in range(len(nums) - 1, 0, -1):"
+  },
+  "M8": {
+    "label": "Indentation Misconception",
+    "description": "Learner misunderstands Python's indentation-based block scoping, placing statements outside their intended block or using inconsistent indentation.",
+    "indicators": ["missing indent after colon", "statement outside loop/if block", "mixed tabs and spaces", "unexpected indent"],
+    "example_bug": "if x > 10:\nprint('Greater')"
   }
 }

@@ -40,6 +40,9 @@ def train():
             int(feats.get("calls_list_reverse", False)),
             int(feats.get("builds_new_list", False)),
             int(feats.get("reverse_range_excludes_zero", False)),
+            int(feats.get("has_indentation_issue", False)),
+            int(feats.get("indentation_after_colon_missing", False)),
+            int(feats.get("parse_error", False)),
             feats.get("loop_count", 0),
         ]
         X.append(feat_vec)

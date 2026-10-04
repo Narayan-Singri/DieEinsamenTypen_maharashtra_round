@@ -38,7 +38,9 @@ class ProbeAnswerResponse(BaseModel):
 @router.post("/probe/answer", response_model=ProbeAnswerResponse)
 def answer_probe(req: ProbeAnswerRequest, db: Session = Depends(get_db)):
     # --- Fetch existing diagnosis ---
-    diagnosis = db.query(Diagnosis).filter_by(id=req.diagnosis_id).first()
+    diagnosis = db.query(Diagnosis).filter(
+        (Diagnosis.id == req.diagnosis_id) | (Diagnosis.submission_id == req.diagnosis_id)
+    ).first()
     if not diagnosis:
         raise HTTPException(status_code=404, detail="Diagnosis not found")
 
