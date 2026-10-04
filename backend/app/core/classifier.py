@@ -18,7 +18,7 @@ import io
 # Misconception labels (short names)
 # ---------------------------------------------------------------------------
 
-MISCONCEPTIONS = ["M0", "M1", "M2", "M3", "M4", "M5", "M6", "M7", "M8"]
+MISCONCEPTIONS = ["M0", "M1", "M2", "M3", "M4", "M5", "M6", "M7", "M8", "M9"]
 
 MISCONCEPTION_LABELS = {
     "M0": "Correct",
@@ -30,6 +30,7 @@ MISCONCEPTION_LABELS = {
     "M6": "Mutation vs New Collection",
     "M7": "Index Boundary Confusion",
     "M8": "Indentation Misconception",
+    "M9": "Parenthesis & Bracket Mismatch",
 }
 
 MISCONCEPTION_DESCRIPTIONS = {
@@ -42,12 +43,63 @@ MISCONCEPTION_DESCRIPTIONS = {
     "M6": "Mutating the original collection in-place instead of building a new one.",
     "M7": "Off-by-one error in reverse iteration that skips the first element.",
     "M8": "Incorrect indentation causes statements to be outside the intended block scope.",
+    "M9": "Unmatched, unclosed, or mismatched parentheses, brackets, or braces (() [] {}).",
 }
 
 
 # ---------------------------------------------------------------------------
-# Heuristic rule-based classifier
+# ML Model Loading & Calibrated Inference
 # ---------------------------------------------------------------------------
+import os
+import joblib
+
+_MODEL_BUNDLE = None
+_MODEL_PATH = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..", "..", "ml", "artifacts", "model.joblib"))
+
+def _get_model_bundle():
+    global _MODEL_BUNDLE
+    if _MODEL_BUNDLE is None and os.path.exists(_MODEL_PATH):
+        try:
+            _MODEL_BUNDLE = joblib.load(_MODEL_PATH)
+        except Exception:
+            _MODEL_BUNDLE = None
+    return _MODEL_BUNDLE
+
+
+def extract_numeric_features(ast_features: Dict[str, Any], execution_signature: List[Any]) -> List[float]:
+    """Convert AST features and execution signature into numeric vector matching ML training schema (25 features)."""
+    sig_none_count = sum(1 for v in execution_signature if v is None)
+    sig_error_count = sum(1 for v in execution_signature if isinstance(v, str) and v.startswith("ERROR:"))
+    sig_syntax_count = sum(1 for v in execution_signature if v == "SYNTAX_ERROR")
+
+    return [
+        float(ast_features.get("accumulator_inside_loop", False)),
+        float(ast_features.get("assign_in_loop_body", False)),
+        float(ast_features.get("has_return", False)),
+        float(ast_features.get("has_print_call", False)),
+        float(ast_features.get("returns_none_explicitly", False)),
+        float(ast_features.get("uses_range_len_minus_one", False)),
+        float(ast_features.get("uses_range_len", False)),
+        float(ast_features.get("has_comparison_lt_update", False)),
+        float(ast_features.get("has_comparison_gt_update", False)),
+        float(ast_features.get("assignment_in_condition", False)),
+        float(ast_features.get("calls_list_reverse", False)),
+        float(ast_features.get("builds_new_list", False)),
+        float(ast_features.get("reverse_range_excludes_zero", False)),
+        float(ast_features.get("has_indentation_issue", False)),
+        float(ast_features.get("indentation_after_colon_missing", False)),
+        float(ast_features.get("mixed_tabs_spaces", False)),
+        float(ast_features.get("inconsistent_block_widths", False)),
+        float(ast_features.get("syntax_indent_error", False)),
+        float(ast_features.get("has_parenthesis_error", False)),
+        float(ast_features.get("parse_error", False)),
+        float(ast_features.get("function_count", 0)),
+        float(ast_features.get("loop_count", 0)),
+        float(sig_none_count),
+        float(sig_error_count),
+        float(sig_syntax_count),
+    ]
+
 
 def classify(
     ast_features: Dict[str, Any],
@@ -56,81 +108,69 @@ def classify(
     total: int,
 ) -> Dict[str, float]:
     """
-    Returns a dict of {misconception_code: probability} (values sum to ~1.0).
-    Uses hand-tuned heuristic rules as a stand-in for the trained RF classifier.
+    Returns a dict of {misconception_code: probability} (values sum to 1.0).
+    Combines calibrated ML model inference with deterministic structural constraints.
     """
-    scores = {m: 0.01 for m in MISCONCEPTIONS}  # small baseline for all
-
-    af = ast_features
     pass_rate = (passed / total) if total > 0 else 0.0
+    af = ast_features
 
-    # --- M0: Correct ---
-    if pass_rate == 1.0 and af.get("has_return") and not af.get("has_print_call"):
-        scores["M0"] += 0.8
+    # 1. Try ML model inference first
+    bundle = _get_model_bundle()
+    if bundle is not None:
+        try:
+            feat_vec = [extract_numeric_features(ast_features, execution_signature)]
+            model = bundle["model"]
+            classes = bundle["classes"]
+            probs_arr = model.predict_proba(feat_vec)[0]
+            ml_probs = {cls_name: float(probs_arr[i]) for i, cls_name in enumerate(classes)}
 
-    # --- M1: Accumulator reinit inside loop ---
-    if af.get("accumulator_inside_loop"):
-        scores["M1"] += 0.75
-    if af.get("assign_in_loop_body") and pass_rate < 0.5:
-        scores["M1"] += 0.2
+            # Apply domain constraints to prevent false positives
+            if pass_rate == 1.0 and af.get("has_return") and not af.get("has_indentation_issue") and not af.get("has_parenthesis_error"):
+                return {m: (0.95 if m == "M0" else 0.05 / 9) for m in MISCONCEPTIONS}
 
-    # Execution signature check: M1 typically returns last element not sum
-    sig = execution_signature
-    if len(sig) >= 4:
-        if sig[4] == 9:
-            scores["M1"] += 0.3
-        if sig[3] == 3:
-            scores["M1"] += 0.25
+            if af.get("has_parenthesis_error"):
+                ml_probs["M9"] = max(ml_probs.get("M9", 0), 0.96)
+                ml_probs["M0"] = min(ml_probs.get("M0", 0), 0.01)
 
-    # --- M2: Print vs Return ---
-    if af.get("has_print_call") and not af.get("has_return"):
-        scores["M2"] += 0.85
-    elif af.get("has_print_call") and af.get("has_return"):
-        scores["M2"] += 0.3
-    none_count = sum(1 for v in sig if v is None)
-    if none_count >= 3:
-        scores["M2"] += 0.4
+            if af.get("has_indentation_issue"):
+                ml_probs["M8"] = max(ml_probs.get("M8", 0), 0.92)
+                ml_probs["M0"] = min(ml_probs.get("M0", 0), 0.01)
 
-    # --- M3: Off-by-one range ---
-    if af.get("uses_range_len_minus_one"):
-        scores["M3"] += 0.8
-    if len(sig) >= 4 and sig[3] == 3 and not scores["M1"] > 0.5:
-        scores["M3"] += 0.2
+            # Re-normalize
+            total_p = sum(ml_probs.values())
+            if total_p > 0:
+                return {m: round(ml_probs.get(m, 0.0) / total_p, 4) for m in MISCONCEPTIONS}
+        except Exception:
+            pass
 
-    # --- M4: Wrong comparison ---
-    if af.get("has_comparison_lt_update") and not af.get("has_comparison_gt_update"):
-        scores["M4"] += 0.8
+    # 2. Evidential Rule Engine fallback
+    scores = {m: 0.001 for m in MISCONCEPTIONS}
 
-    # --- M5: Assignment in condition ---
-    if af.get("parse_error"):
-        scores["M5"] += 0.3
+    if pass_rate == 1.0 and af.get("has_return") and not af.get("has_print_call") and not af.get("has_indentation_issue") and not af.get("has_parenthesis_error"):
+        scores["M0"] = 10.0
+    elif af.get("has_parenthesis_error"):
+        scores["M9"] = 10.0
+    elif af.get("has_indentation_issue") or af.get("indentation_after_colon_missing") or af.get("inconsistent_block_widths"):
+        scores["M8"] = 10.0
+    elif af.get("accumulator_inside_loop"):
+        scores["M1"] = 10.0
+    elif af.get("has_print_call") and not af.get("has_return"):
+        scores["M2"] = 10.0
+    elif af.get("uses_range_len_minus_one"):
+        scores["M3"] = 10.0
+    elif af.get("has_comparison_lt_update") and not af.get("has_comparison_gt_update"):
+        scores["M4"] = 10.0
+    elif af.get("assignment_in_condition"):
+        scores["M5"] = 10.0
+    elif af.get("calls_list_reverse") and not af.get("builds_new_list"):
+        scores["M6"] = 10.0
+    elif af.get("reverse_range_excludes_zero"):
+        scores["M7"] = 10.0
+    else:
+        scores["M0"] = 5.0
 
-    # --- M6: Mutation vs new collection ---
-    if af.get("calls_list_reverse") and not af.get("builds_new_list"):
-        scores["M6"] += 0.7
-    if af.get("calls_list_reverse"):
-        scores["M6"] += 0.2
-
-    # --- M7: Index boundary confusion ---
-    if af.get("reverse_range_excludes_zero"):
-        scores["M7"] += 0.75
-
-    # --- M8: Indentation misconception ---
-    if af.get("has_indentation_issue"):
-        scores["M8"] += 0.80
-    if af.get("indentation_after_colon_missing"):
-        scores["M8"] += 0.50
-
-    # Penalty: if passing all tests, strongly favour M0
-    if pass_rate == 1.0:
-        for m in MISCONCEPTIONS:
-            if m != "M0":
-                scores[m] *= 0.05
-
-    # Softmax-normalize to sum to 1
     total_score = sum(math.exp(v) for v in scores.values())
-    probs = {m: round(math.exp(scores[m]) / total_score, 4) for m in MISCONCEPTIONS}
-    return probs
+    return {m: round(math.exp(scores[m]) / total_score, 4) for m in MISCONCEPTIONS}
 
 
 def classify_arbitrary(
@@ -140,61 +180,79 @@ def classify_arbitrary(
 ) -> Dict[str, float]:
     """
     Classify misconceptions for arbitrary code (Practice mode).
-    No test cases or execution signature — relies purely on AST features
-    and code structure analysis.
+    Uses calibrated ML model inference augmented with structural static checks.
     """
-    scores = {m: 0.01 for m in MISCONCEPTIONS}
     af = ast_features
 
-    if execution_status == "success" and not af.get("parse_error"):
-        scores["M0"] += 0.3
+    # 1. Parenthesis syntax checks (M9) take immediate priority if present
+    if af.get("has_parenthesis_error"):
+        probs = {m: 0.001 for m in MISCONCEPTIONS}
+        probs["M9"] = 0.96
+        rem = (1.0 - 0.96) / 9
+        for m in MISCONCEPTIONS:
+            if m != "M9":
+                probs[m] = round(rem, 4)
+        return probs
 
-    # M1: Accumulator reinit
-    if af.get("accumulator_inside_loop"):
-        scores["M1"] += 0.70
-    if af.get("assign_in_loop_body"):
-        scores["M1"] += 0.15
+    # 2. Indentation & Block checks (M8) take next priority
+    if af.get("has_indentation_issue") or af.get("inconsistent_block_widths") or af.get("indentation_after_colon_missing") or af.get("syntax_indent_error"):
+        probs = {m: 0.001 for m in MISCONCEPTIONS}
+        probs["M8"] = 0.96
+        rem = (1.0 - 0.96) / 9
+        for m in MISCONCEPTIONS:
+            if m != "M8":
+                probs[m] = round(rem, 4)
+        return probs
 
-    # M2: Print vs Return
-    if af.get("has_print_call") and af.get("function_count", 0) > 0 and not af.get("has_return"):
-        scores["M2"] += 0.80
+    # 3. Try ML model inference
+    bundle = _get_model_bundle()
+    if bundle is not None:
+        try:
+            sig = ["NO_SIG"] * 5
+            feat_vec = [extract_numeric_features(ast_features, sig)]
+            model = bundle["model"]
+            classes = bundle["classes"]
+            probs_arr = model.predict_proba(feat_vec)[0]
+            ml_probs = {cls_name: float(probs_arr[i]) for i, cls_name in enumerate(classes)}
 
-    # M3: Off-by-one
-    if af.get("uses_range_len_minus_one"):
-        scores["M3"] += 0.75
+            if not any(af.get(k) for k in [
+                "accumulator_inside_loop", "has_comparison_lt_update", "uses_range_len_minus_one",
+                "assignment_in_condition", "calls_list_reverse", "reverse_range_excludes_zero",
+                "has_indentation_issue", "syntax_indent_error", "has_parenthesis_error"
+            ]) and execution_status == "success":
+                ml_probs["M0"] = max(ml_probs.get("M0", 0), 0.94)
 
-    # M4: Wrong comparison
-    if af.get("has_comparison_lt_update") and not af.get("has_comparison_gt_update"):
-        scores["M4"] += 0.75
+            total_p = sum(ml_probs.values())
+            if total_p > 0:
+                return {m: round(ml_probs.get(m, 0.0) / total_p, 4) for m in MISCONCEPTIONS}
+        except Exception:
+            pass
 
-    # M5: Assignment in condition
-    if af.get("parse_error") and af.get("assignment_in_condition"):
-        scores["M5"] += 0.70
+    # 4. Direct Evidential Rule fallback
+    scores = {m: 0.001 for m in MISCONCEPTIONS}
+    if af.get("has_parenthesis_error"):
+        scores["M9"] = 10.0
+    elif af.get("accumulator_inside_loop"):
+        scores["M1"] = 10.0
+    elif af.get("has_print_call") and af.get("function_count", 0) > 0 and not af.get("has_return"):
+        scores["M2"] = 10.0
+    elif af.get("uses_range_len_minus_one"):
+        scores["M3"] = 10.0
+    elif af.get("has_comparison_lt_update") and not af.get("has_comparison_gt_update"):
+        scores["M4"] = 10.0
+    elif af.get("assignment_in_condition"):
+        scores["M5"] = 10.0
+    elif af.get("calls_list_reverse") and not af.get("builds_new_list"):
+        scores["M6"] = 10.0
+    elif af.get("reverse_range_excludes_zero"):
+        scores["M7"] = 10.0
+    elif execution_status == "success" and not af.get("parse_error"):
+        scores["M0"] = 10.0
+    else:
+        scores["M0"] = 5.0
 
-    # M6: Mutation vs new
-    if af.get("calls_list_reverse") and not af.get("builds_new_list"):
-        scores["M6"] += 0.65
-
-    # M7: Index boundary
-    if af.get("reverse_range_excludes_zero"):
-        scores["M7"] += 0.70
-
-    # M8: Indentation
-    if af.get("has_indentation_issue"):
-        scores["M8"] += 0.80
-    if af.get("indentation_after_colon_missing"):
-        scores["M8"] += 0.50
-
-    if execution_status == "syntax_error":
-        # Syntax errors that are indentation-related
-        if af.get("has_indentation_issue"):
-            scores["M8"] += 0.3
-        scores["M5"] += 0.15
-
-    # Normalize
     total_score = sum(math.exp(v) for v in scores.values())
-    probs = {m: round(math.exp(scores[m]) / total_score, 4) for m in MISCONCEPTIONS}
-    return probs
+    return {m: round(math.exp(scores[m]) / total_score, 4) for m in MISCONCEPTIONS}
 
 
 def get_top_misconception(probs: Dict[str, float]) -> tuple:
@@ -251,11 +309,19 @@ def localize_misconceptions(
     try:
         tree = ast.parse(textwrap.dedent(code))
     except SyntaxError as e:
-        # For syntax errors, report the error location
+        # Check if AST features or static analysis detected specific M9 or M8 issues first
+        if ast_features.get("has_parenthesis_error") or probs.get("M9", 0) >= THRESHOLD:
+            return _localize_m9(code, probs.get("M9", 0.96), ast_features)
+        if ast_features.get("has_indentation_issue") or probs.get("M8", 0) >= THRESHOLD:
+            return _localize_m8(code, probs.get("M8", 0.95), ast_features)
+
+        # For general syntax errors, report the error location
         lineno = e.lineno or 1
+        err_str = str(e).lower()
+        m_type = "M5" if "=" in str(e) else ("M9" if any(k in err_str for k in ("bracket", "parenthesis", "closed")) else "M8")
         annotations.append({
-            "type": "M5" if "=" in str(e) else "M8",
-            "label": "Syntax Error",
+            "type": m_type,
+            "label": MISCONCEPTION_LABELS.get(m_type, "Syntax Error"),
             "confidence": 0.9,
             "severity": "high",
             "line": lineno,
@@ -292,8 +358,12 @@ def localize_misconceptions(
         annotations.extend(_localize_m7(tree, code, probs["M7"]))
 
     # --- M8: Indentation ---
-    if probs.get("M8", 0) >= THRESHOLD:
-        annotations.extend(_localize_m8(code, probs["M8"]))
+    if probs.get("M8", 0) >= THRESHOLD or ast_features.get("has_indentation_issue"):
+        annotations.extend(_localize_m8(code, probs.get("M8", 0.95), ast_features))
+
+    # --- M9: Parenthesis & Bracket Syntax Error ---
+    if probs.get("M9", 0) >= THRESHOLD or ast_features.get("has_parenthesis_error"):
+        annotations.extend(_localize_m9(code, probs.get("M9", 0.96), ast_features))
 
     return annotations
 
@@ -304,6 +374,51 @@ def _severity(confidence: float) -> str:
     elif confidence >= 0.3:
         return "medium"
     return "low"
+
+
+def _localize_m9(code: str, confidence: float, ast_features: Optional[Dict[str, Any]] = None) -> List[Dict]:
+    """
+    Detect unmatched or mismatched parentheses, brackets, or braces (M9)
+    with exact line, column, and diagnostic description.
+    """
+    results = []
+    source_lines = code.splitlines()
+
+    if ast_features and ast_features.get("parenthesis_issues"):
+        for issue in ast_features["parenthesis_issues"]:
+            line_no = max(1, min(issue["line"], len(source_lines))) if source_lines else 1
+            results.append({
+                "type": "M9",
+                "label": MISCONCEPTION_LABELS["M9"],
+                "confidence": round(confidence, 2),
+                "severity": issue.get("severity", "high"),
+                "line": line_no,
+                "column": issue.get("column", 0),
+                "end_line": issue.get("end_line", line_no),
+                "end_column": issue.get("end_column", len(source_lines[line_no-1]) if 0 < line_no <= len(source_lines) else 10),
+                "title": issue["title"],
+                "explanation": issue["explanation"],
+            })
+        return results
+
+    from backend.app.core.features import check_unmatched_parentheses
+    paren_analysis = check_unmatched_parentheses(code)
+    for issue in paren_analysis["issues"]:
+        line_no = max(1, min(issue["line"], len(source_lines))) if source_lines else 1
+        results.append({
+            "type": "M9",
+            "label": MISCONCEPTION_LABELS["M9"],
+            "confidence": round(confidence, 2),
+            "severity": issue.get("severity", "high"),
+            "line": line_no,
+            "column": issue.get("column", 0),
+            "end_line": issue.get("end_line", line_no),
+            "end_column": issue.get("end_column", len(source_lines[line_no-1]) if 0 < line_no <= len(source_lines) else 10),
+            "title": issue["title"],
+            "explanation": issue["explanation"],
+        })
+
+    return results
 
 
 def _localize_m1(tree: ast.AST, code: str, confidence: float) -> List[Dict]:
@@ -510,90 +625,47 @@ def _localize_m8(code: str, confidence: float) -> List[Dict]:
     2. Logical indentation errors (statements outside intended block)
     3. Inconsistent indentation
     """
+def _localize_m8(code: str, confidence: float, ast_features: Optional[Dict[str, Any]] = None) -> List[Dict]:
+    """
+    Detect indentation misconceptions with exact line and column localization.
+    Uses AST features and line-level indentation analysis.
+    """
     results = []
     source_lines = code.splitlines()
 
-    for i, line in enumerate(source_lines):
-        stripped = line.strip()
-        if not stripped or stripped.startswith("#"):
-            continue
+    # If ast_features already has detected issues from analyze_source_indentation, use them!
+    if ast_features and ast_features.get("indentation_issues"):
+        for issue in ast_features["indentation_issues"]:
+            results.append({
+                "type": "M8",
+                "label": MISCONCEPTION_LABELS["M8"],
+                "confidence": round(confidence, 2),
+                "severity": issue.get("severity", "high"),
+                "line": issue["line"],
+                "column": issue.get("column", 0),
+                "end_line": issue.get("end_line", issue["line"]),
+                "end_column": issue.get("end_column", len(source_lines[issue["line"]-1]) if 0 < issue["line"] <= len(source_lines) else 10),
+                "title": issue["title"],
+                "explanation": issue["explanation"],
+            })
+        return results
 
-        lineno = i + 1
-
-        # Check for lines ending with colon — next non-empty line should be indented
-        if stripped.endswith(":") and any(stripped.startswith(kw) for kw in
-                                          ["if ", "elif ", "else:", "for ", "while ", "def ", "class ", "try:", "except", "finally:", "with "]):
-            # Find next non-empty line
-            current_indent = len(line) - len(line.lstrip())
-            for j in range(i + 1, len(source_lines)):
-                next_line = source_lines[j]
-                next_stripped = next_line.strip()
-                if not next_stripped or next_stripped.startswith("#"):
-                    continue
-                next_indent = len(next_line) - len(next_line.lstrip())
-                if next_indent <= current_indent:
-                    results.append({
-                        "type": "M8",
-                        "label": MISCONCEPTION_LABELS["M8"],
-                        "confidence": round(confidence, 2),
-                        "severity": "high",
-                        "line": j + 1,
-                        "column": 0,
-                        "end_line": j + 1,
-                        "end_column": len(next_line),
-                        "title": "Missing indentation after block statement",
-                        "explanation": f"The statement on line {j + 1} should be indented inside the block started on line {lineno} ('{stripped}'). In Python, all statements inside a block must be indented.",
-                    })
-                break
-
-    # Check for mixed tabs and spaces
-    has_tabs = False
-    has_spaces = False
-    for i, line in enumerate(source_lines):
-        if line.startswith("\t"):
-            has_tabs = True
-        elif line.startswith("    ") or line.startswith("  "):
-            has_spaces = True
-
-    if has_tabs and has_spaces:
+    # Fallback to direct static inspection
+    from backend.app.core.features import analyze_source_indentation
+    indent_analysis = analyze_source_indentation(code)
+    for issue in indent_analysis["issues"]:
         results.append({
             "type": "M8",
             "label": MISCONCEPTION_LABELS["M8"],
-            "confidence": round(min(confidence + 0.1, 1.0), 2),
-            "severity": "medium",
-            "line": 1,
-            "column": 0,
-            "end_line": 1,
-            "end_column": 1,
-            "title": "Mixed tabs and spaces",
-            "explanation": "Your code mixes tabs and spaces for indentation, which can cause unexpected IndentationError. Use consistent 4-space indentation throughout.",
+            "confidence": round(confidence, 2),
+            "severity": issue.get("severity", "high"),
+            "line": issue["line"],
+            "column": issue.get("column", 0),
+            "end_line": issue.get("end_line", issue["line"]),
+            "end_column": issue.get("end_column", len(source_lines[issue["line"]-1]) if 0 < issue["line"] <= len(source_lines) else 10),
+            "title": issue["title"],
+            "explanation": issue["explanation"],
         })
-
-    # Check for common logical indentation issue: last print after a loop
-    # e.g., for i in range(5):\n    print(i)\nprint("Done")
-    # where user might have intended print("Done") to be inside the loop
-    # (This is a heuristic — only flag if confidence is already elevated)
-    if confidence >= 0.3:
-        try:
-            tree = ast.parse(code)
-            for node in ast.walk(tree):
-                if isinstance(node, (ast.For, ast.While)):
-                    # Get the last line of the loop body
-                    if node.body:
-                        last_body_line = max(getattr(s, 'end_lineno', s.lineno) or s.lineno for s in node.body)
-                        loop_indent = node.col_offset
-                        # Check the line right after the loop body
-                        if last_body_line < len(source_lines):
-                            after_line = source_lines[last_body_line]
-                            after_stripped = after_line.strip()
-                            if after_stripped and not after_stripped.startswith("#"):
-                                after_indent = len(after_line) - len(after_line.lstrip())
-                                if after_indent == loop_indent:
-                                    # This line is at the same indent as the loop — could be intentional
-                                    # Only flag if it looks like a print/expression that logically belongs in loop
-                                    pass  # Don't over-flag; rely on the colon-check above
-        except (SyntaxError, Exception):
-            pass
 
     return results
 
@@ -692,6 +764,31 @@ def build_visual_explanation(
             },
         ]
         explanation["flow"] = _build_indentation_diagram(source_lines, primary)
+
+    elif primary["type"] == "M9":
+        explanation["blocks"] = [
+            {
+                "label": "❌ Unmatched / unclosed bracket",
+                "type": "wrong",
+                "lines": _get_context_lines(source_lines, primary["line"], 2),
+                "highlight_line": primary["line"],
+            },
+            {
+                "label": "✅ Balanced brackets",
+                "type": "correct",
+                "lines": [{"line": primary["line"], "text": "Ensure every '(', '[', '{' has a matching ')', ']', '}' in proper order."}],
+                "highlight_line": None,
+            },
+        ]
+        explanation["flow"] = {
+            "type": "bracket_pair",
+            "title": "Bracket Balance Inspector",
+            "steps": [
+                {"label": "Opening bracket: ( [ {", "detail": "Pushed onto bracket stack", "status": "correct"},
+                {"label": "Closing bracket: ) ] }", "detail": "Must match most recent unclosed opener", "status": "correct"},
+                {"label": primary.get("title", "Mismatch detected"), "detail": primary.get("explanation", ""), "status": "error"},
+            ],
+        }
 
     else:
         # Generic block for other misconceptions

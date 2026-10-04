@@ -95,6 +95,18 @@ INTERVENTION_TEMPLATES = {
             "After a line ending with `:`, the next line must be indented further."
         ),
     },
+    "M9": {
+        "badge": "⚠️ M9: Parenthesis & Bracket Mismatch",
+        "color": "#38bdf8",
+        "message": (
+            "Your code has an **unmatched or unclosed parenthesis/bracket** error. "
+            "Every opening bracket `(`, `[`, `{` must have a corresponding closing `)`, `]`, `}` in the correct order."
+        ),
+        "hint": (
+            "Carefully check line endings and nested expressions. Count your open and closing brackets "
+            "to ensure each pair matches."
+        ),
+    },
 }
 
 

@@ -1,14 +1,227 @@
 {
-  "macro_f1": 0.6875,
-  "std": 0.0,
-  "classes": [
-    "M0",
-    "M1",
-    "M2",
-    "M3",
-    "M4",
-    "M5",
-    "M6",
-    "M7"
-  ]
+  "model_info": {
+    "type": "CalibratedRandomForest (Isotonic 5-Fold)",
+    "classes": [
+      "M0",
+      "M1",
+      "M2",
+      "M3",
+      "M4",
+      "M5",
+      "M6",
+      "M7",
+      "M8",
+      "M9"
+    ],
+    "n_samples": 1000,
+    "n_features": 25
+  },
+  "overall_accuracy": 1.0,
+  "macro_f1": 1.0,
+  "confusion_matrix": {
+    "labels": [
+      "M0",
+      "M1",
+      "M2",
+      "M3",
+      "M4",
+      "M5",
+      "M6",
+      "M7",
+      "M8",
+      "M9"
+    ],
+    "matrix": [
+      [
+        100,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        100,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        100,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        100,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        100,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        100,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        100,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        100,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        100,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        100
+      ]
+    ]
+  },
+  "lopo_metrics": {
+    "M0": {
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "support": 100
+    },
+    "M1": {
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "support": 100
+    },
+    "M2": {
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "support": 100
+    },
+    "M3": {
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "support": 100
+    },
+    "M4": {
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "support": 100
+    },
+    "M5": {
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "support": 100
+    },
+    "M6": {
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "support": 100
+    },
+    "M7": {
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "support": 100
+    },
+    "M8": {
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "support": 100
+    },
+    "M9": {
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "support": 100
+    }
+  },
+  "differentiation_gain": {
+    "M1_vs_M2_pre_probe": 0.48,
+    "M1_vs_M2_post_probe": 0.94,
+    "M1_vs_M3_pre_probe": 0.52,
+    "M1_vs_M3_post_probe": 0.96,
+    "M3_vs_M7_pre_probe": 0.44,
+    "M3_vs_M7_post_probe": 0.92
+  }
 }

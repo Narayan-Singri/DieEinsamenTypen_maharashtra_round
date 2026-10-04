@@ -154,14 +154,15 @@
   const M_COLORS = {
     M0: "#22c55e", M1: "#f97316", M2: "#9f7aea",
     M3: "#eab308", M4: "#ef4444", M5: "#06b6d4",
-    M6: "#8b5cf6", M7: "#ec4899", M8: "#f43f5e"
+    M6: "#8b5cf6", M7: "#ec4899", M8: "#f43f5e",
+    M9: "#38bdf8"
   };
 
   const M_LABELS = {
     M0: "Correct", M1: "Accum. Reinit", M2: "Print vs Return",
     M3: "Off-by-One Range", M4: "Wrong Comparator",
     M5: "Assign in Cond.", M6: "Mutation vs New", M7: "Index Boundary",
-    M8: "Indentation Issue",
+    M8: "Indentation Issue", M9: "Parenthesis Mismatch"
   };
 
   const { useState, useEffect, useRef, useCallback } = React;
@@ -188,11 +189,12 @@
           fontLigatures: true,
           lineHeight: 22,
           minimap: { enabled: false },
+          glyphMargin: true,
           scrollBeyondLastLine: false,
           wordWrap: "on",
           automaticLayout: true,
           padding: { top: 12, bottom: 12 },
-          renderLineHighlight: "gutter",
+          renderLineHighlight: "all",
           cursorBlinking: "smooth",
           cursorSmoothCaretAnimation: "on",
           smoothScrolling: true,
@@ -223,7 +225,7 @@
       }
     }, [code]);
 
-    // Apply misconception line decorations
+    // Apply misconception line decorations and Monaco Markers (squiggles & tooltips)
     useEffect(() => {
       if (!editorRef.current || !window.monaco) return;
       const model = editorRef.current.getModel();
@@ -231,11 +233,27 @@
 
       if (!misconceptions || misconceptions.length === 0) {
         decorationsRef.current = editorRef.current.deltaDecorations(decorationsRef.current, []);
+        monaco.editor.setModelMarkers(model, "relearn", []);
         return;
       }
 
+      const markers = [];
       const newDecorations = misconceptions.map(m => {
         const line = Math.max(1, Math.min(m.line || 1, model.getLineCount()));
+        const col = Math.max(1, (m.column || 0) + 1);
+        const endLine = Math.max(line, Math.min(m.end_line || line, model.getLineCount()));
+        const endCol = Math.max(col + 1, Math.min((m.end_column || model.getLineMaxColumn(endLine)), model.getLineMaxColumn(endLine)));
+
+        markers.push({
+          severity: monaco.MarkerSeverity.Error,
+          startLineNumber: line,
+          startColumn: col,
+          endLineNumber: endLine,
+          endColumn: endCol,
+          message: `⚠️ [${m.type}] ${m.title || m.label}: ${m.explanation || ''}`,
+          source: "Re:Learn Diagnosis Engine",
+        });
+
         return {
           range: new monaco.Range(line, 1, line, model.getLineMaxColumn(line)),
           options: {
@@ -247,6 +265,7 @@
         };
       });
 
+      monaco.editor.setModelMarkers(model, "relearn", markers);
       decorationsRef.current = editorRef.current.deltaDecorations(decorationsRef.current, newDecorations);
     }, [misconceptions]);
 
@@ -856,9 +875,9 @@
   }
 
   // ────────────────────────────────────────
-  // Reassess Pane
+  // Reassess Pane (Dual-Mode: Problem Mode & Playground Mode)
   // ────────────────────────────────────────
-  function ReassessPane({ result, problems, sessionToken }) {
+  function ReassessPane({ result, problems, sessionToken, mode, code, onReassessPlayground }) {
     const [transferCode,  setTransferCode]  = useState("def solution(values):\n    # Transfer problem\n    pass\n");
     const [counterCode,   setCounterCode]   = useState("def solution(nums):\n    # Counter-probe trap\n    pass\n");
     const [transferProbId, setTransferProbId] = useState("");
@@ -874,7 +893,7 @@
       }
     }, [problems]);
 
-    const handleReassess = async () => {
+    const handleReassessProblem = async () => {
       if (!result) return;
       setLoading(true); setVerdict(null); setError(null);
       try {
@@ -892,12 +911,53 @@
       } catch(e) { setError(e.message); } finally { setLoading(false); }
     };
 
+    const handleReassessPlaygroundCode = async () => {
+      setLoading(true); setVerdict(null); setError(null);
+      try {
+        const res = await fetch(`${API_BASE}/api/reassess`, {
+          method: "POST", headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ code: code }),
+        });
+        const data = await res.json();
+        if (!res.ok) throw new Error(data.detail || "Reassessment failed");
+        setVerdict(data);
+        if (onReassessPlayground) onReassessPlayground();
+      } catch(e) { setError(e.message); } finally { setLoading(false); }
+    };
+
     const textareaStyle = {
       width:'100%',height:80,background:'var(--bg-secondary)',
       border:'1px solid var(--border-normal)',borderRadius:'var(--radius-sm)',
       color:'var(--text-primary)',fontFamily:'JetBrains Mono,monospace',
       fontSize:11,padding:'8px',resize:'vertical',outline:'none',
     };
+
+    if (mode === "practice") {
+      return (
+        <div className="reassess-card">
+          <div className="section-title">🔁 Playground Reassessment</div>
+          <div style={{fontSize:12,color:'var(--text-secondary)',lineHeight:1.6,marginBottom:12}}>
+            Edit your code in the playground to resolve any misconceptions, then click below to re-verify your fix and update diagnostics.
+          </div>
+          <button id="reassess-practice-btn" className="btn btn-primary" onClick={handleReassessPlaygroundCode}
+            disabled={loading} style={{width:'100%',justifyContent:'center'}}>
+            {loading ? <><span className="loading-spinner"/> Reassessing…</> : "🔁 Reassess Playground Code"}
+          </button>
+          {error && <div style={{marginTop:10,color:'var(--accent-red)',fontSize:12}}>{error}</div>}
+          {verdict && (
+            <div style={{marginTop:12}}>
+              <div className={`verdict-banner ${verdict.verdict.toLowerCase()}`}>{verdict.badge}</div>
+              <div style={{fontSize:12,color:'var(--text-secondary)',lineHeight:1.6,marginTop:6}}>{verdict.message}</div>
+              {verdict.top_misconception && (
+                <div style={{marginTop:8,fontSize:11,color:'var(--text-muted)'}}>
+                  Current State: <strong>{verdict.top_misconception}</strong> ({Math.round((verdict.confidence||0)*100)}% conf)
+                </div>
+              )}
+            </div>
+          )}
+        </div>
+      );
+    }
 
     return (
       <div className="reassess-card">
@@ -920,7 +980,7 @@
                 </select>
                 <textarea value={counterCode} onChange={e=>setCounterCode(e.target.value)} style={textareaStyle}/>
               </div>
-              <button id="reassess-btn" className="btn btn-primary" onClick={handleReassess}
+              <button id="reassess-btn" className="btn btn-primary" onClick={handleReassessProblem}
                 disabled={loading||!transferProbId||!counterProbId}
                 style={{width:'100%',justifyContent:'center'}}>
                 {loading?<><span className="loading-spinner"/> Evaluating…</>:"🔁 Run Dual-Gate Check"}
@@ -956,7 +1016,7 @@
     const [selectedId,  setSelectedId]  = useState(null);
     const [problem,     setProblem]     = useState(null);
     const [problemCode, setProblemCode] = useState("def solution(nums):\n    # your code here\n    pass\n");
-    const [practiceCode, setPracticeCode] = useState("# Practice Playground — write arbitrary Python code\ndef solution(nums):\n    total = 0\n    for n in nums:\n        total += n\n    return total\n\nprint(solution([1, 2, 3, 4]))\n");
+    const [practiceCode, setPracticeCode] = useState("num = 4\nif num % 2 == 0:\n    print('Even')\nelse:\n    print('Odd')\n");
     const [result,      setResult]      = useState(null);
     const [isLoading,   setIsLoading]   = useState(false);
     const [activeTab,   setActiveTab]   = useState("diagnosis");
@@ -971,6 +1031,19 @@
     const addConsole = useCallback((type, text) => {
       setConsoleLines(prev => [...prev.slice(-60), {type, text, id: Date.now()+Math.random()}]);
     }, []);
+
+    const handlePresetSelection = (token) => {
+      setSessionToken(token);
+      if (token) localStorage.setItem("rl_session", token);
+      else localStorage.removeItem("rl_session");
+
+      const preset = presets.find(p => p.session_token === token);
+      if (preset && preset.code) {
+        if (mode === "problem") setProblemCode(preset.code);
+        else setPracticeCode(preset.code);
+        addConsole("info", `🎭 Loaded preset: ${preset.name}`);
+      }
+    };
 
     useEffect(() => {
       fetch(`${API_BASE}/api/inspector/problems`).then(r=>r.json()).then(data=>{
@@ -1060,7 +1133,7 @@
 
     return (
       <div id="root">
-        <Header presetLearners={presets} onPresetChange={t=>{setSessionToken(t);localStorage.setItem("rl_session",t);}}
+        <Header presetLearners={presets} onPresetChange={handlePresetSelection}
           onOpenInspector={()=>setInspectorOpen(true)}/>
         <div className="workspace">
           {/* Left */}
@@ -1083,7 +1156,7 @@
             <div className="pane-content">
               {activeTab==="diagnosis"  && <DiagnosisPane result={result}/>}
               {activeTab==="visualizer" && <Visualizer memoryBoxes={result?.memory_boxes||[]}/>}
-              {activeTab==="reassess"   && <ReassessPane result={result} problems={problems} sessionToken={sessionToken}/>}
+              {activeTab==="reassess"   && <ReassessPane result={result} problems={problems} sessionToken={sessionToken} mode={mode} code={code} onReassessPlayground={handleSubmit}/>}
             </div>
           </div>
         </div>

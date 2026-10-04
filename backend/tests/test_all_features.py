@@ -248,6 +248,27 @@ def test_dual_gate_reassessment():
     assert "verdict" in data
     assert data["verdict"] in ("RESOLVED", "SUPERFICIAL_FIX", "UNRESOLVED")
 
+def test_ast_feature_extraction_m9_parentheses():
+    code = (
+        "def solution(nums):\n"
+        "    return sum(nums\n"
+    )
+    feats = extract_ast_features(code)
+    assert feats["has_parenthesis_error"] is True
+    assert len(feats["parenthesis_issues"]) > 0
+
+def test_practice_mode_m9_unclosed_parenthesis():
+    code = (
+        "x = [1, 2, 3\n"
+        "print('Done')\n"
+    )
+    res = client.post("/api/practice", json={"code": code})
+    assert res.status_code == 200
+    data = res.json()
+    assert data["top_misconception"] == "M9"
+    assert len(data["misconceptions"]) > 0
+    assert any(m["type"] == "M9" for m in data["misconceptions"])
+
 def test_inspector_endpoints():
     res = client.get("/api/inspector")
     assert res.status_code == 200

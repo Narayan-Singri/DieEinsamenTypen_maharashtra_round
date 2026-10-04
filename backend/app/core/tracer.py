@@ -203,6 +203,9 @@ def trace_arbitrary(code: str, timeout: float = TRACE_TIMEOUT) -> List[Dict]:
             fn_name = None
 
         local_vars = _filter_locals(frame.f_locals)
+        # If at module level and locals is empty or identical to globals, extract non-builtin globals
+        if not local_vars and frame.f_globals:
+            local_vars = _filter_locals(frame.f_globals)
 
         step_counter[0] += 1
         snapshot = {
@@ -210,6 +213,7 @@ def trace_arbitrary(code: str, timeout: float = TRACE_TIMEOUT) -> List[Dict]:
             "event": event,
             "line": lineno,
             "locals": local_vars,
+            "vars": local_vars,  # ensure compatibility with build_memory_boxes
             "source_line": src_line.strip() if src_line else "",
             "function": fn_name,
         }

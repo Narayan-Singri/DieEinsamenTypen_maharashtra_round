@@ -62,10 +62,10 @@ def get_inspector_data():
         try:
             with open(METRICS_PATH, "r") as f:
                 trained = json.load(f)
+                if "model_info" in trained:
+                    metrics["model_info"] = trained["model_info"]
                 if "macro_f1" in trained:
                     metrics["macro_f1"] = trained["macro_f1"]
-                if "classes" in trained:
-                    metrics["model_info"]["classes"] = trained["classes"]
                 if "confusion_matrix" in trained:
                     metrics["confusion_matrix"] = trained["confusion_matrix"]
                 if "lopo_metrics" in trained:
@@ -112,7 +112,7 @@ def get_preset_learners():
             Learner.session_token.like("preset-%")
         ).all()
         return [
-            {"id": l.id, "name": l.name, "session_token": l.session_token}
+            {"id": l.id, "name": l.name, "session_token": l.session_token, "code": l.code}
             for l in learners
         ]
     finally:

@@ -21,6 +21,7 @@ class Learner(Base):
     id = Column(Integer, primary_key=True, autoincrement=True)
     name = Column(String(100), nullable=False, default="anonymous")
     session_token = Column(String(64), unique=True, nullable=False)
+    code = Column(Text, nullable=True)
     created_at = Column(DateTime, default=datetime.utcnow)
 
     submissions = relationship("Submission", back_populates="learner")

@@ -157,24 +157,59 @@ PROBLEMS = [
 
 PRESET_LEARNERS = [
     {
-        "name": "M1 — Reinit Accumulator (Classic Bug)",
+        "name": "M0 — Correct Solution",
+        "session_token": "preset-m0-correct",
+        "code": "def solution(nums):\n    total = 0\n    for n in nums:\n        total += n\n    return total\n",
+    },
+    {
+        "name": "M1 — Accumulator Reinit Inside Loop",
         "session_token": "preset-m1-reinit",
+        "code": "def solution(nums):\n    total = 0\n    for n in nums:\n        total = 0\n        total += n\n    return total\n",
     },
     {
         "name": "M2 — Print vs Return Confusion",
         "session_token": "preset-m2-print",
-    },
-    {
-        "name": "M0 — Correct Solution",
-        "session_token": "preset-m0-correct",
+        "code": "def solution(nums):\n    total = 0\n    for n in nums:\n        total += n\n    print(total)\n",
     },
     {
         "name": "M3 — Off-by-One Range Error",
         "session_token": "preset-m3-obo",
+        "code": "def solution(nums):\n    total = 0\n    for i in range(len(nums) - 1):\n        total += nums[i]\n    return total\n",
+    },
+    {
+        "name": "M4 — Wrong Comparison Direction",
+        "session_token": "preset-m4-comparator",
+        "code": "def solution(nums):\n    m = nums[0]\n    for n in nums:\n        if n < m:\n            m = n\n    return m\n",
+    },
+    {
+        "name": "M5 — Assignment vs Equality in Condition",
+        "session_token": "preset-m5-assign",
+        "code": "def solution(nums):\n    count = 0\n    for n in nums:\n        if n % 2 = 0:\n            count += 1\n    return count\n",
+    },
+    {
+        "name": "M6 — Mutation vs New Collection",
+        "session_token": "preset-m6-mutation",
+        "code": "def solution(nums):\n    nums.reverse()\n    return nums\n",
+    },
+    {
+        "name": "M7 — Index Boundary Confusion (Reverse)",
+        "session_token": "preset-m7-index-boundary",
+        "code": "def solution(nums):\n    result = []\n    for i in range(len(nums) - 1, 0, -1):\n        result.append(nums[i])\n    return result\n",
+    },
+    {
+        "name": "M8 — Indentation & Scoping Inconsistency",
+        "session_token": "preset-m8-indentation",
+        "code": "num = 4\nif num % 2 == 0:\n    print('Even')\n\nelse:\n  print('Odd')\n",
+    },
+    {
+        "name": "M9 — Parenthesis & Bracket Mismatch",
+        "session_token": "preset-m9-brackets",
+        "code": "def solution(nums):\n    total = sum(nums\n    return total\n",
     },
     {
         "name": "Fragile Knowledge (SUPPRESSED)",
         "session_token": "preset-fragile",
+        "code": "def solution(nums):\n    # Hardcoded edge cases but missing general pattern\n    if nums == [1, 2, 3]: return 6\n    if nums == [4, 9]: return 13\n    return 0\n",
     },
 ]
 
@@ -192,13 +227,17 @@ def seed():
                 db.add(prob)
                 print(f"  [+] Problem: {p_data['title']}")
 
-        # Seed preset learners
+        # Seed or update preset learners
         for l_data in PRESET_LEARNERS:
             existing = db.query(Learner).filter_by(session_token=l_data["session_token"]).first()
             if not existing:
                 learner = Learner(**l_data)
                 db.add(learner)
                 print(f"  [+] Preset learner: {l_data['name']}")
+            else:
+                existing.name = l_data["name"]
+                existing.code = l_data.get("code")
+                print(f"  [*] Updated preset learner: {l_data['name']}")
 
         db.commit()
         print("\n[OK] Seed complete.")
