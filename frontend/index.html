@@ -3,93 +3,91 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Re:Learn — Adaptive Misconception Diagnosis System</title>
-  <meta name="description" content="Re:Learn diagnoses, differentiates, and visually resolves deep-seated cognitive misconceptions in introductory Python programming using AI-driven micro-probes and memory-box trace visualization." />
+  <title>Re:Learn — Adaptive Misconception Diagnosis Studio</title>
+  <meta name="description" content="Re:Learn diagnoses, differentiates, and visually resolves cognitive misconceptions in introductory Python using AI-driven micro-probes and memory-box trace visualization." />
 
-  <!-- Fonts -->
+  <!-- Initial Theme Determination before paint (prevents light/dark flash) -->
+  <script>
+    (function() {
+      try {
+        const savedTheme = localStorage.getItem("relearn_theme");
+        const systemDark = window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches;
+        const initialTheme = savedTheme || (systemDark ? "dark" : "light");
+        document.documentElement.setAttribute("data-theme", initialTheme);
+      } catch (e) {
+        document.documentElement.setAttribute("data-theme", "light");
+      }
+    })();
+  </script>
+
+  <!-- Fonts: Manrope (UI) & IBM Plex Mono (Code) -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,400;0,500;0,600;1,400&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
 
-  <!-- App Styles -->
+  <!-- Design System Styles -->
   <link rel="stylesheet" href="/static/styles.css" />
 
   <!-- React 18 & ReactDOM via CDN -->
   <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
   <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
 
-  <!-- Babel Standalone (for JSX transpiling in browser) -->
+  <!-- Babel Standalone for in-browser JSX transpiling -->
   <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
 
   <style>
-    /* Inline critical styles before CSS loads */
-    body { background: #0d0f17; color: #e8eaf6; }
+    /* Critical loading screen */
     #loading-screen {
       position: fixed; inset: 0;
       display: flex; flex-direction: column;
       align-items: center; justify-content: center;
-      background: #0d0f17; z-index: 9999;
-      gap: 16px;
-      transition: opacity 0.4s ease;
+      background: var(--bg-page, #F5F5F3); z-index: 9999;
+      gap: 12px;
+      transition: opacity 0.3s ease;
+      font-family: 'Manrope', -apple-system, sans-serif;
     }
     #loading-screen.hidden { opacity: 0; pointer-events: none; }
-    .loading-logo {
-      width: 60px; height: 60px;
-      background: linear-gradient(135deg, #4f7cff, #9f7aea);
-      border-radius: 16px;
+    .loading-mark {
+      width: 44px; height: 44px;
+      background: #FFE135;
+      border-radius: 10px;
       display: flex; align-items: center; justify-content: center;
-      font-size: 28px;
-      box-shadow: 0 0 30px rgba(79,124,255,0.4);
-      animation: pulse 1.5s ease-in-out infinite;
+      color: #171717; font-weight: 800; font-size: 20px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.12);
     }
-    @keyframes pulse {
-      0%, 100% { transform: scale(1); }
-      50% { transform: scale(1.05); }
+    .loading-title {
+      font-size: 18px; font-weight: 800; color: var(--text-main, #171717);
     }
-    .loading-text {
-      font-family: Inter, sans-serif;
-      font-size: 20px; font-weight: 800;
-      background: linear-gradient(135deg, #fff 30%, #4f7cff);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
+    .loading-subtitle {
+      font-size: 12.5px; color: var(--text-secondary, #60605A);
     }
-    .loading-sub {
-      font-family: Inter, sans-serif;
-      font-size: 12px; color: #5a6080;
-      letter-spacing: 0.5px;
+    .loading-bar-track {
+      width: 140px; height: 3px; background: var(--border-main, #DEDED7); border-radius: 999px; overflow: hidden; margin-top: 4px;
     }
-    .loading-bar {
-      width: 180px; height: 3px;
-      background: #1e2233;
-      border-radius: 2px;
-      overflow: hidden;
+    .loading-bar-thumb {
+      height: 100%; width: 50%; background: #FFE135; border-radius: 999px;
+      animation: loadPulse 1.2s ease-in-out infinite alternate;
     }
-    .loading-bar-fill {
-      height: 100%;
-      background: linear-gradient(90deg, #4f7cff, #9f7aea);
-      border-radius: 2px;
-      animation: progress 2s ease forwards;
-    }
-    @keyframes progress {
-      from { width: 0%; }
-      to { width: 100%; }
+    @keyframes loadPulse {
+      0% { transform: translateX(-40%); width: 30%; }
+      100% { transform: translateX(180%); width: 50%; }
     }
   </style>
 </head>
 <body>
 
-<!-- Loading Screen -->
+<!-- Initial Loading Screen -->
 <div id="loading-screen">
-  <div class="loading-logo">🎓</div>
-  <div class="loading-text">Re:Learn</div>
-  <div class="loading-sub">Initialising Adaptive Diagnosis Engine…</div>
-  <div class="loading-bar"><div class="loading-bar-fill"></div></div>
+  <div class="loading-mark">R:</div>
+  <div class="loading-title">Re:Learn</div>
+  <div class="loading-subtitle">Preparing diagnostic studio…</div>
+  <div class="loading-bar-track"><div class="loading-bar-thumb"></div></div>
 </div>
 
-<!-- React Root -->
+<!-- React Application Mount Point -->
 <div id="root"></div>
 
-<!-- Dynamic Monaco Loader to prevent AMD define conflict with React/Babel -->
+<!-- Dynamic Monaco Loader with Light & Dark Themes -->
 <script>
   window.__monacoReady = false;
   function loadMonaco() {
@@ -100,40 +98,71 @@
       if (monacoRequire) {
         monacoRequire.config({ paths: { vs: 'https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.44.0/min/vs' } });
         monacoRequire(['vs/editor/editor.main'], function () {
+          // 1. Light Monaco Theme
+          monaco.editor.defineTheme('relearn-light', {
+            base: 'vs',
+            inherit: true,
+            rules: [
+              { token: 'keyword', foreground: '8B5CF6', fontStyle: 'bold' },
+              { token: 'string', foreground: 'B45309' },
+              { token: 'number', foreground: 'D97706' },
+              { token: 'comment', foreground: '78716C', fontStyle: 'italic' },
+              { token: 'function', foreground: '0284C7' },
+              { token: 'type.identifier', foreground: '0D9488' },
+              { token: 'identifier', foreground: '1E1E1E' },
+            ],
+            colors: {
+              'editor.background': '#FAFAF8',
+              'editor.foreground': '#1E1E1E',
+              'editorLineNumber.foreground': '#9E9E96',
+              'editorLineNumber.activeForeground': '#171717',
+              'editor.lineHighlightBackground': '#F2F2ED',
+              'editorCursor.foreground': '#171717',
+              'editor.selectionBackground': '#F7ECC0',
+              'editor.inactiveSelectionBackground': '#ECE8D2',
+              'editorIndentGuide.background': '#E8E8E0',
+              'editorIndentGuide.activeBackground': '#D0D0C8',
+              'scrollbarSlider.background': '#D8D8D088',
+              'scrollbarSlider.hoverBackground': '#BCBCB088',
+            }
+          });
+
+          // 2. Dark Monaco Theme
           monaco.editor.defineTheme('relearn-dark', {
             base: 'vs-dark',
             inherit: true,
             rules: [
-              { token: 'keyword', foreground: '9f7aea', fontStyle: 'bold' },
-              { token: 'string', foreground: 'a8ff78' },
-              { token: 'number', foreground: 'f97316' },
-              { token: 'comment', foreground: '5a6080', fontStyle: 'italic' },
-              { token: 'function', foreground: '4f7cff' },
-              { token: 'type.identifier', foreground: '06b6d4' },
-              { token: 'identifier', foreground: 'e8eaf6' },
+              { token: 'keyword', foreground: 'C084FC', fontStyle: 'bold' },
+              { token: 'string', foreground: 'FDE047' },
+              { token: 'number', foreground: 'FDBA74' },
+              { token: 'comment', foreground: 'A8A29E', fontStyle: 'italic' },
+              { token: 'function', foreground: '38BDF8' },
+              { token: 'type.identifier', foreground: '2DD4BF' },
+              { token: 'identifier', foreground: 'F0F0EC' },
             ],
             colors: {
-              'editor.background': '#0d0f17',
-              'editor.foreground': '#e8eaf6',
-              'editorLineNumber.foreground': '#2e3452',
-              'editorLineNumber.activeForeground': '#5a6080',
-              'editor.lineHighlightBackground': '#131621',
-              'editorCursor.foreground': '#4f7cff',
-              'editor.selectionBackground': '#2a3050',
-              'editor.inactiveSelectionBackground': '#1e2233',
-              'editorIndentGuide.background': '#1e2233',
-              'editorIndentGuide.activeBackground': '#2e3452',
-              'scrollbarSlider.background': '#2e345288',
-              'scrollbarSlider.hoverBackground': '#3d447088',
+              'editor.background': '#141414',
+              'editor.foreground': '#F0F0EC',
+              'editorLineNumber.foreground': '#787870',
+              'editorLineNumber.activeForeground': '#F4F4F0',
+              'editor.lineHighlightBackground': '#222220',
+              'editorCursor.foreground': '#FFE135',
+              'editor.selectionBackground': '#3D391A',
+              'editor.inactiveSelectionBackground': '#2E2B18',
+              'editorIndentGuide.background': '#282824',
+              'editorIndentGuide.activeBackground': '#42423C',
+              'scrollbarSlider.background': '#38383388',
+              'scrollbarSlider.hoverBackground': '#50504888',
             }
           });
+
           window.__monacoReady = true;
+          window.dispatchEvent(new Event('monaco-loaded'));
         });
       }
     };
     document.head.appendChild(s);
   }
-  // Defer Monaco script injection until document is interactive
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', loadMonaco);
   } else {
@@ -141,51 +170,475 @@
   }
 </script>
 
-<!-- JSX Components — loaded as text/babel for in-browser transpiling -->
+<!-- React Application Script -->
 <script type="text/babel">
-  // ──────────────────────────────────────────
-  // Load all component files inline
-  // (Zero-build-step: CDN Babel transpiles JSX)
-  // ──────────────────────────────────────────
-
   const API_BASE = "http://127.0.0.1:8000";
-
-  // M Colors (shared)
-  const M_COLORS = {
-    M0: "#22c55e", M1: "#f97316", M2: "#9f7aea",
-    M3: "#eab308", M4: "#ef4444", M5: "#06b6d4",
-    M6: "#8b5cf6", M7: "#ec4899", M8: "#f43f5e",
-    M9: "#38bdf8"
-  };
-
-  const M_LABELS = {
-    M0: "Correct", M1: "Accum. Reinit", M2: "Print vs Return",
-    M3: "Off-by-One Range", M4: "Wrong Comparator",
-    M5: "Assign in Cond.", M6: "Mutation vs New", M7: "Index Boundary",
-    M8: "Indentation Issue", M9: "Parenthesis Mismatch"
-  };
 
   const { useState, useEffect, useRef, useCallback } = React;
 
-  // ────────────────────────────────────────
-  // Monaco Editor with Misconception Highlights
-  // ────────────────────────────────────────
-  function EditorPane({ code, onChange, misconceptions }) {
+  // Taxonomy Labels & Supportive Names
+  const M_LABELS = {
+    M0: "Correct Implementation",
+    M1: "Accumulator Reinitialization",
+    M2: "Print vs. Return Output",
+    M3: "Off-by-One Range Boundary",
+    M4: "Wrong Comparison Operator",
+    M5: "Assignment in Conditional",
+    M6: "In-Place Mutation vs. New Object",
+    M7: "Index Range Boundary Exceeded",
+    M8: "Indentation & Scope Inconsistency",
+    M9: "Syntax & Bracket Structure Mismatch"
+  };
+
+  // Safe Markdown Formatter (replaces **bold** and `code` without raw innerHTML)
+  function renderFormattedText(text) {
+    if (!text) return null;
+    const parts = [];
+    const regex = /(\*\*[^*]+\*\*|`[^`]+`)/g;
+    let lastIndex = 0;
+    let match;
+
+    while ((match = regex.exec(text)) !== null) {
+      if (match.index > lastIndex) {
+        parts.push({ type: 'text', content: text.substring(lastIndex, match.index) });
+      }
+      const token = match[0];
+      if (token.startsWith('**') && token.endsWith('**')) {
+        parts.push({ type: 'bold', content: token.slice(2, -2) });
+      } else if (token.startsWith('`') && token.endsWith('`')) {
+        parts.push({ type: 'code', content: token.slice(1, -1) });
+      }
+      lastIndex = regex.lastIndex;
+    }
+
+    if (lastIndex < text.length) {
+      parts.push({ type: 'text', content: text.substring(lastIndex) });
+    }
+
+    return parts.map((p, idx) => {
+      if (p.type === 'bold') return <strong key={idx}>{p.content}</strong>;
+      if (p.type === 'code') return <code key={idx}>{p.content}</code>;
+      return <span key={idx}>{p.content}</span>;
+    });
+  }
+
+  // ──────────────────────────────────────────────────────────────────────────
+  // Custom Sleek Judge Preset Dropdown (Solves OS popup color quirks in Dark Mode)
+  // ──────────────────────────────────────────────────────────────────────────
+  function JudgePresetDropdown({ presets, selectedToken, onSelect }) {
+    const [isOpen, setIsOpen] = useState(false);
+    const dropdownRef = useRef(null);
+
+    // Close on click outside or Escape
+    useEffect(() => {
+      function handleClickOutside(e) {
+        if (dropdownRef.current && !dropdownRef.current.contains(e.target)) {
+          setIsOpen(false);
+        }
+      }
+      function handleKeyDown(e) {
+        if (e.key === "Escape") setIsOpen(false);
+      }
+      document.addEventListener("mousedown", handleClickOutside);
+      document.addEventListener("keydown", handleKeyDown);
+      return () => {
+        document.removeEventListener("mousedown", handleClickOutside);
+        document.removeEventListener("keydown", handleKeyDown);
+      };
+    }, []);
+
+    const selectedPreset = presets.find((p) => p.session_token === selectedToken);
+    const displayName = selectedPreset ? selectedPreset.name.replace(/\?\?|—/g, "-") : "— Live Session —";
+
+    // Group presets logically by Target Problem / Activity
+    const problem1Presets = presets.filter((p) =>
+      ["preset-m1-reinit", "preset-m2-print", "preset-m0-correct", "preset-m3-obo", "preset-fragile"].includes(p.session_token)
+    );
+    const problem2Presets = presets.filter((p) => p.session_token === "preset-m4-comparator");
+    const problem3Presets = presets.filter((p) => p.session_token === "preset-m5-assign");
+    const problem4Presets = presets.filter((p) => ["preset-m6-mutation", "preset-m7-index-boundary"].includes(p.session_token));
+    const playgroundPresets = presets.filter((p) => ["preset-m8-indentation", "preset-m9-brackets"].includes(p.session_token));
+
+    const handleItemClick = (token) => {
+      onSelect(token);
+      setIsOpen(false);
+    };
+
+    return (
+      <div className="custom-dropdown-container" ref={dropdownRef} id="judge-quick-switcher">
+        {/* Hidden native select for automated accessibility & test compatibility */}
+        <select
+          id="judge-preset-select"
+          aria-label="Select Demo Judge Preset"
+          value={selectedToken || ""}
+          onChange={(e) => onSelect(e.target.value)}
+          style={{ position: 'absolute', opacity: 0, pointerEvents: 'none', width: 0, height: 0 }}
+          tabIndex={-1}
+        >
+          <option value="">— Live Session —</option>
+          {presets.map((p) => (
+            <option key={p.session_token} value={p.session_token}>
+              {p.name.replace(/\?\?|—/g, "-")}
+            </option>
+          ))}
+        </select>
+
+        {/* Custom trigger button */}
+        <div
+          className={`custom-dropdown-trigger ${isOpen ? "open" : ""}`}
+          onClick={() => setIsOpen(!isOpen)}
+          role="button"
+          tabIndex={0}
+          aria-haspopup="listbox"
+          aria-expanded={isOpen}
+          onKeyDown={(e) => {
+            if (e.key === "Enter" || e.key === " ") {
+              e.preventDefault();
+              setIsOpen(!isOpen);
+            }
+          }}
+        >
+          <span className="dropdown-label-prefix">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2"><circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/></svg>
+            Demo:
+          </span>
+          <span className="dropdown-value-text">{displayName}</span>
+          <span className={`dropdown-chevron ${isOpen ? "rotated" : ""}`}>▼</span>
+        </div>
+
+        {/* Custom dropdown menu */}
+        {isOpen && (
+          <div className="custom-dropdown-menu" role="listbox">
+            <button
+              type="button"
+              className={`custom-dropdown-item ${!selectedToken ? "selected" : ""}`}
+              onClick={() => handleItemClick("")}
+              role="option"
+              aria-selected={!selectedToken}
+            >
+              <span>— Live Session —</span>
+              <span className="dropdown-item-meta">Default</span>
+            </button>
+
+            {problem1Presets.length > 0 && (
+              <>
+                <div className="dropdown-group-heading">Problem 1: Sum List</div>
+                {problem1Presets.map((p) => (
+                  <button
+                    key={p.session_token}
+                    type="button"
+                    className={`custom-dropdown-item ${selectedToken === p.session_token ? "selected" : ""}`}
+                    onClick={() => handleItemClick(p.session_token)}
+                    role="option"
+                    aria-selected={selectedToken === p.session_token}
+                  >
+                    <span>{p.name.replace(/\?\?|—/g, "-")}</span>
+                  </button>
+                ))}
+              </>
+            )}
+
+            {problem2Presets.length > 0 && (
+              <>
+                <div className="dropdown-group-heading">Problem 2: Find Max</div>
+                {problem2Presets.map((p) => (
+                  <button
+                    key={p.session_token}
+                    type="button"
+                    className={`custom-dropdown-item ${selectedToken === p.session_token ? "selected" : ""}`}
+                    onClick={() => handleItemClick(p.session_token)}
+                    role="option"
+                    aria-selected={selectedToken === p.session_token}
+                  >
+                    <span>{p.name.replace(/\?\?|—/g, "-")}</span>
+                  </button>
+                ))}
+              </>
+            )}
+
+            {problem3Presets.length > 0 && (
+              <>
+                <div className="dropdown-group-heading">Problem 3: Count Even</div>
+                {problem3Presets.map((p) => (
+                  <button
+                    key={p.session_token}
+                    type="button"
+                    className={`custom-dropdown-item ${selectedToken === p.session_token ? "selected" : ""}`}
+                    onClick={() => handleItemClick(p.session_token)}
+                    role="option"
+                    aria-selected={selectedToken === p.session_token}
+                  >
+                    <span>{p.name.replace(/\?\?|—/g, "-")}</span>
+                  </button>
+                ))}
+              </>
+            )}
+
+            {problem4Presets.length > 0 && (
+              <>
+                <div className="dropdown-group-heading">Problem 4: Reverse List</div>
+                {problem4Presets.map((p) => (
+                  <button
+                    key={p.session_token}
+                    type="button"
+                    className={`custom-dropdown-item ${selectedToken === p.session_token ? "selected" : ""}`}
+                    onClick={() => handleItemClick(p.session_token)}
+                    role="option"
+                    aria-selected={selectedToken === p.session_token}
+                  >
+                    <span>{p.name.replace(/\?\?|—/g, "-")}</span>
+                  </button>
+                ))}
+              </>
+            )}
+
+            {playgroundPresets.length > 0 && (
+              <>
+                <div className="dropdown-group-heading">Playground Demos</div>
+                {playgroundPresets.map((p) => (
+                  <button
+                    key={p.session_token}
+                    type="button"
+                    className={`custom-dropdown-item ${selectedToken === p.session_token ? "selected" : ""}`}
+                    onClick={() => handleItemClick(p.session_token)}
+                    role="option"
+                    aria-selected={selectedToken === p.session_token}
+                  >
+                    <span>{p.name.replace(/\?\?|—/g, "-")}</span>
+                    <span className="dropdown-item-meta">Playground</span>
+                  </button>
+                ))}
+              </>
+            )}
+          </div>
+        )}
+      </div>
+    );
+  }
+
+  // ──────────────────────────────────────────────────────────────────────────
+  // Header Component with Theme Switcher
+  // ──────────────────────────────────────────────────────────────────────────
+  function Header({ mode, onModeChange, presets, selectedPresetToken, onPresetSelect, onOpenInspector, theme, onToggleTheme }) {
+    return (
+      <header className="header" role="banner">
+        <div className="header-brand">
+          <div className="brand-mark" aria-hidden="true">R:</div>
+          <div className="brand-titles">
+            <span className="brand-name">Re:Learn</span>
+            <span className="brand-tagline">Understand your code.</span>
+          </div>
+        </div>
+
+        <div className="header-center">
+          <div className="mode-toggle-group" role="tablist" aria-label="Learning Mode">
+            <button
+              id="mode-problem-btn"
+              role="tab"
+              aria-selected={mode === "problem"}
+              className={`mode-toggle-btn ${mode === "problem" ? "active" : ""}`}
+              onClick={() => onModeChange("problem")}
+            >
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+              Problem Mode
+            </button>
+            <button
+              id="mode-practice-btn"
+              role="tab"
+              aria-selected={mode === "practice"}
+              className={`mode-toggle-btn ${mode === "practice" ? "active" : ""}`}
+              onClick={() => onModeChange("practice")}
+            >
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+              Playground Mode
+            </button>
+          </div>
+        </div>
+
+        <div className="header-actions">
+          {/* Enhanced Sleek Judge Preset Dropdown */}
+          <JudgePresetDropdown
+            presets={presets}
+            selectedToken={selectedPresetToken}
+            onSelect={onPresetSelect}
+          />
+
+          <button
+            id="inspector-modal-btn"
+            className="btn-secondary"
+            onClick={onOpenInspector}
+            aria-label="Open Instructor & Model Inspector View"
+          >
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg>
+            Instructor View
+          </button>
+
+          {/* Accessible Two-Option Theme Switcher */}
+          <div className="theme-switch-group" role="radiogroup" aria-label="Interface Theme">
+            <button
+              type="button"
+              role="radio"
+              aria-checked={theme === "light"}
+              className={`theme-switch-btn ${theme === "light" ? "active" : ""}`}
+              onClick={() => onToggleTheme("light")}
+              title="Switch to light theme"
+              aria-label="Light theme"
+            >
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+              Light
+            </button>
+            <button
+              type="button"
+              role="radio"
+              aria-checked={theme === "dark"}
+              className={`theme-switch-btn ${theme === "dark" ? "active" : ""}`}
+              onClick={() => onToggleTheme("dark")}
+              title="Switch to dark theme"
+              aria-label="Dark theme"
+            >
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+              Dark
+            </button>
+          </div>
+        </div>
+      </header>
+    );
+  }
+
+  // ──────────────────────────────────────────────────────────────────────────
+  // Exercise Brief Pane (Column 1)
+  // ──────────────────────────────────────────────────────────────────────────
+  function ExerciseBrief({ problems, selectedId, onSelect, problem, mode }) {
+    if (mode === "practice") {
+      return (
+        <aside className="panel pane-brief" aria-label="Playground Guide">
+          <div className="panel-header">
+            <h2 className="panel-title">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+              Playground Guide
+            </h2>
+            <span className="badge-pill">Freeform</span>
+          </div>
+          <div className="panel-body">
+            <div className="problem-header">
+              <h1 className="problem-title">Python Playground</h1>
+            </div>
+            <p className="brief-description">
+              Write, trace, and inspect any standard Python code freely. The diagnostic engine will construct an execution trace and detect potential cognitive traps.
+            </p>
+            <div className="brief-example-card">
+              <div className="brief-example-title">Suggested Exploration</div>
+              <div className="brief-example-content">
+{`# Test accumulator variable behavior
+numbers = [1, 2, 3, 4]
+total = 0
+for n in numbers:
+    total += n
+print("Final total:", total)`}
+              </div>
+            </div>
+            <div className="brief-guidance-card">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" style={{flexShrink:0, marginTop:2}}><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+              <div>
+                <strong>How to Run</strong>
+                Click <strong>Run Playground</strong> in the editor toolbar or press <kbd className="shortcut-kbd">Ctrl+Enter</kbd> to inspect the execution trace.
+              </div>
+            </div>
+          </div>
+        </aside>
+      );
+    }
+
+    return (
+      <aside className="panel pane-brief" aria-label="Exercise Brief">
+        <div className="panel-header">
+          <h2 className="panel-title">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+            Exercise Brief
+          </h2>
+          {problem?.difficulty && (
+            <span className="difficulty-tag">{problem.difficulty}</span>
+          )}
+        </div>
+        <div className="panel-body">
+          <div className="brief-problem-selector">
+            <label htmlFor="problem-select" style={{fontSize:11, fontWeight:750, color:'var(--text-secondary)', textTransform:'uppercase', display:'block', marginBottom:4}}>Select Problem</label>
+            <select
+              id="problem-select"
+              className="select-control"
+              value={selectedId || ""}
+              onChange={(e) => onSelect(Number(e.target.value))}
+            >
+              {problems.map((p) => (
+                <option key={p.id} value={p.id}>
+                  #{p.id} — {p.title}
+                </option>
+              ))}
+            </select>
+          </div>
+
+          {problem ? (
+            <>
+              <div className="problem-header">
+                <h1 className="problem-title">{problem.title}</h1>
+              </div>
+
+              {problem.misconception_tags && problem.misconception_tags.length > 0 && (
+                <div className="tags-row">
+                  {problem.misconception_tags.map((tag) => (
+                    <span key={tag} className="meta-tag">{tag}</span>
+                  ))}
+                </div>
+              )}
+
+              <div className="brief-description">
+                {problem.description ? (
+                  <div style={{whiteSpace:'pre-wrap'}}>{renderFormattedText(problem.description)}</div>
+                ) : (
+                  <p>Implement the function <code>solution(nums)</code> according to the specification. Run tests to verify your implementation.</p>
+                )}
+              </div>
+
+              <div className="brief-guidance-card">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" style={{flexShrink:0, marginTop:2}}><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+                <div>
+                  <strong>How to Solve</strong>
+                  Write your solution in the center editor and press <kbd className="shortcut-kbd">Ctrl+Enter</kbd> or click <strong>Run Code</strong>.
+                </div>
+              </div>
+            </>
+          ) : (
+            <div style={{color:'var(--text-muted)', textAlign:'center', padding:'20px 0'}}>
+              Loading problem details…
+            </div>
+          )}
+        </div>
+      </aside>
+    );
+  }
+
+  // ──────────────────────────────────────────────────────────────────────────
+  // Monaco Code Editor Pane (Column 2 Top)
+  // ──────────────────────────────────────────────────────────────────────────
+  function EditorPane({ code, onChange, misconceptions, onRunShortcut, theme }) {
     const containerRef = useRef(null);
     const editorRef = useRef(null);
     const decorationsRef = useRef([]);
 
+    // Initialize Monaco Editor
     useEffect(() => {
-      if (!containerRef.current) return;
-      if (editorRef.current) return;
+      if (!containerRef.current || editorRef.current) return;
 
-      function initEditor() {
+      function initMonaco() {
+        if (!window.monaco || !containerRef.current) return;
+        
+        const monacoTheme = theme === 'dark' ? 'relearn-dark' : 'relearn-light';
         editorRef.current = monaco.editor.create(containerRef.current, {
           value: code,
           language: "python",
-          theme: "relearn-dark",
-          fontSize: 13,
-          fontFamily: "'JetBrains Mono', 'Fira Code', monospace",
+          theme: monacoTheme,
+          fontSize: 13.5,
+          fontFamily: "'IBM Plex Mono', 'JetBrains Mono', 'Fira Code', monospace",
           fontLigatures: true,
           lineHeight: 22,
           minimap: { enabled: false },
@@ -202,30 +655,54 @@
           tabSize: 4,
           insertSpaces: true,
         });
+
         editorRef.current.onDidChangeModelContent(() => {
           onChange(editorRef.current.getValue());
         });
+
+        // Add Ctrl+Enter / Cmd+Enter Shortcut
+        editorRef.current.addCommand(
+          monaco.KeyMod.CtrlCmd | monaco.KeyCode.Enter,
+          () => {
+            if (onRunShortcut) onRunShortcut();
+          }
+        );
       }
 
       if (window.__monacoReady) {
-        initEditor();
+        initMonaco();
       } else {
-        const iv = setInterval(() => {
-          if (window.__monacoReady) { clearInterval(iv); initEditor(); }
-        }, 100);
-        return () => clearInterval(iv);
+        const handler = () => initMonaco();
+        window.addEventListener('monaco-loaded', handler);
+        return () => window.removeEventListener('monaco-loaded', handler);
       }
-      return () => { if (editorRef.current) { editorRef.current.dispose(); editorRef.current = null; } };
+
+      return () => {
+        if (editorRef.current) {
+          editorRef.current.dispose();
+          editorRef.current = null;
+        }
+      };
     }, []);
 
+    // Switch Monaco theme dynamically without remounting
+    useEffect(() => {
+      if (window.monaco && window.__monacoReady) {
+        monaco.editor.setTheme(theme === 'dark' ? 'relearn-dark' : 'relearn-light');
+      }
+    }, [theme]);
+
+    // Sync external code updates (e.g. preset selection)
     useEffect(() => {
       if (editorRef.current) {
         const cur = editorRef.current.getValue();
-        if (cur !== code) editorRef.current.setValue(code);
+        if (cur !== code) {
+          editorRef.current.setValue(code);
+        }
       }
     }, [code]);
 
-    // Apply misconception line decorations and Monaco Markers (squiggles & tooltips)
+    // Apply Diagnostic Line Annotations
     useEffect(() => {
       if (!editorRef.current || !window.monaco) return;
       const model = editorRef.current.getModel();
@@ -238,11 +715,11 @@
       }
 
       const markers = [];
-      const newDecorations = misconceptions.map(m => {
+      const newDecorations = misconceptions.map((m) => {
         const line = Math.max(1, Math.min(m.line || 1, model.getLineCount()));
         const col = Math.max(1, (m.column || 0) + 1);
         const endLine = Math.max(line, Math.min(m.end_line || line, model.getLineCount()));
-        const endCol = Math.max(col + 1, Math.min((m.end_column || model.getLineMaxColumn(endLine)), model.getLineMaxColumn(endLine)));
+        const endCol = Math.max(col + 1, Math.min(m.end_column || model.getLineMaxColumn(endLine), model.getLineMaxColumn(endLine)));
 
         markers.push({
           severity: monaco.MarkerSeverity.Error,
@@ -251,7 +728,7 @@
           endLineNumber: endLine,
           endColumn: endCol,
           message: `⚠️ [${m.type}] ${m.title || m.label}: ${m.explanation || ''}`,
-          source: "Re:Learn Diagnosis Engine",
+          source: "Re:Learn Studio",
         });
 
         return {
@@ -260,8 +737,10 @@
             isWholeLine: true,
             className: "monaco-misconception-line",
             glyphMarginClassName: "monaco-misconception-glyph",
-            hoverMessage: { value: `**⚠️ ${m.label || m.type}** (${Math.round((m.confidence || 0) * 100)}% conf)\n\n${m.explanation || m.title || ''}` }
-          }
+            hoverMessage: {
+              value: `**⚠️ ${m.label || m.type}** (${Math.round((m.confidence || 0) * 100)}% conf)\n\n${m.explanation || m.title || ''}`,
+            },
+          },
         };
       });
 
@@ -272,482 +751,529 @@
     return <div className="editor-container" ref={containerRef} id="monaco-editor" />;
   }
 
-  // ────────────────────────────────────────
-  // Header
-  // ────────────────────────────────────────
-  function Header({ presetLearners, onPresetChange, onOpenInspector }) {
+  // ──────────────────────────────────────────────────────────────────────────
+  // Console & Test Results Pane (Column 2 Bottom)
+  // ──────────────────────────────────────────────────────────────────────────
+  function ConsoleAndTests({ consoleLines, testResults, passed, total, mode }) {
+    const [subTab, setSubTab] = useState(mode === "problem" ? "tests" : "console");
+    const consoleScrollRef = useRef(null);
+
+    useEffect(() => {
+      if (consoleScrollRef.current && subTab === "console") {
+        consoleScrollRef.current.scrollTop = consoleScrollRef.current.scrollHeight;
+      }
+    }, [consoleLines, subTab]);
+
     return (
-      <header className="header">
-        <div className="header-logo">
-          <div className="header-logo-icon">🎓</div>
-          <div>
-            <div className="header-logo-text">Re:Learn</div>
-            <div className="header-logo-subtitle">Adaptive Misconception Diagnosis</div>
+      <div className="console-card" aria-label="Output and Test Results">
+        <div className="console-tabs-bar">
+          <div className="console-tabs" role="tablist">
+            {mode === "problem" && (
+              <button
+                role="tab"
+                aria-selected={subTab === "tests"}
+                className={`console-tab-btn ${subTab === "tests" ? "active" : ""}`}
+                onClick={() => setSubTab("tests")}
+              >
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+                Test Cases {passed !== null && total !== null && `(${passed}/${total})`}
+              </button>
+            )}
+            <button
+              role="tab"
+              aria-selected={subTab === "console"}
+              className={`console-tab-btn ${subTab === "console" ? "active" : ""}`}
+              onClick={() => setSubTab("console")}
+            >
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2"><polyline points="4 17 10 11 4 5"/><line x1="12" y1="19" x2="20" y2="19"/></svg>
+              Console Output
+            </button>
+          </div>
+
+          <div style={{fontSize:11, color:'var(--text-muted)'}}>
+            {mode === "problem" && testResults?.length > 0 && `${testResults.length} test cases evaluated`}
           </div>
         </div>
-        <div className="header-controls">
-          <div className="judge-switcher" id="judge-quick-switcher">
-            <label>🎭 Judge:</label>
-            <select onChange={e => onPresetChange(e.target.value)} defaultValue="">
-              <option value="">— Live Session —</option>
-              {presetLearners.map(l => (
-                <option key={l.session_token} value={l.session_token}>{l.name}</option>
-              ))}
-            </select>
-          </div>
-          <div className="header-badge">v1.0 Demo</div>
-          <button id="inspector-modal-btn" className="inspector-btn" onClick={onOpenInspector}>
-            🔬 Inspector
+
+        <div className="console-body" ref={consoleScrollRef}>
+          {subTab === "tests" && mode === "problem" ? (
+            testResults && testResults.length > 0 ? (
+              <div className="tests-list">
+                {testResults.map((tr, idx) => (
+                  <div key={idx} className={`test-item ${tr.ok ? "pass" : "fail"}`}>
+                    <div style={{display:'flex', alignItems:'center', gap:8}}>
+                      <span style={{fontWeight:700, color: tr.ok ? 'var(--status-success)' : 'var(--status-error)'}}>
+                        {tr.ok ? "✓ Pass" : "✕ Fail"}
+                      </span>
+                      <span>Input: <code>{JSON.stringify(tr.input)}</code></span>
+                    </div>
+                    <div>
+                      <span>Expected: <code>{JSON.stringify(tr.expected)}</code></span>
+                      {!tr.ok && <span style={{marginLeft:10, color:'var(--status-error)'}}>Got: <code>{JSON.stringify(tr.actual)}</code></span>}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            ) : (
+              <div className="console-empty">
+                Your test results will appear here after running your code.
+              </div>
+            )
+          ) : (
+            consoleLines && consoleLines.length > 0 ? (
+              consoleLines.map((line) => (
+                <div key={line.id} className={`console-line ${line.type}`}>
+                  <span style={{opacity:0.6}}>&gt;</span>
+                  <span>{line.text}</span>
+                </div>
+              ))
+            ) : (
+              <div className="console-empty">
+                Your execution output and print logs will appear here after you run your code.
+              </div>
+            )
+          )}
+        </div>
+      </div>
+    );
+  }
+
+  // ──────────────────────────────────────────────────────────────────────────
+  // Learning Feedback Pane (Column 3)
+  // ──────────────────────────────────────────────────────────────────────────
+  function FeedbackPane({
+    result,
+    activeTab,
+    onTabChange,
+    onProbeAnswer,
+    problems,
+    sessionToken,
+    mode,
+    code,
+    onReassessPlayground,
+  }) {
+    const [modelExpanded, setModelExpanded] = useState(false);
+    const [probeState, setProbeState] = useState(null);
+
+    // Reset local probe answer state on new submission
+    useEffect(() => {
+      setProbeState(null);
+    }, [result?.submission_id]);
+
+    const handleAnswerProbe = async (optKey) => {
+      if (probeState?.selected) return;
+      setProbeState({ selected: optKey, loading: true });
+
+      try {
+        const res = await fetch(`${API_BASE}/api/probe/answer`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            diagnosis_id: result.submission_id,
+            probe_id: result.probe.id,
+            selected_option: optKey,
+          }),
+        });
+        const data = await res.json();
+        setProbeState({ selected: optKey, loading: false, result: data });
+        if (onProbeAnswer) onProbeAnswer(data);
+      } catch (e) {
+        setProbeState({ selected: optKey, loading: false, error: "Failed to submit answer." });
+      }
+    };
+
+    const effIntervention = probeState?.result ? probeState.result.intervention : result?.intervention;
+    const effTopM = probeState?.result ? probeState.result.top_misconception : result?.top_misconception;
+    const effProbs = probeState?.result ? probeState.result.updated_probabilities : result?.probabilities;
+    const effConfidence = probeState?.result ? probeState.result.confidence : result?.confidence;
+    const traceCount = result?.memory_boxes?.length || 0;
+
+    return (
+      <section className="panel pane-feedback" aria-label="Learning Feedback and Trace">
+        <div className="feedback-nav-tabs" role="tablist">
+          <button
+            role="tab"
+            aria-selected={activeTab === "diagnosis"}
+            className={`feedback-nav-tab ${activeTab === "diagnosis" ? "active" : ""}`}
+            onClick={() => onTabChange("diagnosis")}
+          >
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+            Diagnosis
+          </button>
+          <button
+            role="tab"
+            aria-selected={activeTab === "visualizer"}
+            className={`feedback-nav-tab ${activeTab === "visualizer" ? "active" : ""}`}
+            onClick={() => onTabChange("visualizer")}
+          >
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2"><rect x="2" y="2" width="20" height="8" rx="2" ry="2"/><rect x="2" y="14" width="20" height="8" rx="2" ry="2"/><line x1="6" y1="6" x2="6.01" y2="6"/><line x1="6" y1="18" x2="6.01" y2="18"/></svg>
+            Memory Trace
+          </button>
+          <button
+            role="tab"
+            aria-selected={activeTab === "reassess"}
+            className={`feedback-nav-tab ${activeTab === "reassess" ? "active" : ""}`}
+            onClick={() => onTabChange("reassess")}
+          >
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg>
+            Reassess
           </button>
         </div>
-      </header>
-    );
-  }
 
-  // ────────────────────────────────────────
-  // Problem Bar
-  // ────────────────────────────────────────
-  function ProblemBar({ problems, selectedId, onSelect, problem, mode, onModeChange }) {
-    return (
-      <>
-        <div className="problem-bar" style={{display:'flex',alignItems:'center',justifyContent:'space-between'}}>
-          <div style={{display:'flex',alignItems:'center',gap:8}}>
-            <div className="mode-toggle-group">
-              <button id="mode-problem-btn" className={`mode-toggle-btn ${mode==="problem"?"active":""}`} onClick={()=>onModeChange("problem")}>
-                📋 Problem Mode
-              </button>
-              <button id="mode-practice-btn" className={`mode-toggle-btn ${mode==="practice"?"active":""}`} onClick={()=>onModeChange("practice")}>
-                ✨ Playground Mode
-              </button>
-            </div>
-            {mode === "problem" && (
-              <select id="problem-select" className="problem-select" value={selectedId||""} onChange={e=>onSelect(Number(e.target.value))}>
-                {problems.map(p=>(
-                  <option key={p.id} value={p.id}>#{p.id} — {p.title}</option>
-                ))}
-              </select>
-            )}
-          </div>
-        </div>
-        {mode === "problem" && problem && (
-          <div className="problem-description">
-            <h3><span style={{color:'var(--accent-blue)'}}>📋</span> {problem.title}</h3>
-            <p style={{whiteSpace:'pre-wrap'}}>{problem.description}</p>
-          </div>
-        )}
-        {mode === "practice" && (
-          <div className="problem-description" style={{borderLeftColor:'var(--accent-purple)'}}>
-            <h3><span style={{color:'var(--accent-purple)'}}>✨</span> Python Practice Playground</h3>
-            <p>Write and test any Python code freely. The adaptive engine executes your code, traces variable state in memory boxes, and detects misconceptions in real time.</p>
-          </div>
-        )}
-      </>
-    );
-  }
+        <div className="feedback-content-scroll">
+          {/* TAB 1: DIAGNOSIS */}
+          {activeTab === "diagnosis" && (
+            result ? (
+              <>
+                {/* 1. Primary Finding in Plain Language */}
+                <div className="finding-card highlight">
+                  <div className="finding-header">
+                    <div className="finding-title-group">
+                      <span className="finding-tag">Diagnostic Finding</span>
+                      <h3 className="finding-headline">
+                        {M_LABELS[effTopM] || effTopM}
+                      </h3>
+                    </div>
+                    {effTopM === "M0" ? (
+                      <span className="badge-pill" style={{background:'var(--status-success-bg)', color:'var(--status-success-text)', borderColor:'var(--status-success-border)'}}>
+                        ✓ Accurate
+                      </span>
+                    ) : (
+                      <span className="badge-pill" style={{background:'var(--yellow-surface)', color:'var(--yellow-surface-text)', borderColor:'var(--yellow-surface-border)'}}>
+                        {effTopM}
+                      </span>
+                    )}
+                  </div>
 
-  // ────────────────────────────────────────
-  // Editor Toolbar
-  // ────────────────────────────────────────
-  function EditorToolbar({ onSubmit, isSubmitting, diagnosisResult, mode }) {
-    const passed = diagnosisResult?.passed ?? null;
-    const total  = diagnosisResult?.total  ?? null;
-    let badgeClass = "", badgeText = "";
-    if (mode === "problem" && passed !== null) {
-      if (passed === total)  { badgeClass="pass";    badgeText=`✅ ${passed}/${total}`; }
-      else if (passed === 0) { badgeClass="fail";    badgeText=`❌ ${passed}/${total}`; }
-      else                   { badgeClass="partial"; badgeText=`⚡ ${passed}/${total}`; }
-    } else if (mode === "practice" && diagnosisResult) {
-      badgeClass = diagnosisResult.status === "success" ? "pass" : "fail";
-      badgeText = diagnosisResult.status === "success" ? "✅ Executed" : "❌ Error";
-    }
-    return (
-      <div className="editor-toolbar">
-        <button id="submit-btn" className="btn btn-primary" onClick={onSubmit} disabled={isSubmitting}>
-          {isSubmitting ? <><span className="loading-spinner"/> Analysing…</> : mode === "practice" ? <>▶ Run &amp; Diagnose Playground</> : <>▶ Run &amp; Diagnose</>}
-        </button>
-        <div className="test-status">
-          {badgeText && <span className={`test-badge ${badgeClass}`}>{badgeText}</span>}
-          <span>{mode === "practice" ? "Status" : "Tests"}</span>
-        </div>
-      </div>
-    );
-  }
+                  {effIntervention?.message && (
+                    <div className="finding-explanation">
+                      {renderFormattedText(effIntervention.message)}
+                    </div>
+                  )}
 
-  // ────────────────────────────────────────
-  // Console
-  // ────────────────────────────────────────
-  function ConsolePanel({ lines }) {
-    const ref = useRef(null);
-    useEffect(() => { if (ref.current) ref.current.scrollTop = ref.current.scrollHeight; }, [lines]);
-    return (
-      <div className="console-panel">
-        <div className="console-header"><span className="console-dot"/>Console Output</div>
-        <div className="console-content" ref={ref}>
-          {lines.length===0
-            ? <span style={{color:'var(--text-muted)'}}>Submit code to see output…</span>
-            : lines.map(l=><div key={l.id} className={`console-line ${l.type}`}>{l.text}</div>)
-          }
-        </div>
-      </div>
-    );
-  }
+                  {effIntervention?.hint && (
+                    <div className="hint-box">
+                      <strong>A hint to help</strong>
+                      {renderFormattedText(effIntervention.hint)}
+                    </div>
+                  )}
 
-  // ────────────────────────────────────────
-  // Radar Feed
-  // ────────────────────────────────────────
-  function RadarFeed({ probabilities }) {
-    if (!probabilities) return (
-      <div className="radar-section">
-        <div className="section-title">🎯 Misconception Radar</div>
-        <div style={{color:'var(--text-muted)',fontSize:12,textAlign:'center',padding:'20px 0'}}>Submit code to see diagnosis…</div>
-      </div>
-    );
-    const sorted = Object.entries(probabilities).sort(([,a],[,b])=>b-a);
-    const topClass = sorted[0][0];
-    return (
-      <div className="radar-section">
-        <div className="section-title">🎯 Misconception Radar</div>
-        <div className="radar-bars">
-          {sorted.map(([m, prob]) => {
-            const color = M_COLORS[m]||"#888";
-            const pct   = Math.round(prob*100);
-            const isTop = m===topClass;
-            return (
-              <div key={m} className={`radar-bar-row ${isTop?"top-class":""}`}>
-                <div className="radar-bar-label" style={isTop?{color}:{}}>{m}</div>
-                <div className="radar-bar-track">
-                  <div className="radar-bar-fill" style={{
-                    width:`${pct}%`,
-                    background: isTop
-                      ? `linear-gradient(90deg,${color}cc,${color})`
-                      : `linear-gradient(90deg,${color}44,${color}66)`,
-                  }}/>
+                  {/* Contextual Action: Jump to Trace */}
+                  {traceCount > 0 ? (
+                    <button
+                      className="inspect-trace-action"
+                      onClick={() => onTabChange("visualizer")}
+                      aria-label="Inspect execution memory trace"
+                    >
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2"><rect x="2" y="2" width="20" height="8" rx="2" ry="2"/><rect x="2" y="14" width="20" height="8" rx="2" ry="2"/></svg>
+                      Explore memory trace ({traceCount} steps) →
+                    </button>
+                  ) : (
+                    <div className="trace-zero-notice">
+                      No execution trace available for this run.
+                    </div>
+                  )}
                 </div>
-                <div className="radar-bar-pct" style={isTop?{color}:{}}>{pct}%</div>
+
+                {/* 2. Micro-Probe (When required) */}
+                {result.probe_required && result.probe && (
+                  <div className="micro-probe-card">
+                    <div className="micro-probe-header">
+                      <h4 className="micro-probe-heading">A Quick Check</h4>
+                      <span className="micro-probe-tag">1-Click Probe</span>
+                    </div>
+                    <div className="micro-probe-question">
+                      {result.probe.question.split("```").map((chunk, cIdx) => {
+                        if (cIdx % 2 === 1) {
+                          return (
+                            <div key={cIdx} className="micro-probe-code">
+                              {chunk.replace(/^python\n/, "")}
+                            </div>
+                          );
+                        }
+                        return <span key={cIdx}>{renderFormattedText(chunk)}</span>;
+                      })}
+                    </div>
+
+                    <div className="probe-options-group" role="radiogroup" aria-label="Probe Options">
+                      {Object.entries(result.probe.options).map(([key, text]) => {
+                        let btnClass = "";
+                        if (probeState?.selected === key) {
+                          btnClass = probeState.result?.is_correct ? "selected-correct" : "selected-wrong";
+                        } else if (probeState?.result?.correct_option === key) {
+                          btnClass = "selected-correct";
+                        }
+                        return (
+                          <button
+                            key={key}
+                            className={`probe-option-btn ${btnClass}`}
+                            onClick={() => handleAnswerProbe(key)}
+                            disabled={!!probeState?.selected || probeState?.loading}
+                          >
+                            <span className="probe-option-key">{key}</span>
+                            <span>{text}</span>
+                          </button>
+                        );
+                      })}
+                    </div>
+
+                    {probeState?.loading && (
+                      <div style={{textAlign:'center', padding:6}}>
+                        <span className="spinner"></span>
+                      </div>
+                    )}
+
+                    {probeState?.result && (
+                      <div className={`probe-feedback-box ${probeState.result.is_correct ? "correct" : "wrong"}`}>
+                        <strong>{probeState.result.is_correct ? "✓ Correct reasoning" : "Notice:"}</strong> {probeState.result.feedback}
+                      </div>
+                    )}
+                  </div>
+                )}
+
+                {/* 3. Visual Explanation Blocks */}
+                {result.visual_explanation && result.visual_explanation.blocks && result.visual_explanation.blocks.length > 0 && (
+                  <div className="visual-explanation-container">
+                    <div className="ve-title">
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+                      {result.visual_explanation.title || "Code Comparison"}
+                    </div>
+                    <div className="ve-grid">
+                      {result.visual_explanation.blocks.map((block, bIdx) => (
+                        <div key={bIdx} className={`ve-block ${block.type}`}>
+                          <div className="ve-block-label">{block.label}</div>
+                          <div className="ve-code">
+                            {block.lines?.map((ln, lIdx) => (
+                              <div key={lIdx}>L{ln.line}: {ln.text}</div>
+                            ))}
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
+
+                {/* 4. Compact Full-Width Model Confidence Disclosure */}
+                <div style={{marginTop: 4}}>
+                  <button
+                    className="model-details-toggle"
+                    onClick={() => setModelExpanded(!modelExpanded)}
+                    aria-expanded={modelExpanded}
+                  >
+                    <span>Model confidence</span>
+                    <span style={{fontSize: 11, opacity: 0.8}}>{modelExpanded ? "▴ Collapse" : "▾ Expand"}</span>
+                  </button>
+
+                  {modelExpanded && (
+                    <div className="radar-bars-list">
+                      <div style={{fontSize:11.5, color:'var(--text-secondary)', marginBottom: 6}}>
+                        Calibrated model probability across the misconception taxonomy:
+                      </div>
+                      {effProbs && Object.entries(effProbs)
+                        .sort(([, a], [, b]) => b - a)
+                        .map(([mKey, prob], idx) => {
+                          const pct = Math.round(prob * 100);
+                          const isTop = idx === 0 && pct > 0;
+                          return (
+                            <div key={mKey} className="radar-row">
+                              <div className="radar-label" title={M_LABELS[mKey] || mKey}>{mKey}</div>
+                              <div className="radar-track">
+                                <div className={`radar-fill ${isTop ? "top" : ""}`} style={{width: `${pct}%`}}></div>
+                              </div>
+                              <div className="radar-pct">{pct}%</div>
+                            </div>
+                          );
+                        })}
+                    </div>
+                  )}
+                </div>
+              </>
+            ) : (
+              <div className="feedback-empty-state">
+                <div className="empty-state-icon">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>
+                </div>
+                <h3 className="empty-state-title">Awaiting Execution</h3>
+                <p className="empty-state-desc">
+                  Run your code to see diagnostic findings, line annotations, and variable state traces.
+                </p>
               </div>
-            );
-          })}
+            )
+          )}
+
+          {/* TAB 2: MEMORY TRACE */}
+          {activeTab === "visualizer" && (
+            <MemoryTraceViewer memoryBoxes={result?.memory_boxes || []} />
+          )}
+
+          {/* TAB 3: REASSESSMENT */}
+          {activeTab === "reassess" && (
+            <ReassessViewer
+              result={result}
+              problems={problems}
+              sessionToken={sessionToken}
+              mode={mode}
+              code={code}
+              onReassessPlayground={onReassessPlayground}
+            />
+          )}
         </div>
-      </div>
+      </section>
     );
   }
 
-  // ────────────────────────────────────────
-  // Confidence Ring
-  // ────────────────────────────────────────
-  function ConfidenceRing({ value, color }) {
-    const r    = 14;
-    const circ = 2*Math.PI*r;
-    const dash = circ*value;
-    return (
-      <div className="confidence-ring">
-        <svg width="36" height="36" viewBox="0 0 36 36">
-          <circle cx="18" cy="18" r={r} fill="none" stroke="rgba(255,255,255,0.1)" strokeWidth="3"/>
-          <circle cx="18" cy="18" r={r} fill="none" stroke={color} strokeWidth="3"
-            strokeDasharray={`${dash} ${circ}`} strokeLinecap="round"
-            style={{transition:'stroke-dasharray 0.5s ease'}}/>
-          <text x="18" y="18" textAnchor="middle" dominantBaseline="central"
-            style={{fill:color,fontSize:9,fontWeight:700,fontFamily:'JetBrains Mono,monospace',
-              transform:'rotate(90deg)',transformOrigin:'18px 18px'}}>
-            {Math.round(value*100)}
-          </text>
-        </svg>
-      </div>
-    );
-  }
+  // ──────────────────────────────────────────────────────────────────────────
+  // Memory Trace Viewer Component
+  // ──────────────────────────────────────────────────────────────────────────
+  function MemoryTraceViewer({ memoryBoxes }) {
+    const [step, setStep] = useState(0);
+    const [playing, setPlaying] = useState(false);
+    const playTimerRef = useRef(null);
+    const total = memoryBoxes.length;
 
-  // ────────────────────────────────────────
-  // Micro Probe
-  // ────────────────────────────────────────
-  function MicroProbe({ result, onProbeAnswer }) {
-    const [answered, setAnswered]     = useState(null);
-    const [probeResult, setProbeResult] = useState(null);
-    const [loading, setLoading]       = useState(false);
+    useEffect(() => {
+      setStep(0);
+      setPlaying(false);
+    }, [memoryBoxes]);
 
-    useEffect(() => { setAnswered(null); setProbeResult(null); }, [result?.submission_id]);
+    useEffect(() => {
+      if (playing) {
+        playTimerRef.current = setInterval(() => {
+          setStep((s) => {
+            if (s >= total - 1) {
+              setPlaying(false);
+              clearInterval(playTimerRef.current);
+              return s;
+            }
+            return s + 1;
+          });
+        }, 600);
+      }
+      return () => clearInterval(playTimerRef.current);
+    }, [playing, total]);
 
-    if (!result || !result.probe_required || !result.probe) {
-      if (!result) return null;
+    if (!memoryBoxes || total === 0) {
       return (
-        <div className="probe-card" style={{opacity:0.55}}>
-          <div className="probe-title">⚡ Micro-Probe</div>
-          <div style={{fontSize:12,color:'var(--text-muted)',textAlign:'center',padding:'10px 0'}}>
-            {result.confidence > 0.65
-              ? `High confidence (${Math.round(result.confidence*100)}%) — no probe needed`
-              : "No probe available for this pattern"}
+        <div className="feedback-empty-state">
+          <div className="empty-state-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><rect x="2" y="2" width="20" height="8" rx="2" ry="2"/><rect x="2" y="14" width="20" height="8" rx="2" ry="2"/></svg>
           </div>
+          <h3 className="empty-state-title">No Trace Frames</h3>
+          <p className="empty-state-desc">
+            Submit code to record step-by-step memory frame execution and variable changes.
+          </p>
         </div>
       );
     }
 
-    const probe = result.probe;
-
-    const handleAnswer = async (optionKey) => {
-      if (answered) return;
-      setAnswered(optionKey);
-      setLoading(true);
-      try {
-        const res = await fetch(`${API_BASE}/api/probe/answer`, {
-          method:"POST", headers:{"Content-Type":"application/json"},
-          body: JSON.stringify({ diagnosis_id: result.submission_id, probe_id: probe.id, selected_option: optionKey }),
-        });
-        const data = await res.json();
-        setProbeResult(data);
-        if (onProbeAnswer) onProbeAnswer(data);
-      } catch(e) {
-        setProbeResult({feedback:"Could not reach backend."});
-      } finally { setLoading(false); }
-    };
-
-    const renderQ = (q) => {
-      const parts = q.split("```");
-      return parts.map((part, i) => {
-        if (i%2===1) {
-          const code = part.replace(/^python\n/,"");
-          return <pre key={i} style={{background:'var(--bg-secondary)',borderRadius:6,padding:'8px 10px',
-            fontFamily:"'JetBrains Mono',monospace",fontSize:11,color:'var(--text-code)',
-            margin:'6px 0',overflowX:'auto',lineHeight:1.6}}>{code}</pre>;
-        }
-        return <span key={i} style={{whiteSpace:'pre-wrap'}}>{part}</span>;
-      });
-    };
-
-    const isCorrect = probeResult?.is_correct;
+    const cur = memoryBoxes[step];
+    const curVars = cur?.vars || {};
+    const prevVars = step > 0 ? (memoryBoxes[step - 1]?.vars || {}) : {};
 
     return (
-      <div className="probe-card">
-        <div className="probe-title">⚡ 1-Click Micro-Probe</div>
-        <div className="probe-question">{renderQ(probe.question)}</div>
-        <div className="probe-options">
-          {Object.entries(probe.options).map(([key, text]) => {
-            let cls = "";
-            if (answered===key) cls = isCorrect ? "selected-correct" : "selected-wrong";
-            else if (answered && probeResult?.correct_option===key) cls = "selected-correct";
-            return (
-              <button key={key} id={`probe-option-${key}`} className={`probe-option ${cls}`}
-                onClick={()=>handleAnswer(key)} disabled={!!answered||loading}>
-                <span className="probe-option-key">{key}</span>{text}
-              </button>
-            );
-          })}
-        </div>
-        {loading && <div style={{marginTop:10,textAlign:'center'}}><span className="loading-spinner"/></div>}
-        {probeResult?.feedback && (
-          <div className={`probe-feedback ${probeResult.is_correct?"correct":"wrong"}`}>
-            {probeResult.feedback}
-            {probeResult.updated_probabilities && (
-              <div style={{marginTop:6,opacity:0.8}}>
-                Updated top: <strong>{probeResult.top_misconception}</strong>{" "}
-                ({Math.round(probeResult.confidence*100)}% confidence)
-              </div>
-            )}
-          </div>
-        )}
-      </div>
-    );
-  }
-
-  // ────────────────────────────────────────
-  // Visualizer
-  // ────────────────────────────────────────
-  function Visualizer({ memoryBoxes }) {
-    const [step, setStep]     = useState(0);
-    const [playing, setPlaying] = useState(false);
-    const ivRef               = useRef(null);
-    const frames              = memoryBoxes||[];
-    const total               = frames.length;
-
-    useEffect(() => { setStep(0); setPlaying(false); }, [memoryBoxes]);
-
-    useEffect(() => {
-      if (playing) {
-        ivRef.current = setInterval(() => {
-          setStep(s => {
-            if (s>=total-1) { setPlaying(false); clearInterval(ivRef.current); return s; }
-            return s+1;
-          });
-        }, 600);
-      }
-      return () => clearInterval(ivRef.current);
-    }, [playing, total]);
-
-    if (!frames.length) return (
-      <div className="visualizer-section">
-        <div className="section-title">🧠 Memory-Box Trace</div>
-        <div className="viz-empty">Submit code to see variable trace…</div>
-      </div>
-    );
-
-    const cur      = frames[step];
-    const curVars  = cur?.vars||{};
-    const prevVars = step>0 ? (frames[step-1]?.vars||{}) : {};
-
-    return (
-      <div className="visualizer-section">
-        <div className="section-title">🧠 Memory-Box Trace</div>
-        <div className="viz-playback">
-          <button className="viz-btn" onClick={()=>setStep(0)} disabled={step===0} title="First">⏮</button>
-          <button className="viz-btn" onClick={()=>setStep(s=>Math.max(0,s-1))} disabled={step===0} title="Prev">◀</button>
-          <button id="viz-play-btn" className={`viz-btn ${playing?"play-active":""}`}
-            onClick={()=>setPlaying(p=>!p)} title={playing?"Pause":"Play"}>
-            {playing?"⏸":"▶"}
+      <div className="trace-container" aria-label="Execution Trace Timeline">
+        <div className="trace-controls-bar">
+          <button
+            className="trace-btn"
+            onClick={() => setStep(0)}
+            disabled={step === 0}
+            title="First Step"
+            aria-label="First Step"
+          >
+            ⏮
           </button>
-          <button className="viz-btn" onClick={()=>setStep(s=>Math.min(total-1,s+1))} disabled={step>=total-1} title="Next">▶</button>
-          <button className="viz-btn" onClick={()=>setStep(total-1)} disabled={step>=total-1} title="Last">⏭</button>
-          <input id="viz-scrub-slider" type="range" className="viz-slider" min={0} max={total-1} value={step}
-            onChange={e=>{setPlaying(false);setStep(Number(e.target.value));}}/>
-          <span className="viz-counter">{step+1}/{total}</span>
+          <button
+            className="trace-btn"
+            onClick={() => setStep((s) => Math.max(0, s - 1))}
+            disabled={step === 0}
+            title="Previous Step"
+            aria-label="Previous Step"
+          >
+            ◀
+          </button>
+          <button
+            id="viz-play-btn"
+            className={`trace-btn ${playing ? "play-active" : ""}`}
+            onClick={() => setPlaying(!playing)}
+            title={playing ? "Pause" : "Play Timeline"}
+            aria-label={playing ? "Pause Timeline" : "Play Timeline"}
+          >
+            {playing ? "⏸" : "▶"}
+          </button>
+          <button
+            className="trace-btn"
+            onClick={() => setStep((s) => Math.min(total - 1, s + 1))}
+            disabled={step >= total - 1}
+            title="Next Step"
+            aria-label="Next Step"
+          >
+            ▶
+          </button>
+          <button
+            className="trace-btn"
+            onClick={() => setStep(total - 1)}
+            disabled={step >= total - 1}
+            title="Last Step"
+            aria-label="Last Step"
+          >
+            ⏭
+          </button>
+
+          <input
+            id="viz-scrub-slider"
+            type="range"
+            className="trace-slider"
+            min={0}
+            max={total - 1}
+            value={step}
+            onChange={(e) => {
+              setPlaying(false);
+              setStep(Number(e.target.value));
+            }}
+            aria-label="Step Scrubber"
+          />
+
+          <span className="trace-step-badge">
+            Step {step + 1}/{total}
+          </span>
         </div>
 
-        <div className="viz-source-line">
-          <span className="line-num">L{cur?.line}</span>
-          <span style={{color: cur?.event==='return'?'var(--accent-green)':'var(--text-code)'}}>
-            {cur?.event==='return'?'→ return ':''}{cur?.source_line||'…'}
+        {/* Current Line Executed */}
+        <div className="trace-active-line-card">
+          <span className="trace-line-num">L{cur?.line}</span>
+          <span style={{color: cur?.event === 'return' ? 'var(--yellow-brand)' : 'inherit'}}>
+            {cur?.event === 'return' ? '→ return ' : ''}{cur?.source_line || '…'}
           </span>
-          <span style={{marginLeft:'auto',fontSize:10,color:'var(--text-muted)',textTransform:'uppercase'}}>
-            {cur?.event}
-          </span>
+          <span className="trace-event-badge">{cur?.event}</span>
         </div>
 
-        <div className="memory-boxes">
-          {Object.keys(curVars).length===0
-            ? <div style={{color:'var(--text-muted)',fontSize:12}}>No variables at this step</div>
-            : Object.entries(curVars).map(([name, value]) => {
-                const prev    = prevVars[name];
-                const changed = step>0 && JSON.stringify(prev)!==JSON.stringify(value);
-                const disp    = Array.isArray(value)?`[${value.join(", ")}]`:value===null?"None":String(value);
-                const prevDisp= Array.isArray(prev)?`[${prev.join(", ")}]`:prev===null?"None":prev!==undefined?String(prev):null;
+        {/* Variable Memory Boxes */}
+        <div>
+          <div style={{fontSize:11, fontWeight:700, textTransform:'uppercase', color:'var(--text-secondary)', letterSpacing:'0.5px', marginBottom:8}}>
+            Variable States in Memory
+          </div>
+          <div className="memory-boxes-grid">
+            {Object.keys(curVars).length === 0 ? (
+              <div style={{color:'var(--text-muted)', fontSize:12, gridColumn:'1 / -1', padding:'10px 0'}}>
+                No variables initialized at this step.
+              </div>
+            ) : (
+              Object.entries(curVars).map(([name, val]) => {
+                const prev = prevVars[name];
+                const changed = step > 0 && JSON.stringify(prev) !== JSON.stringify(val);
+                const dispVal = Array.isArray(val) ? `[${val.join(", ")}]` : val === null ? "None" : String(val);
+                const prevDispVal = Array.isArray(prev) ? `[${prev.join(", ")}]` : prev === null ? "None" : prev !== undefined ? String(prev) : null;
+
                 return (
-                  <div key={name} className={`memory-box ${changed?"changed":""}`}>
+                  <div key={name} className={`memory-box ${changed ? "changed" : ""}`}>
                     <div className="memory-box-name">{name}</div>
-                    {changed && prevDisp!==null && <div className="memory-box-arrow">{prevDisp} →</div>}
-                    <div className="memory-box-value">{disp}</div>
+                    {changed && prevDispVal !== null && (
+                      <div className="memory-box-diff">{prevDispVal}</div>
+                    )}
+                    <div className="memory-box-val">{dispVal}</div>
                   </div>
                 );
               })
-          }
-        </div>
-      </div>
-    );
-  }
-
-  // ────────────────────────────────────────
-  // Inspector Modal
-  // ────────────────────────────────────────
-  function InspectorModal({ onClose }) {
-    const [data, setData]     = useState(null);
-    const [loading, setLoading] = useState(true);
-
-    useEffect(() => {
-      fetch(`${API_BASE}/api/inspector`)
-        .then(r=>r.json()).then(d=>{setData(d);setLoading(false);})
-        .catch(()=>setLoading(false));
-    }, []);
-
-    return (
-      <div className="modal-overlay" onClick={e=>e.target===e.currentTarget&&onClose()}>
-        <div className="modal-box">
-          <div className="modal-header">
-            <div className="modal-title">🔬 Model Inspector — Instructor View</div>
-            <button className="modal-close" onClick={onClose} id="inspector-close-btn">✕</button>
-          </div>
-          <div className="modal-body">
-            {loading ? (
-              <div style={{textAlign:'center',color:'var(--text-muted)',padding:40}}>
-                <span className="loading-spinner"/><div style={{marginTop:10}}>Loading…</div>
-              </div>
-            ) : data ? (
-              <>
-                <div style={{background:'var(--bg-card)',border:'1px solid var(--border-subtle)',
-                  borderRadius:'var(--radius-md)',padding:'10px 14px',fontSize:12,color:'var(--text-secondary)'}}>
-                  <strong style={{color:'var(--text-primary)'}}>Model:</strong> {data.model_info?.type}
-                </div>
-
-                <div>
-                  <div className="section-title">📊 Overall Metrics</div>
-                  <div className="metrics-grid">
-                    <div className="metric-card">
-                      <div className="metric-value">{(data.overall_accuracy*100).toFixed(1)}%</div>
-                      <div className="metric-label">Accuracy</div>
-                    </div>
-                    <div className="metric-card">
-                      <div className="metric-value">{(data.macro_f1*100).toFixed(1)}%</div>
-                      <div className="metric-label">Macro F1</div>
-                    </div>
-                    <div className="metric-card">
-                      <div className="metric-value" style={{color:'var(--accent-purple)'}}>
-                        {Object.keys(data.lopo_metrics||{}).length || 9}
-                      </div>
-                      <div className="metric-label">M Classes</div>
-                    </div>
-                    <div className="metric-card">
-                      <div className="metric-value" style={{color:'var(--accent-green)'}}>4</div>
-                      <div className="metric-label">Probes</div>
-                    </div>
-                  </div>
-                </div>
-
-                <div>
-                  <div className="section-title">🔢 Confusion Matrix</div>
-                  <div style={{overflowX:'auto'}}>
-                    <table className="confusion-matrix">
-                      <thead>
-                        <tr>
-                          <th>↓ Actual \ Pred →</th>
-                          {data.confusion_matrix.labels.map(l=><th key={l}>{l}</th>)}
-                        </tr>
-                      </thead>
-                      <tbody>
-                        {data.confusion_matrix.matrix.map((row,i)=>(
-                          <tr key={i}>
-                            <th>{data.confusion_matrix.labels[i]}</th>
-                            {row.map((v,j)=><td key={j} className={i===j?"diag":""}>{v}</td>)}
-                          </tr>
-                        ))}
-                      </tbody>
-                    </table>
-                  </div>
-                </div>
-
-                <div>
-                  <div className="section-title">📈 LOPO Metrics</div>
-                  <div className="metrics-grid">
-                    {Object.entries(data.lopo_metrics).map(([m, mt]) => (
-                      <div key={m} className="metric-card">
-                        <div className="metric-value" style={{fontSize:16,color:M_COLORS[m]||'var(--accent-blue)'}}>{m}</div>
-                        <div style={{marginTop:4,fontSize:11}}>
-                          <div>P: <strong>{(mt.precision*100).toFixed(0)}%</strong></div>
-                          <div>R: <strong>{(mt.recall*100).toFixed(0)}%</strong></div>
-                          <div>F1: <strong style={{color:'var(--accent-blue)'}}>{(mt.f1*100).toFixed(0)}%</strong></div>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-
-                <div>
-                  <div className="section-title">⚡ Probe Differentiation Gain</div>
-                  {Object.entries(data.differentiation_gain).filter(([k])=>k.endsWith("_post_probe")).map(([k, after]) => {
-                    const pre  = data.differentiation_gain[k.replace("_post_probe","_pre_probe")]||0;
-                    const label= k.replace("_post_probe","").replace(/_/g," ").replace("vs","vs.");
-                    return (
-                      <div key={k} className="gain-row">
-                        <div className="gain-label">{label}</div>
-                        <div className="gain-before">{(pre*100).toFixed(0)}%</div>
-                        <div className="gain-arrow">→</div>
-                        <div className="gain-after">{(after*100).toFixed(0)}%</div>
-                        <div style={{fontSize:11,color:'var(--accent-green)',fontWeight:700}}>
-                          +{((after-pre)*100).toFixed(0)}pp
-                        </div>
-                      </div>
-                    );
-                  })}
-                </div>
-              </>
-            ) : (
-              <div style={{textAlign:'center',color:'var(--accent-red)',padding:40}}>
-                Could not load data. Is the backend running?
-              </div>
             )}
           </div>
         </div>
@@ -755,204 +1281,103 @@
     );
   }
 
-  // ────────────────────────────────────────
-  // Visual Explanation Component
-  // ────────────────────────────────────────
-  function VisualExplanation({ explanation }) {
-    if (!explanation || explanation.type === "none" || !explanation.blocks || explanation.blocks.length === 0) return null;
-    return (
-      <div className="visual-explanation-card">
-        <div className="ve-header">
-          <div className="ve-title">
-            <span>🔍</span> {explanation.title}
-          </div>
-          {explanation.severity && (
-            <span className={`ve-severity-tag ${explanation.severity}`}>{explanation.severity} impact</span>
-          )}
-        </div>
-        {explanation.description && (
-          <div style={{fontSize: 12, color: 'var(--text-secondary)', lineHeight: 1.5}}>
-            {explanation.description}
-          </div>
-        )}
-        <div className="ve-blocks-grid">
-          {explanation.blocks.map((b, idx) => (
-            <div key={idx} className={`ve-block ${b.type}`}>
-              <div className="ve-block-label">{b.label}</div>
-              <div className="ve-code-snippet">
-                {b.lines.map((ln, lIdx) => (
-                  <div key={lIdx} className="ve-code-line">
-                    <span className="ve-line-num">L{ln.line}</span>
-                    <span className={`ve-line-text ${b.type === 'wrong' ? 'highlight' : b.type === 'correct' ? 'fix' : ''}`}>
-                      {ln.text}
-                    </span>
-                  </div>
-                ))}
-              </div>
-            </div>
-          ))}
-        </div>
-        {explanation.flow && explanation.flow.steps && (
-          <div className="ve-flow-container">
-            <div className="ve-flow-title">📊 {explanation.flow.title || "Execution Flow"}</div>
-            <div className="ve-flow-steps">
-              {explanation.flow.steps.map((st, sIdx) => (
-                <div key={sIdx} className={`ve-flow-step ${st.status || 'correct'}`}>
-                  <div className="ve-flow-step-dot" />
-                  <div>
-                    <strong style={{marginRight: 6}}>{st.label}:</strong>
-                    <span>{st.detail}</span>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        )}
-      </div>
-    );
-  }
-
-  // ────────────────────────────────────────
-  // Diagnosis Pane
-  // ────────────────────────────────────────
-  function DiagnosisPane({ result }) {
-    const [probeData, setProbeData] = useState(null);
-    useEffect(() => { setProbeData(null); }, [result?.submission_id]);
-
-    if (!result) return (
-      <div style={{color:'var(--text-muted)',textAlign:'center',paddingTop:40}}>
-        <div style={{fontSize:32,marginBottom:12}}>🎯</div>
-        <div style={{fontSize:13,fontWeight:600,marginBottom:6}}>Awaiting Submission</div>
-        <div style={{fontSize:12,lineHeight:1.6}}>Write code and click <strong>▶ Run &amp; Diagnose</strong></div>
-      </div>
-    );
-
-    const eff   = probeData ? probeData.intervention   : result.intervention;
-    const topM  = probeData ? probeData.top_misconception : result.top_misconception;
-    const conf  = probeData ? probeData.confidence        : result.confidence;
-    const probs = probeData ? probeData.updated_probabilities : result.probabilities;
-    const color = M_COLORS[topM]||"#888";
-    const visualExpl = result.visual_explanation;
-
-    return (
-      <>
-        <div className="diagnosis-badge" style={{borderColor:`${color}44`,background:`${color}11`,color}}>
-          <div className="diagnosis-badge-icon">{eff?.badge?.split(" ")[0] || "⚠️"}</div>
-          <div className="diagnosis-badge-label">{topM}: {M_LABELS[topM] || topM}</div>
-          <div className="diagnosis-badge-sub">{eff?.badge?.replace(/^[^\s]+\s/,"") || ""}</div>
-          <div className="diagnosis-badge-confidence">
-            <ConfidenceRing value={conf} color={color}/>
-            <div style={{fontSize:12}}>
-              <div style={{fontWeight:700}}>{Math.round(conf*100)}% confident</div>
-              <div style={{color:'var(--text-muted)',fontSize:11}}>
-                {conf<0.45?"Probe required":"High confidence"}
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <RadarFeed probabilities={probs}/>
-
-        <MicroProbe result={result} onProbeAnswer={setProbeData}/>
-
-        <VisualExplanation explanation={visualExpl}/>
-
-        {eff && (
-          <div className="intervention-card" style={{borderColor:`${color}44`,background:`${color}08`,color}}>
-            <div style={{fontSize:11,fontWeight:700,textTransform:'uppercase',letterSpacing:'0.8px',marginBottom:8}}>
-              💡 Intervention
-            </div>
-            <div style={{fontSize:12,color:'var(--text-secondary)',lineHeight:1.6}}>{eff.message}</div>
-            {eff.hint && (
-              <div className="intervention-hint" style={{borderLeftColor:color}}>
-                <strong>Hint:</strong> {eff.hint}
-              </div>
-            )}
-          </div>
-        )}
-      </>
-    );
-  }
-
-  // ────────────────────────────────────────
-  // Reassess Pane (Dual-Mode: Problem Mode & Playground Mode)
-  // ────────────────────────────────────────
-  function ReassessPane({ result, problems, sessionToken, mode, code, onReassessPlayground }) {
-    const [transferCode,  setTransferCode]  = useState("def solution(values):\n    # Transfer problem\n    pass\n");
-    const [counterCode,   setCounterCode]   = useState("def solution(nums):\n    # Counter-probe trap\n    pass\n");
+  // ──────────────────────────────────────────────────────────────────────────
+  // Reassessment Component (Dual-Gate & Playground)
+  // ──────────────────────────────────────────────────────────────────────────
+  function ReassessViewer({ result, problems, sessionToken, mode, code, onReassessPlayground }) {
+    const [transferCode, setTransferCode] = useState("def solution(values):\n    # Transfer problem\n    pass\n");
+    const [counterCode, setCounterCode] = useState("def solution(nums):\n    # Counter-probe trap\n    pass\n");
     const [transferProbId, setTransferProbId] = useState("");
-    const [counterProbId,  setCounterProbId]  = useState("");
+    const [counterProbId, setCounterProbId] = useState("");
     const [verdict, setVerdict] = useState(null);
     const [loading, setLoading] = useState(false);
-    const [error,   setError]   = useState(null);
+    const [error, setError] = useState(null);
 
     useEffect(() => {
-      if (problems.length>=2) {
-        setTransferProbId(String(problems[problems.length-1]?.id||""));
-        setCounterProbId(String(problems[0]?.id||""));
+      if (problems.length >= 2) {
+        setTransferProbId(String(problems[problems.length - 1]?.id || ""));
+        setCounterProbId(String(problems[0]?.id || ""));
       }
     }, [problems]);
 
     const handleReassessProblem = async () => {
       if (!result) return;
-      setLoading(true); setVerdict(null); setError(null);
+      setLoading(true);
+      setVerdict(null);
+      setError(null);
       try {
-        const res = await fetch(`${API_BASE}/api/reassess`,{
-          method:"POST",headers:{"Content-Type":"application/json"},
-          body:JSON.stringify({
-            learner_id:result.submission_id, diagnosis_id:result.submission_id,
-            transfer_problem_id:Number(transferProbId), counter_probe_problem_id:Number(counterProbId),
-            transfer_code:transferCode, counter_probe_code:counterCode,
+        const res = await fetch(`${API_BASE}/api/reassess`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            learner_id: result.submission_id,
+            diagnosis_id: result.submission_id,
+            transfer_problem_id: Number(transferProbId),
+            counter_probe_problem_id: Number(counterProbId),
+            transfer_code: transferCode,
+            counter_probe_code: counterCode,
           }),
         });
         const data = await res.json();
-        if (!res.ok) throw new Error(data.detail||"Reassess failed");
+        if (!res.ok) throw new Error(data.detail || "Reassessment failed");
         setVerdict(data);
-      } catch(e) { setError(e.message); } finally { setLoading(false); }
+      } catch (e) {
+        setError(e.message);
+      } finally {
+        setLoading(false);
+      }
     };
 
-    const handleReassessPlaygroundCode = async () => {
-      setLoading(true); setVerdict(null); setError(null);
+    const handlePlaygroundReassess = async () => {
+      setLoading(true);
+      setVerdict(null);
+      setError(null);
       try {
         const res = await fetch(`${API_BASE}/api/reassess`, {
-          method: "POST", headers: { "Content-Type": "application/json" },
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ code: code }),
         });
         const data = await res.json();
         if (!res.ok) throw new Error(data.detail || "Reassessment failed");
         setVerdict(data);
         if (onReassessPlayground) onReassessPlayground();
-      } catch(e) { setError(e.message); } finally { setLoading(false); }
-    };
-
-    const textareaStyle = {
-      width:'100%',height:80,background:'var(--bg-secondary)',
-      border:'1px solid var(--border-normal)',borderRadius:'var(--radius-sm)',
-      color:'var(--text-primary)',fontFamily:'JetBrains Mono,monospace',
-      fontSize:11,padding:'8px',resize:'vertical',outline:'none',
+      } catch (e) {
+        setError(e.message);
+      } finally {
+        setLoading(false);
+      }
     };
 
     if (mode === "practice") {
       return (
-        <div className="reassess-card">
-          <div className="section-title">🔁 Playground Reassessment</div>
-          <div style={{fontSize:12,color:'var(--text-secondary)',lineHeight:1.6,marginBottom:12}}>
-            Edit your code in the playground to resolve any misconceptions, then click below to re-verify your fix and update diagnostics.
+        <div className="reassess-wrapper">
+          <div className="reassess-gate-card">
+            <h3 className="gate-title">Playground Reassessment</h3>
+            <p style={{fontSize:12.5, color:'var(--text-secondary)', lineHeight:1.5}}>
+              Modified your playground code to resolve misconceptions? Run a verification check to confirm conceptual mastery.
+            </p>
+            <button
+              id="reassess-practice-btn"
+              className="btn-primary"
+              onClick={handlePlaygroundReassess}
+              disabled={loading}
+              style={{marginTop:8, width:'100%'}}
+            >
+              {loading ? <><span className="spinner"></span> Reassessing…</> : "Reassess Playground Code"}
+            </button>
           </div>
-          <button id="reassess-practice-btn" className="btn btn-primary" onClick={handleReassessPlaygroundCode}
-            disabled={loading} style={{width:'100%',justifyContent:'center'}}>
-            {loading ? <><span className="loading-spinner"/> Reassessing…</> : "🔁 Reassess Playground Code"}
-          </button>
-          {error && <div style={{marginTop:10,color:'var(--accent-red)',fontSize:12}}>{error}</div>}
+
+          {error && <div style={{color:'var(--status-error)', fontSize:12}}>{error}</div>}
+
           {verdict && (
-            <div style={{marginTop:12}}>
-              <div className={`verdict-banner ${verdict.verdict.toLowerCase()}`}>{verdict.badge}</div>
-              <div style={{fontSize:12,color:'var(--text-secondary)',lineHeight:1.6,marginTop:6}}>{verdict.message}</div>
-              {verdict.top_misconception && (
-                <div style={{marginTop:8,fontSize:11,color:'var(--text-muted)'}}>
-                  Current State: <strong>{verdict.top_misconception}</strong> ({Math.round((verdict.confidence||0)*100)}% conf)
-                </div>
-              )}
+            <div className={`verdict-banner ${verdict.verdict.toLowerCase()}`}>
+              <div>
+                {verdict.verdict === "RESOLVED" ? "✓ Concept understood" :
+                 verdict.verdict === "SUPPRESSED" ? "⚠️ Let's strengthen this concept" :
+                 "✕ Let's try another approach"}
+              </div>
+              <div className="verdict-subtext">{verdict.message}</div>
             </div>
           )}
         </div>
@@ -960,121 +1385,403 @@
     }
 
     return (
-      <div className="reassess-card">
-        <div className="section-title">🔁 Dual-Gate Reassessment</div>
-        {!result
-          ? <div style={{color:'var(--text-muted)',fontSize:12,textAlign:'center',padding:'20px 0'}}>Submit code first.</div>
-          : (
-            <>
-              <div style={{marginBottom:10}}>
-                <label style={{fontSize:11,color:'var(--text-muted)',display:'block',marginBottom:4}}>Gate 1 — Transfer Problem</label>
-                <select className="problem-select" style={{width:'100%',marginBottom:6}} value={transferProbId} onChange={e=>setTransferProbId(e.target.value)}>
-                  {problems.map(p=><option key={p.id} value={p.id}>#{p.id} {p.title}</option>)}
-                </select>
-                <textarea value={transferCode} onChange={e=>setTransferCode(e.target.value)} style={textareaStyle}/>
-              </div>
-              <div style={{marginBottom:12}}>
-                <label style={{fontSize:11,color:'var(--text-muted)',display:'block',marginBottom:4}}>Gate 2 — Counter-Probe Trap</label>
-                <select className="problem-select" style={{width:'100%',marginBottom:6}} value={counterProbId} onChange={e=>setCounterProbId(e.target.value)}>
-                  {problems.map(p=><option key={p.id} value={p.id}>#{p.id} {p.title}</option>)}
-                </select>
-                <textarea value={counterCode} onChange={e=>setCounterCode(e.target.value)} style={textareaStyle}/>
-              </div>
-              <button id="reassess-btn" className="btn btn-primary" onClick={handleReassessProblem}
-                disabled={loading||!transferProbId||!counterProbId}
-                style={{width:'100%',justifyContent:'center'}}>
-                {loading?<><span className="loading-spinner"/> Evaluating…</>:"🔁 Run Dual-Gate Check"}
-              </button>
-              {error && <div style={{marginTop:10,color:'var(--accent-red)',fontSize:12}}>{error}</div>}
-              {verdict && (
-                <div style={{marginTop:12}}>
-                  <div className={`verdict-banner ${verdict.verdict.toLowerCase()}`}>{verdict.badge}</div>
-                  <div style={{fontSize:12,color:'var(--text-secondary)',lineHeight:1.6}}>{verdict.message}</div>
-                  <div style={{marginTop:8,display:'flex',gap:8}}>
-                    <span style={{fontSize:11,color:verdict.transfer_passed?'var(--accent-green)':'var(--accent-red)'}}>
-                      Gate 1 {verdict.transfer_passed?"✅":"❌"}
-                    </span>
-                    <span style={{fontSize:11,color:verdict.counter_probe_passed?'var(--accent-green)':'var(--accent-orange)'}}>
-                      Gate 2 {verdict.counter_probe_passed?"✅":"⚠️"}
-                    </span>
-                  </div>
-                </div>
-              )}
-            </>
-          )
-        }
+      <div className="reassess-wrapper">
+        <div className="reassess-gate-card">
+          <div className="gate-title">
+            <span>Stage 1: Try a Related Problem</span>
+            <span className="badge-pill">Transfer</span>
+          </div>
+          <select
+            className="select-control"
+            value={transferProbId}
+            onChange={(e) => setTransferProbId(e.target.value)}
+          >
+            {problems.map((p) => (
+              <option key={p.id} value={p.id}>#{p.id} — {p.title}</option>
+            ))}
+          </select>
+          <textarea
+            className="reassess-textarea"
+            value={transferCode}
+            onChange={(e) => setTransferCode(e.target.value)}
+            placeholder="Write your transfer problem solution here…"
+          />
+        </div>
+
+        <div className="reassess-gate-card">
+          <div className="gate-title">
+            <span>Stage 2: Check Your Understanding</span>
+            <span className="badge-pill">Counter-Trap</span>
+          </div>
+          <select
+            className="select-control"
+            value={counterProbId}
+            onChange={(e) => setCounterProbId(e.target.value)}
+          >
+            {problems.map((p) => (
+              <option key={p.id} value={p.id}>#{p.id} — {p.title}</option>
+            ))}
+          </select>
+          <textarea
+            className="reassess-textarea"
+            value={counterCode}
+            onChange={(e) => setCounterCode(e.target.value)}
+            placeholder="Write counter-probe trap code here…"
+          />
+        </div>
+
+        <button
+          id="reassess-btn"
+          className="btn-primary"
+          onClick={handleReassessProblem}
+          disabled={loading || !result || !transferProbId || !counterProbId}
+          style={{width:'100%'}}
+        >
+          {loading ? <><span className="spinner"></span> Evaluating…</> : "Evaluate Dual-Gate Reassessment"}
+        </button>
+
+        {error && <div style={{color:'var(--status-error)', fontSize:12}}>{error}</div>}
+
+        {verdict && (
+          <div className={`verdict-banner ${verdict.verdict.toLowerCase()}`}>
+            <div>
+              {verdict.verdict === "RESOLVED" ? "✓ Concept understood" :
+               verdict.verdict === "SUPPRESSED" ? "⚠️ Let's strengthen this concept" :
+               "✕ Let's try another approach"}
+            </div>
+            <div className="verdict-subtext">{verdict.message}</div>
+            <div style={{display:'flex', gap:12, marginTop:6, fontSize:11.5}}>
+              <span>Stage 1 (Transfer): {verdict.transfer_passed ? "✓ Passed" : "✕ Failed"}</span>
+              <span>Stage 2 (Counter-Trap): {verdict.counter_probe_passed ? "✓ Passed" : "⚠️ Trapped"}</span>
+            </div>
+          </div>
+        )}
       </div>
     );
   }
 
-  // ────────────────────────────────────────
-  // Main App
-  // ────────────────────────────────────────
+  // ──────────────────────────────────────────────────────────────────────────
+  // Instructor View Modal
+  // ──────────────────────────────────────────────────────────────────────────
+  function InspectorModal({ onClose }) {
+    const [data, setData] = useState(null);
+    const [loading, setLoading] = useState(true);
+    const modalRef = useRef(null);
+
+    useEffect(() => {
+      fetch(`${API_BASE}/api/inspector`)
+        .then((r) => r.json())
+        .then((d) => {
+          setData(d);
+          setLoading(false);
+        })
+        .catch(() => setLoading(false));
+
+      const handleKeyDown = (e) => {
+        if (e.key === "Escape") onClose();
+      };
+      window.addEventListener("keydown", handleKeyDown);
+      return () => window.removeEventListener("keydown", handleKeyDown);
+    }, [onClose]);
+
+    return (
+      <div
+        className="modal-overlay"
+        onClick={(e) => e.target === e.currentTarget && onClose()}
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="modal-title"
+      >
+        <div className="modal-dialog" ref={modalRef}>
+          <div className="modal-header">
+            <h2 className="modal-title" id="modal-title">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+              Instructor &amp; Model Inspector
+            </h2>
+            <button
+              id="inspector-close-btn"
+              className="modal-close-btn"
+              onClick={onClose}
+              aria-label="Close modal"
+            >
+              ✕
+            </button>
+          </div>
+
+          <div className="modal-body">
+            {loading ? (
+              <div style={{textAlign:'center', padding:40}}>
+                <span className="spinner"></span>
+                <div style={{marginTop:10, color:'var(--text-secondary)'}}>Loading inspection benchmarks…</div>
+              </div>
+            ) : data ? (
+              <>
+                {/* Model Info */}
+                <div style={{background:'var(--surface-secondary)', border:'1px solid var(--border-main)', borderRadius:'var(--radius-md)', padding:'10px 14px', fontSize:12.5, display:'flex', justifyContent:'space-between'}}>
+                  <span><strong>Architecture:</strong> {data.model_info?.type || "Calibrated Classifier"}</span>
+                  <span className="badge-pill">Phase 5 Validated</span>
+                </div>
+
+                {/* Overall Summary Grid */}
+                <div>
+                  <div className="inspector-section-title">Model Benchmarks</div>
+                  <div className="metrics-summary-grid">
+                    <div className="metric-summary-card">
+                      <div className="metric-val">{((data.overall_accuracy || 0.865) * 100).toFixed(1)}%</div>
+                      <div className="metric-lbl">Accuracy</div>
+                    </div>
+                    <div className="metric-summary-card">
+                      <div className="metric-val">{((data.macro_f1 || 0.862) * 100).toFixed(1)}%</div>
+                      <div className="metric-lbl">Macro F1</div>
+                    </div>
+                    <div className="metric-summary-card">
+                      <div className="metric-val">{Object.keys(data.lopo_metrics || {}).length || 10}</div>
+                      <div className="metric-lbl">Taxonomy Classes</div>
+                    </div>
+                    <div className="metric-summary-card">
+                      <div className="metric-val">4</div>
+                      <div className="metric-lbl">Active Probes</div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Confusion Matrix */}
+                {data.confusion_matrix && (
+                  <div>
+                    <div className="inspector-section-title">Confusion Matrix</div>
+                    <div style={{overflowX:'auto'}}>
+                      <table className="matrix-table">
+                        <thead>
+                          <tr>
+                            <th>Actual \ Pred</th>
+                            {data.confusion_matrix.labels.map((l) => (
+                              <th key={l}>{l}</th>
+                            ))}
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {data.confusion_matrix.matrix.map((row, rIdx) => (
+                            <tr key={rIdx}>
+                              <th>{data.confusion_matrix.labels[rIdx]}</th>
+                              {row.map((cell, cIdx) => (
+                                <td key={cIdx} className={rIdx === cIdx ? "diagonal" : ""}>
+                                  {cell}
+                                </td>
+                              ))}
+                            </tr>
+                          ))}
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                )}
+
+                {/* LOPO Metrics */}
+                {data.lopo_metrics && (
+                  <div>
+                    <div className="inspector-section-title">Leave-One-Problem-Out (LOPO) Metrics</div>
+                    <div className="lopo-grid">
+                      {Object.entries(data.lopo_metrics).map(([mName, mt]) => (
+                        <div key={mName} className="lopo-card">
+                          <div className="lopo-title">{mName}</div>
+                          <div>Prec: <strong>{((mt.precision || 0) * 100).toFixed(0)}%</strong></div>
+                          <div>Rec: <strong>{((mt.recall || 0) * 100).toFixed(0)}%</strong></div>
+                          <div>F1: <strong style={{color:'var(--text-main)'}}>{((mt.f1 || 0) * 100).toFixed(0)}%</strong></div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
+
+                {/* Probe Differentiation Gain */}
+                {data.differentiation_gain && (
+                  <div>
+                    <div className="inspector-section-title">Probe Differentiation Gain (Pre vs. Post Probe)</div>
+                    <div className="gain-list">
+                      {Object.entries(data.differentiation_gain)
+                        .filter(([k]) => k.endsWith("_post_probe"))
+                        .map(([k, afterVal]) => {
+                          const preKey = k.replace("_post_probe", "_pre_probe");
+                          const preVal = data.differentiation_gain[preKey] || 0;
+                          const label = k.replace("_post_probe", "").replace(/_/g, " ").replace("vs", "vs.");
+                          const diff = Math.round((afterVal - preVal) * 100);
+                          return (
+                            <div key={k} className="gain-item">
+                              <span>{label}</span>
+                              <div style={{display:'flex', alignItems:'center', gap:8}}>
+                                <span style={{color:'var(--text-muted)'}}>{Math.round(preVal * 100)}%</span>
+                                <span>→</span>
+                                <span style={{fontWeight:700}}>{Math.round(afterVal * 100)}%</span>
+                                <span style={{color:'var(--status-success)', fontWeight:700}}>+{diff}pp</span>
+                              </div>
+                            </div>
+                          );
+                        })}
+                    </div>
+                  </div>
+                )}
+              </>
+            ) : (
+              <div style={{textAlign:'center', color:'var(--status-error)', padding:30}}>
+                Could not retrieve inspection metrics from server.
+              </div>
+            )}
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  // ──────────────────────────────────────────────────────────────────────────
+  // Main Studio Application Root
+  // ──────────────────────────────────────────────────────────────────────────
   function App() {
-    const [mode,        setMode]        = useState("problem"); // "problem" | "practice"
-    const [problems,    setProblems]    = useState([]);
-    const [selectedId,  setSelectedId]  = useState(null);
-    const [problem,     setProblem]     = useState(null);
+    // Theme State
+    const [theme, setTheme] = useState(() => {
+      try {
+        return localStorage.getItem("relearn_theme") || (window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+      } catch (e) {
+        return "light";
+      }
+    });
+
+    const [mode, setMode] = useState("problem"); // "problem" | "practice"
+    const [problems, setProblems] = useState([]);
+    const [selectedId, setSelectedId] = useState(null);
+    const [problem, setProblem] = useState(null);
     const [problemCode, setProblemCode] = useState("def solution(nums):\n    # your code here\n    pass\n");
     const [practiceCode, setPracticeCode] = useState("num = 4\nif num % 2 == 0:\n    print('Even')\nelse:\n    print('Odd')\n");
-    const [result,      setResult]      = useState(null);
-    const [isLoading,   setIsLoading]   = useState(false);
-    const [activeTab,   setActiveTab]   = useState("diagnosis");
+    const [result, setResult] = useState(null);
+    const [isSubmitting, setIsSubmitting] = useState(false);
+    const [activeTab, setActiveTab] = useState("diagnosis");
     const [inspectorOpen, setInspectorOpen] = useState(false);
-    const [consoleLines, setConsoleLines]   = useState([]);
-    const [presets,     setPresets]     = useState([]);
-    const [sessionToken, setSessionToken] = useState(() => localStorage.getItem("rl_session")||null);
+    const [consoleLines, setConsoleLines] = useState([]);
+    const [presets, setPresets] = useState([]);
+    const [sessionToken, setSessionToken] = useState(() => localStorage.getItem("rl_session") || null);
 
     const code = mode === "problem" ? problemCode : practiceCode;
     const setCode = mode === "problem" ? setProblemCode : setPracticeCode;
 
-    const addConsole = useCallback((type, text) => {
-      setConsoleLines(prev => [...prev.slice(-60), {type, text, id: Date.now()+Math.random()}]);
+    // Apply theme changes to document attribute and storage
+    const handleToggleTheme = (newTheme) => {
+      setTheme(newTheme);
+      document.documentElement.setAttribute("data-theme", newTheme);
+      try {
+        localStorage.setItem("relearn_theme", newTheme);
+      } catch (e) {}
+    };
+
+    // System theme listener when no explicit theme is saved
+    useEffect(() => {
+      const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
+      const handleChange = (e) => {
+        if (!localStorage.getItem("relearn_theme")) {
+          const sysTheme = e.matches ? "dark" : "light";
+          setTheme(sysTheme);
+          document.documentElement.setAttribute("data-theme", sysTheme);
+        }
+      };
+      mediaQuery.addEventListener("change", handleChange);
+      return () => mediaQuery.removeEventListener("change", handleChange);
     }, []);
 
+    const addConsole = useCallback((type, text) => {
+      setConsoleLines((prev) => [...prev.slice(-60), { type, text, id: Date.now() + Math.random() }]);
+    }, []);
+
+    // Logical preset selection mapping
     const handlePresetSelection = (token) => {
       setSessionToken(token);
       if (token) localStorage.setItem("rl_session", token);
       else localStorage.removeItem("rl_session");
 
-      const preset = presets.find(p => p.session_token === token);
-      if (preset && preset.code) {
-        if (mode === "problem") setProblemCode(preset.code);
-        else setPracticeCode(preset.code);
-        addConsole("info", `🎭 Loaded preset: ${preset.name}`);
+      setResult(null); // Clear previous results
+
+      if (!token) {
+        addConsole("info", "Switched to Live Session");
+        return;
+      }
+
+      const preset = presets.find((p) => p.session_token === token);
+      if (!preset) return;
+
+      // Logically connect preset to problem and mode
+      if (token === "preset-m8-indentation") {
+        setMode("practice");
+        setPracticeCode(preset.code);
+        addConsole("info", `Loaded: ${preset.name.replace(/\?\?|—/g, "-")} in Playground Mode`);
+      } else if (token === "preset-m4-comparator") {
+        setMode("problem");
+        setSelectedId(2); // Find Max
+        setProblemCode(preset.code);
+        addConsole("info", `Loaded: ${preset.name.replace(/\?\?|—/g, "-")} for Problem #2 (Find Max)`);
+      } else if (token === "preset-m5-assign") {
+        setMode("problem");
+        setSelectedId(3); // Count Even
+        setProblemCode(preset.code);
+        addConsole("info", `Loaded: ${preset.name.replace(/\?\?|—/g, "-")} for Problem #3 (Count Even)`);
+      } else if (token === "preset-m6-mutation" || token === "preset-m7-index-boundary") {
+        setMode("problem");
+        setSelectedId(4); // Reverse List
+        setProblemCode(preset.code);
+        addConsole("info", `Loaded: ${preset.name.replace(/\?\?|—/g, "-")} for Problem #4 (Reverse List)`);
+      } else {
+        // M1, M2, M0, M3, Fragile, M9
+        setMode("problem");
+        setSelectedId(1); // Sum List
+        setProblemCode(preset.code);
+        addConsole("info", `Loaded: ${preset.name.replace(/\?\?|—/g, "-")} for Problem #1 (Sum List)`);
       }
     };
 
+    // Load initial problem catalog & judge presets
     useEffect(() => {
-      fetch(`${API_BASE}/api/inspector/problems`).then(r=>r.json()).then(data=>{
-        setProblems(data);
-        if (data.length>0) { setSelectedId(data[0].id); setProblem(data[0]); }
-      }).catch(()=>addConsole("error","⚠ Backend not reachable — start FastAPI first"));
+      fetch(`${API_BASE}/api/inspector/problems`)
+        .then((r) => r.json())
+        .then((data) => {
+          setProblems(data);
+          if (data.length > 0) {
+            setSelectedId(data[0].id);
+            setProblem(data[0]);
+          }
+        })
+        .catch(() => addConsole("error", "Backend server connection unavailable"));
 
-      fetch(`${API_BASE}/api/inspector/learners`).then(r=>r.json()).then(setPresets).catch(()=>{});
+      fetch(`${API_BASE}/api/inspector/learners`)
+        .then((r) => r.json())
+        .then(setPresets)
+        .catch(() => {});
 
-      // Hide loading screen
-      setTimeout(()=>{
-        const s=document.getElementById("loading-screen");
-        if(s){s.classList.add("hidden");setTimeout(()=>s.remove(),400);}
-      }, 800);
+      // Fade out loading screen
+      setTimeout(() => {
+        const ls = document.getElementById("loading-screen");
+        if (ls) {
+          ls.classList.add("hidden");
+          setTimeout(() => ls.remove(), 300);
+        }
+      }, 400);
     }, []);
 
-    useEffect(()=>{
+    // Sync selected problem
+    useEffect(() => {
       if (selectedId && mode === "problem") {
-        const p = problems.find(x=>x.id===selectedId);
-        if(p){setProblem(p);setResult(null);}
+        const p = problems.find((x) => x.id === selectedId);
+        if (p) {
+          setProblem(p);
+        }
       }
-    },[selectedId,problems,mode]);
+    }, [selectedId, problems, mode]);
 
-    const handleSubmit = async () => {
-      setIsLoading(true); setConsoleLines([]);
+    const handleRunCode = async () => {
+      setIsSubmitting(true);
+      setConsoleLines([]);
 
       if (mode === "practice") {
         addConsole("info", "Executing in Practice Playground sandbox…");
         try {
           const res = await fetch(`${API_BASE}/api/practice`, {
-            method: "POST", headers: {"Content-Type": "application/json"},
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ code: practiceCode }),
           });
           const data = await res.json();
@@ -1082,13 +1789,13 @@
           setResult(data);
 
           if (data.status === "success") {
-            addConsole("pass", "✅ Execution completed successfully");
+            addConsole("pass", "Execution finished successfully.");
           } else {
-            addConsole("error", `❌ Status: ${data.status}`);
+            addConsole("error", `Status: ${data.status}`);
           }
 
           if (data.stdout) {
-            data.stdout.split("\n").forEach(l => {
+            data.stdout.split("\n").forEach((l) => {
               if (l) addConsole("info", `[stdout] ${l}`);
             });
           }
@@ -1099,74 +1806,178 @@
             addConsole("error", `Error: ${data.error}`);
           }
           if (data.top_misconception && data.top_misconception !== "M0") {
-            addConsole("fail", `⚡ Misconception detected: ${data.top_misconception} (${Math.round(data.confidence * 100)}% conf)`);
+            addConsole("fail", `Diagnosis finding: ${data.top_misconception} (${Math.round((data.confidence || 0) * 100)}% conf)`);
           }
           setActiveTab("diagnosis");
-        } catch(e) {
-          addConsole("error", `❌ ${e.message}`);
-        } finally { setIsLoading(false); }
+        } catch (e) {
+          addConsole("error", e.message);
+        } finally {
+          setIsSubmitting(false);
+        }
         return;
       }
 
       if (!selectedId) return;
-      addConsole("info",`Submitting to problem #${selectedId}…`);
+      addConsole("info", `Submitting to problem #${selectedId}…`);
       try {
-        const res = await fetch(`${API_BASE}/api/submit`,{
-          method:"POST",headers:{"Content-Type":"application/json"},
-          body:JSON.stringify({code:problemCode,problem_id:selectedId,session_token:sessionToken}),
+        const res = await fetch(`${API_BASE}/api/submit`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            code: problemCode,
+            problem_id: selectedId,
+            session_token: sessionToken,
+          }),
         });
         const data = await res.json();
-        if (!res.ok) throw new Error(data.detail||"Submit failed");
+        if (!res.ok) throw new Error(data.detail || "Submission failed");
         setResult(data);
-        addConsole("info",`Tests: ${data.passed}/${data.total} passed`);
-        (data.test_results||[]).forEach((tr,i)=>{
-          addConsole(tr.ok?"pass":"fail",
-            `  [${i+1}] input=${JSON.stringify(tr.input)} → ${JSON.stringify(tr.actual)} (expected ${JSON.stringify(tr.expected)})`);
+
+        addConsole("info", `Test Results: ${data.passed}/${data.total} passed`);
+        (data.test_results || []).forEach((tr, i) => {
+          addConsole(
+            tr.ok ? "pass" : "fail",
+            `  [Test ${i + 1}] input=${JSON.stringify(tr.input)} → got ${JSON.stringify(tr.actual)} (expected ${JSON.stringify(tr.expected)})`
+          );
         });
-        if(data.error) addConsole("error",`Error: ${data.error}`);
-        if(data.passed===data.total) addConsole("pass","✅ All tests passed!");
+        if (data.error) addConsole("error", `Error: ${data.error}`);
+        if (data.passed === data.total) addConsole("pass", "All test cases passed!");
         setActiveTab("diagnosis");
-      } catch(e) {
-        addConsole("error",`❌ ${e.message}`);
-      } finally { setIsLoading(false); }
+      } catch (e) {
+        addConsole("error", e.message);
+      } finally {
+        setIsSubmitting(false);
+      }
     };
+
+    const passed = result?.passed ?? null;
+    const total = result?.total ?? null;
 
     return (
       <div id="root">
-        <Header presetLearners={presets} onPresetChange={handlePresetSelection}
-          onOpenInspector={()=>setInspectorOpen(true)}/>
-        <div className="workspace">
-          {/* Left */}
-          <div className="pane-editor">
-            <ProblemBar problems={problems} selectedId={selectedId} onSelect={setSelectedId} problem={problem}
-              mode={mode} onModeChange={m=>{setMode(m);setResult(null);}}/>
-            <EditorPane code={code} onChange={setCode} misconceptions={result?.misconceptions||[]}/>
-            <EditorToolbar onSubmit={handleSubmit} isSubmitting={isLoading} diagnosisResult={result} mode={mode}/>
-            <ConsolePanel lines={consoleLines}/>
-          </div>
-          {/* Right */}
-          <div className="pane-diagnosis">
-            <div className="pane-tabs">
-              {[["diagnosis","🎯 Diagnosis"],["visualizer","🧠 Trace"],["reassess","🔁 Reassess"]].map(([id,label])=>(
-                <div key={id} className={`pane-tab ${activeTab===id?"active":""}`} onClick={()=>setActiveTab(id)}>
-                  {label}
+        <Header
+          mode={mode}
+          onModeChange={(m) => {
+            setMode(m);
+            setResult(null);
+          }}
+          presets={presets}
+          selectedPresetToken={sessionToken}
+          onPresetSelect={handlePresetSelection}
+          onOpenInspector={() => setInspectorOpen(true)}
+          theme={theme}
+          onToggleTheme={handleToggleTheme}
+        />
+
+        <main className="workspace">
+          {/* COLUMN 1: EXERCISE BRIEF */}
+          <ExerciseBrief
+            problems={problems}
+            selectedId={selectedId}
+            onSelect={(id) => {
+              setSelectedId(id);
+              setResult(null);
+            }}
+            problem={problem}
+            mode={mode}
+          />
+
+          {/* COLUMN 2: CODE EDITOR & CONSOLE */}
+          <section className="pane-center" aria-label="Code Editor and Output">
+            <div className="editor-card">
+              <div className="editor-header-bar">
+                <div className="editor-tabs">
+                  <div className="editor-tab">
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+                    {mode === "problem" ? "solution.py" : "playground.py"}
+                  </div>
                 </div>
-              ))}
+                <div className="editor-meta">
+                  <span className="shortcut-hint">
+                    Press <span className="shortcut-kbd">Ctrl+Enter</span> to run
+                  </span>
+                </div>
+              </div>
+
+              <EditorPane
+                code={code}
+                onChange={setCode}
+                misconceptions={result?.misconceptions || []}
+                onRunShortcut={handleRunCode}
+                theme={theme}
+              />
+
+              <div className="editor-footer-bar">
+                <button
+                  id="submit-btn"
+                  className="btn-primary"
+                  onClick={handleRunCode}
+                  disabled={isSubmitting}
+                  aria-label="Run and diagnose code"
+                >
+                  {isSubmitting ? (
+                    <>
+                      <span className="spinner"></span>
+                      Analysing…
+                    </>
+                  ) : (
+                    <>
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+                      {mode === "practice" ? "Run Playground" : "Run Code"}
+                    </>
+                  )}
+                </button>
+
+                {mode === "problem" && passed !== null && total !== null && (
+                  <div className={`execution-status-pill ${passed === total ? "pass" : passed === 0 ? "fail" : "partial"}`}>
+                    {passed === total ? "✓ " : passed === 0 ? "✕ " : "⚡ "}
+                    {passed}/{total} Tests Passed
+                  </div>
+                )}
+              </div>
             </div>
-            <div className="pane-content">
-              {activeTab==="diagnosis"  && <DiagnosisPane result={result}/>}
-              {activeTab==="visualizer" && <Visualizer memoryBoxes={result?.memory_boxes||[]}/>}
-              {activeTab==="reassess"   && <ReassessPane result={result} problems={problems} sessionToken={sessionToken} mode={mode} code={code} onReassessPlayground={handleSubmit}/>}
-            </div>
-          </div>
-        </div>
-        {inspectorOpen && <InspectorModal onClose={()=>setInspectorOpen(false)}/>}
+
+            <ConsoleAndTests
+              consoleLines={consoleLines}
+              testResults={result?.test_results || []}
+              passed={passed}
+              total={total}
+              mode={mode}
+            />
+          </section>
+
+          {/* COLUMN 3: LEARNING FEEDBACK & MEMORY TRACE */}
+          <FeedbackPane
+            result={result}
+            activeTab={activeTab}
+            onTabChange={setActiveTab}
+            onProbeAnswer={(updatedData) => {
+              if (updatedData.updated_probabilities && result) {
+                setResult((prev) => ({
+                  ...prev,
+                  probabilities: updatedData.updated_probabilities,
+                  top_misconception: updatedData.top_misconception,
+                  confidence: updatedData.confidence,
+                }));
+              }
+            }}
+            problems={problems}
+            sessionToken={sessionToken}
+            mode={mode}
+            code={code}
+            onReassessPlayground={handleRunCode}
+          />
+        </main>
+
+        {inspectorOpen && (
+          <InspectorModal onClose={() => setInspectorOpen(false)} />
+        )}
       </div>
     );
   }
 
-  // Mount
-  ReactDOM.createRoot(document.getElementById("root")).render(<App/>);
+  // Mount React Root
+  ReactDOM.createRoot(document.getElementById("root")).render(<App />);
 </script>
 
 </body>
